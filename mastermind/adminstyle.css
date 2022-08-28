@@ -1,0 +1,59 @@
+@media screen and (min-width: 1000px) {
+
+    .blocv2 {
+
+      display: flex;
+      background-color: #E8F1F2;
+      height: 89vh;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    img {
+    height: 89vh;
+    width: 50vw;
+    min-width: 500px; 
+  }
+  .formConnection {
+    display: flex;
+    justify-content: center;
+    width: 50vw;
+  }
+
+
+
+  }
+
+  @media screen and (max-width: 1000px) {
+
+    .blocv2 {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      background-color: #E8F1F2;
+      height: 87vh;
+
+      text-align: center;
+      flex-wrap: wrap;
+
+    }
+
+    img {
+   
+      width: 100vw;
+
+    }
+
+    .formConnection {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+
+  }
+  .contact-form form {
+    display: block;
+  }

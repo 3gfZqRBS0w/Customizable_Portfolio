@@ -1,0 +1,461 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Poppins:wght@300&display=swap');
+
+
+* {
+    font-family: poppins, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+footer {
+
+    background-color: #E8F1F2;
+    background: #E8F1F2;
+    text-align: center;
+    box-shadow: 10px 10px 10px red;
+}
+
+header {
+    text-align: center;
+
+}
+
+.navPortfolio {
+
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    padding: 10px;
+    z-index: -1;
+    background: #E8F1F2;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    box-shadow: 0 4px 2px -2px black;
+    justify-content: center;
+    z-index: 1;
+}
+
+.navAdmin {
+
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+    padding: 10px;
+    z-index: -1;
+    background: #E8F1F2;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    box-shadow: 0 4px 2px -2px black;
+    justify-content: center;
+    z-index: 1;
+}
+
+a {
+
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+    padding-left: 10px;
+
+}
+
+hr {
+    border: 1px solid;
+    width: 100%;
+    height: 1px;
+    background: #333;
+
+}
+
+.competenceList {
+    list-style-type: none;
+}
+
+.veilleTechnologique {
+    display: flex;
+    justify-content: center;
+    min-width: 100px;
+     
+    
+    
+     
+}
+
+.articleVeille {
+    background: white;
+    border: white 0px solid;
+    border: 2px solid;
+    border-left: black 15px solid; 
+    margin-left: 10vw ;
+    margin-right: 10vw ;
+    padding: 2vh; 
+
+}
+
+.articleVeille:hover {
+    transition-delay: 1s;
+    transform: scale(1.2);
+}
+
+
+
+
+#titre {
+    transform: translateY(+50%);
+}
+
+
+#head {
+    background: #E8F1F2;
+    background-repeat: repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+
+a:hover {
+    text-decoration: underline;
+    transition-delay: 0.25s;
+}
+
+
+
+/* Contenue de la page */
+
+#bloc1 {}
+
+#bloc2 {
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#bloc3 {}
+
+#bloc4 {}
+
+.bloc {
+    background-color: #E8F1F2;
+    height: 80%;
+    justify-content: space-around;
+    padding-top: 8vh;
+}
+
+
+#element {
+    box-shadow: 10px 10px 10px black;
+    width: 30vw;
+    height: 50vh;
+
+}
+
+#element:hover {
+    transition-duration: 1s;
+    color: grey;
+    filter: blur(4px);
+    transform: scale(1.137);
+
+}
+
+.skillBar {
+    border: solid 1px;
+}
+
+.categoryTitle {
+    padding-left: 9vw !important;
+    padding-bottom: 5vh;
+}
+
+
+
+
+
+
+#container1 {
+
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#blocTexte1 {
+    width: 50%;
+    /*min-width: 500px;*/
+    padding-bottom: 5vh;
+}
+
+.previewProject {
+    min-width: 400px;
+    min-height: 400px;
+
+}
+
+
+#monPortrait {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 0;
+    width: 20vw;
+    height: 40vh;
+    min-width: 400px;
+    min-height: 400px;
+    border-style: solid;
+    border-width: 15px 15px 0px 15px;
+    border-color: #FFF;
+    background: white;
+    padding-bottom: 50px;
+    transition: transform .2s;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+#monPortrait:hover {
+    transform: scale(1.137);
+}
+
+#bold:hover {
+    text-decoration: underline;
+}
+
+
+
+
+#soulignage {
+    width: 88%;
+}
+
+#separationCategories {
+    width: 80%;
+    margin: auto;
+}
+
+
+
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.w3-container {
+    margin: auto;
+    padding: 0.01em 16px;
+    width: 60%;
+}
+
+.zigzag-timeline__item {
+    /* Used to position the milestone */
+    position: relative;
+    /*padding: 50px;*/
+    /* Border */
+    border-bottom: 3px solid #333;
+
+    /* Take full width */
+    width: 100%;
+    padding: 3vh;
+
+    /*padding-left: 48px;
+padding-right: 48px;*/
+}
+
+p,
+h3 {
+    display: block;
+    margin-block-start: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.zigzag-timeline__milestone {
+    position: absolute;
+    top: 50%;
+    border: 3px solid rgb(0, 0, 0);
+    height: 1.6rem;
+    background: #FFF;
+    text-align: center;
+    padding: 10px;
+}
+
+
+.zigzag-timeline__item:nth-child(2n) {
+    border-left: 3px solid #71717A;
+
+}
+
+.zigzag-timeline__item:nth-child(2n) .zigzag-timeline__milestone {
+    left: 0;
+    transform: translate(-50%, -50%);
+}
+
+/* Styles for odd items */
+.zigzag-timeline__item:nth-child(2n + 1) {
+    border-right: 3px solid #71717A;
+}
+
+.zigzag-timeline__item:nth-child(2n + 1) .zigzag-timeline__milestone {
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+.container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+li {
+    list-style: none;
+    /* retirer les puces */
+}
+
+ul {
+    padding: 0;
+    /* les listes sont décalées par défauts et c moche*/
+}
+
+.skillBar {
+    border: .5px solid;
+    /* Des bordures plus fines */
+    background: white;
+    margin-bottom: 10px;
+    /* un peu d'espaces entre chaque bar */
+}
+
+hr.blocOfSkills {
+    padding: 100px;
+}
+
+.intoSkillBar {
+    text-align: center;
+}
+
+/*en js faire en sorte que quand on arrive ici l'anim se lance, tu m'enverras ton projet à la fin je te l'ajouterais*/
+.growUp {
+    animation: growUp 1s linear forwards;
+    background-color: rgb(129, 255, 127);
+    overflow: auto;
+    border-right: .5px black solid;
+    white-space: nowrap;
+    color: rgba(0, 0, 0, 0);
+}
+
+@keyframes growUp {
+    0% {
+        width: 0%;
+    }
+
+    60% {
+        color: rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        width: 100%;
+        color: rgba(0, 0, 0, 1);
+    }
+}
+
+.blocOfSkills {
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: top;
+    /* tu align center ce qui n'est pas très jolie, un align top rend mieux */
+    justify-content: center;
+}
+
+.blocOfSkill {
+    /* padding: 100px;  NONNNNNNNN pas de padding fixe c pas bon pour le responsive on est en display flex alors on fixe des marges en % à nos éléments, tu as 4 élémments donc 100/4 = 25 chque élément doit faire 25% mais on veut des marges donc chaque éléments vaudra 20% il nous reste 100 - 20*4 = 20% à dédier au marge, il y a des marges à gauche et a droite de chaque élément dont on fixe à 2.5% car 2.5*2 = 5 et 5*4 = 20 (ce dont il nous reste d'espaces pour fixer nos marges) */
+    width: 20%;
+    margin: 2.5%;
+
+    /*a partir de la on fixe une min-width (taille minimum) comme ca si on resert trop l'ecran le block ne fera plus 20% car illisible*/
+    min-width: 300px;
+}
+
+
+/* form */
+.contact-form form {
+display: grid;
+grid-template-columns: 1fr 1fr;
+}
+
+.contact-form form label {
+display: block;
+}
+
+.contact-form form p {
+margin: 0;
+padding: 1em;
+}
+
+.contact-form form .block {
+grid-column: 1 / 3;
+}
+
+.contact-form form button,
+.contact-form form input,
+.contact-form form textarea {
+width: 100%;
+padding: .7em;
+border: none;
+background: none;
+outline: 0;
+color: #fff;
+border-bottom: 1px solid black;
+}
+
+.contact-form form button {
+background: black;
+border: 0;
+text-transform: uppercase;
+padding: 1em;
+}
+
+.contact-form form button:hover,
+.contact-form form button:focus {
+background: #d63031;
+color: rgb(0, 0, 0);
+transition: background-color 1s ease-out;
+outline: 0;
+}
+
+/* CONTACT INFO */
+.contact-info {
+background: white;
+border: 2px solid black;
+border-left: 15px solid black
+}
+
+.contact-info h4, .contact-info ul, .contact-info p {
+text-align: center;
+margin: 0 0 1rem 0;
+}
+
+/* LARGE SIZE */
+@media(min-width: 700px) {
+
+.contact-wrapper {
+display: grid;
+grid-template-columns: 2fr 1fr;
+}
+.contact-wrapper > * {
+margin-left: 10vh;
+margin-right: 10vh;  
+padding: 2em;
+}
+.contact-info h4,
+.contact-info ul,
+.contact-info p {
+text-align: left;
+}
+}
