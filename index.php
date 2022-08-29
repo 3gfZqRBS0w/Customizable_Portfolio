@@ -1,3 +1,8 @@
+<?php
+require_once("init.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,15 +10,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
 
 
     <title>Portfolio | LASTNAME FIRSTNAME</title>
 </head>
 
 <body>
-    <?php require_once("librairies/header.php"); ?>
+    <?php
+     echo(Utility::getHeader($CheminPage, "TITLE", "SUBTITLE")) ;
+    ?>
     <main>
         <div class="bloc" id="bloc1">
             <div id="container1">
@@ -296,7 +302,9 @@
 
 
 
-        <?php require_once("librairies/footer.php"); ?>
+        <?php
+        echo(Utility::getFooter() ) ; 
+        ?>
 
 </body>
 
