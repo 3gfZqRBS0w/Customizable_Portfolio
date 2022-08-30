@@ -1,5 +1,14 @@
 <?php
+    require_once("config/basededonnee.php") ;
+    require_once("config/redirection.php") ;
+    require_once("config/recuperation.php") ;
+    require_once("librairies/Parsedown.php") ; 
+    require_once("librairies/Utility.php") ;
+
+
 require_once("init.php");
+
+
 ?>
 
 
@@ -13,31 +22,33 @@ require_once("init.php");
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
 
-    <title>Portfolio | LASTNAME FIRSTNAME</title>
+    <title>Portfolio | <?=Utility::getValueOfPrimaryData($bdd, "lastName")?> <?=Utility::getValueOfPrimaryData($bdd, "surName")?></title>
 </head>
 
 <body>
     <?php
-     echo(Utility::getHeader($CheminPage, "TITLE", "SUBTITLE")) ;
+    session_start(); 
+    if (isset($_SESSION["codeSecret"])) {
+        echo(Utility::getHeader($PortfolioAdmin, Utility::getValueOfPrimaryData($bdd, "nameOfWebsite"), Utility::getValueOfPrimaryData($bdd, "websiteSubtitble"))) ;
+    }
+    else {
+        echo(Utility::getHeader($Portfolio, Utility::getValueOfPrimaryData($bdd, "nameOfWebsite"), Utility::getValueOfPrimaryData($bdd, "websiteSubtitble"))) ;
+    }
+     
     ?>
     <main>
         <div class="bloc" id="bloc1">
             <div id="container1">
                 <div id="blocTexte1">
-                    <h1>WELCOME MESSAGE </h1>
-                    <hr><br>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vel quam elementum pulvinar etiam non quam lacus suspendisse. Ornare massa eget egestas purus. Mauris in aliquam sem fringilla ut morbi tincidunt. Et ultrices neque ornare aenean euismod elementum nisi. Lorem dolor sed viverra ipsum nunc aliquet bibendum enim facilisis. Suspendisse faucibus interdum posuere lorem. Facilisis volutpat est velit egestas dui id ornare. At consectetur lorem donec massa sapien faucibus et molestie ac. At lectus urna duis convallis convallis tellus id. Pulvinar mattis nunc sed blandit libero. Varius duis at consectetur lorem donec massa sapien faucibus et. Tristique nulla aliquet enim tortor. Nibh praesent tristique magna sit amet purus gravida quis.<br><br>
-                    Consequat mauris nunc congue nisi vitae suscipit tellus mauris. Sapien faucibus et molestie ac feugiat. Lacinia quis vel eros donec ac odio tempor orci. Sit amet cursus sit amet dictum. Sed lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt. Lobortis elementum nibh tellus molestie nunc non blandit massa enim. Sit amet nisl purus in mollis nunc. Sagittis aliquam malesuada bibendum arcu vitae elementum curabitur. Posuere ac ut consequat semper viverra. Felis eget nunc lobortis mattis aliquam faucibus purus in. Etiam tempor orci eu lobortis elementum nibh. Nibh sed pulvinar proin gravida hendrerit. Lectus magna fringilla urna porttitor. Odio aenean sed adipiscing diam donec. Nec ultrices dui sapien eget mi proin sed libero. Eget magna fermentum iaculis eu non diam phasellus vestibulum. Nisi quis eleifend quam adipiscing vitae. Egestas sed tempus urna et pharetra pharetra massa.<br><br>
-                    Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed. Consequat semper viverra nam libero justo. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras. Consectetur lorem donec massa sapien faucibus et molestie ac feugiat. Sed velit dignissim sodales ut eu sem. Suspendisse in est ante in nibh mauris cursus mattis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a scelerisque. Vitae ultricies leo integer malesuada nunc vel risus commodo. Enim ut tellus elementum sagittis. Nisi quis eleifend quam adipiscing vitae proin. Elementum integer enim neque volutpat ac tincidunt vitae semper. Dignissim convallis aenean et tortor at risus viverra adipiscing.
-                    </p>
+                  <?php
+                   echo(Utility::ExtractHTMLFromMarkDownFile($bdd, "summaryPath")) ; 
+                  ?>
                 </div>
                 <div id="monPortrait">
-                    <img src="images/portrait.png">
-                    <h3 style="text-align: center;">
-                        <p>Lorem ipsum dolor</p>
-                        <a>➔ LINK 1</a><br>
-                        <a>➔ LINK 2</a>
-                    </h3>
+                    <img src=<?php echo(Utility::getValueOfPrimaryData($bdd, "profilePath")) ?>>
+                    <?php
+                   echo(Utility::ExtractHTMLFromMarkDownFile($bdd, "libellePortrait")) ; 
+                  ?>
                 </div>
             </div>
         </div>
@@ -51,7 +62,6 @@ require_once("init.php");
                 <hr><br>
                 <div class="w3-container">
                     <div class="zigzag-timeline__item">
-
                         <div>
 
                         </div>
@@ -309,3 +319,5 @@ require_once("init.php");
 </body>
 
 </html>
+
+<script src="script/app.js"></script>

@@ -1,6 +1,16 @@
 <?php 
 
-$CheminPage = [
+$PortfolioAdmin = [
+    "Presentation" => "#bloc1",
+    "Projects" => "#bloc3",
+    "Skills" => "#bloc4",
+    "Article" => "#bloc5",
+    "CV" => "",
+    "Contact" => "#bloc6",
+    "Panel" => 'mastermind'
+] ;
+
+$Portfolio = [
     "Presentation" => "#bloc1",
     "Projects" => "#bloc3",
     "Skills" => "#bloc4",
@@ -16,7 +26,7 @@ $CheminPageAdminNonConnecte = [
 
 $CheminPageAdminConnecte = [
     "Portfolio" => "../index.php",
-    "Deconnexion" => "../index.php"
+    "Deconnexion" => "deconnexion.php"
 ] ;
 
 

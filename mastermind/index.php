@@ -1,5 +1,14 @@
 <?php
+session_start();
+
+
+require_once("../config/basededonnee.php") ;
+require_once("../config/redirection.php") ;
+require_once("../config/recuperation.php") ;
+require_once("../librairies/Utility.php") ;
+require_once("../librairies/Parsedown.php") ; 
 require_once("../init.php");
+
 ?>
 
 
@@ -13,42 +22,51 @@ require_once("../init.php");
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../styles/main.css">
   <link rel="stylesheet" type="text/css" href="../styles/admin.css">
+
+  <style>
+        .notification {
+      
+
+      text-align: center;
+      position: absolute;
+      width: 100vw;
+
+    }
+  </style>
   <title>Admin Page</title>
 </head>
 
 <body>
 <?php
-     echo(Utility::getHeader($CheminPageAdminNonConnecte, "ADMIN", "Admin Page")) ;
+     
+// jmvB6sQ*yPjdBZS(1P1xkeuhq7XFiytFNF*4)G)bQh*WgY.E0KgiMXo]d9Z[nQ[M4vL.n.TiGiFC8)9jnV4.1-2QW66gwf-CttnEU-NSVWH*YUJNPXTf6UK[*RJMvx[( password
+     if (isset($_SESSION["codeSecret"])) {
+      echo(Utility::getHeader($CheminPageAdminConnecte, "ADMIN", "Admin Page")) ;
+      echo("vous êtes connecté bg ") ;
+     }
+     else {
+      echo(Utility::getHeader($CheminPageAdminNonConnecte, "ADMIN", "Admin Page")) ; 
+      if ( isset($_POST["password"]) ) {
+        if (hash('sha256', $_POST["password"]) == Utility::getValueOfPrimaryData($bdd, "secretCode") ) {
+          echo("<p class='notification' style='background-color: green;'>Mot de passe correct. redirection dans cinq secondes </p>") ; 
+          $_SESSION['codeSecret'] = $_POST["password"]  ;
+          header("Refresh: 5;url=index.php");
+        }
+        else {
+          echo("<p class='notification' style='background-color: red;' >Mot de passe incorrect.</p>") ;
+        }
+        
+       }
+       echo(Utility::getLoginPage()) ;
+     }
+
+
     ?>
-  <div class="blocv2">
-    <div class="formConnection">
 
-      <div class="contact-form">
-
-        <form>
-          <h1>Page de connexion</h1>
-
-          <p>
-            <label>Code Secret </label>
-            <input type="text" name="fullname">
-          </p>
-          <p>
-            <button>Soumettre</button>
-          </p>
-        </form>
-      </div>
-
-    </div>
-    <div>
-      <img src="../images/lampadaire.png">
-    </div>
-  </div>
-
-  </div>
-  <?php
-     echo(Utility::getFooter()) ;
-    ?>
 </body>
 
 
 </html>
+
+<script src="../script/app.js"></script>
+

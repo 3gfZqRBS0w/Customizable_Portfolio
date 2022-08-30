@@ -1,5 +1,7 @@
 <?php
 
+// CONNEXION A LA BASE DE DONNEE
+
 $nomUtilisateur = "admin" ;
 $motDePasse = "password" ;
 $nomBDD = "customportfolio";

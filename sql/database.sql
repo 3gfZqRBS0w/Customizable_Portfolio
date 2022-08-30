@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS primaryData_tbl(
     -- Information de base pour l'accueil 
     nameOfWebsite VARCHAR(255) NOT NULL,
     websiteSubtitble VARCHAR(255) NOT NULL,
+    libellePortrait VARCHAR(255) NOT NULL,
     summaryPath VARCHAR(255) NOT NULL,
     profilePath VARCHAR(255) NOT NULL,
     endTextPath VARCHAR(255) NOT NULL
@@ -40,4 +41,6 @@ CREATE TABLE IF NOT EXISTS career_tbl(
     FOREIGN KEY (idOfProject) REFERENCES project_tbl(id)
 );
 
-INSERT INTO primaryData_tbl(lastName, surName, nameOfWebsite, websiteSubtitble, summaryPath,profilePath, endTextPath ) VALUES ("LASTNAME", "FIRSTNAME", "PORTFOLIO OF LASTNAME FIRSTNAME","SUBTITLE", "markdown/default_summary.md", "images/default_portrait.png","markdown/default_endtext.md"); 
+
+
+INSERT INTO primaryData_tbl(lastName, surName, nameOfWebsite, websiteSubtitble, summaryPath,profilePath, libellePortrait, endTextPath ) VALUES ("LASTNAME", "FIRSTNAME", "PORTFOLIO OF LASTNAME FIRSTNAME","SUBTITLE", "markdown/default_summary.md", "images/default_portrait.png","markdown/libellePortrait.md","markdown/default_endtext.md"); 

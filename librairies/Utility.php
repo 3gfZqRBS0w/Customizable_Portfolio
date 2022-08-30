@@ -1,6 +1,27 @@
 <?php
 
+
 class Utility {
+
+
+  public static function ExtractHTMLFromMarkDownFile($pdo, $champ) {
+    $Parsedown = new Parsedown();
+    
+    $stmt = $pdo->prepare("SELECT `$champ` FROM `primaryData_tbl` WHERE 1;");
+    $stmt->execute();
+    $path = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return ($Parsedown->text(file_get_contents($path[$champ]))) ; 
+  }
+
+
+  public static function getValueOfPrimaryData($pdo, $champ) {
+    $stmt = $pdo->prepare("SELECT `$champ` FROM `primaryData_tbl` WHERE 1;");
+    $stmt->execute();
+    $path = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    return $path[$champ] ;
+  }
     
     public static function getFooter() {
         return "<div>
@@ -28,15 +49,43 @@ class Utility {
       </nav>" ; 
     }
 
-    static function getInstallMessages($IsInstalled, $pass) {
+    static function getInstallMessages($pass) {
 
-      if ($IsInstalled) return (" <h1>Le site a correctement été installé sur le serveur</h1>
+    return (" <h1>Le site a correctement été installé sur le serveur</h1>
         <p>Le mot de passe administrateur est ".$pass." .</p>
         <p>Il a été envoyée a l'adresse email configurée</p>
         ") ; 
-      else return ("<h1>L'installation du site est un échec </h1> ");
 
      
+    }
+
+    static function getLoginPage() {
+      return ('  <div class="blocv2">
+      <div class="formConnection">
+  
+        <div class="contact-form">
+  
+          <form action="" method="POST">
+            <h1>Page de connexion</h1>
+  
+            <p>
+              <label>Code Secret </label>
+              <input type="text" name="password">
+            </p>
+            <p>
+              <button>Soumettre</button>
+            </p>
+          </form>
+        </div>
+  
+      </div>
+      <div>
+        <img src="../images/lampadaire.png">
+      </div>
+    </div>
+  
+    </div>
+    ') ;
     }
 
 // found in https://thisinterestsme.com/php-random-password/

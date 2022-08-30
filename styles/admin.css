@@ -42,8 +42,11 @@
     img {
    
       width: 100vw;
+      position: relative;
+      
 
     }
+
 
     .formConnection {
     display: flex;
