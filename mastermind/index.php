@@ -41,11 +41,10 @@ require_once("../init.php");
      
 // jmvB6sQ*yPjdBZS(1P1xkeuhq7XFiytFNF*4)G)bQh*WgY.E0KgiMXo]d9Z[nQ[M4vL.n.TiGiFC8)9jnV4.1-2QW66gwf-CttnEU-NSVWH*YUJNPXTf6UK[*RJMvx[( password
      if (isset($_SESSION["codeSecret"])) {
-      echo(Utility::getHeader($CheminPageAdminConnecte, "ADMIN", "Admin Page")) ;
-      echo("vous êtes connecté bg ") ;
+      header('Location: admin/dashboard.php');
      }
      else {
-      echo(Utility::getHeader($CheminPageAdminNonConnecte, "ADMIN", "Admin Page")) ; 
+      echo(Utility::getHeader($CheminPageAdminNonConnecte, "ADMIN AREA", "LOGIN PAGE")) ; 
       if ( isset($_POST["password"]) ) {
         if (hash('sha256', $_POST["password"]) == Utility::getValueOfPrimaryData($bdd, "secretCode") ) {
           echo("<p class='notification' style='background-color: green;'>Mot de passe correct. redirection dans cinq secondes </p>") ; 

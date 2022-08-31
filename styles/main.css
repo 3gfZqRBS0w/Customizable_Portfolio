@@ -140,9 +140,9 @@ a:hover {
 
 .bloc {
     background-color: #E8F1F2;
-    height: 80%;
+    /*height: 80%;*/
     justify-content: space-around;
-    padding-top: 8vh;
+   padding-top: 8vh;
 }
 
 
@@ -489,7 +489,7 @@ text-align: left;
         text-shadow: none;
     }
     100% {
-        color: #fff900;
+        color: #000000;
         text-shadow: 0 0 7px #fff900;
     }
 }

@@ -3,6 +3,8 @@
     .blocv2 {
 
       display: flex;
+
+      flex-wrap: wrap;
       background-color: #E8F1F2;
       height: 89vh;
       justify-content: space-between;
@@ -60,3 +62,14 @@
   .contact-form form {
     display: block;
   }
+
+
+.basicAdministration {
+    color: rgb(102, 102, 102);
+    border-right: solid 1vw rgb(0, 0, 0); 
+    background-color: #E8F1F2;
+    position: fixed;
+    width: 10vw;
+    height: 100vh;
+}
+
