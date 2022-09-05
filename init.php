@@ -10,8 +10,6 @@ catch (PDOException $e) {
     die("Echec de la connexion : ".$e->getMessage());
 }
 
-
-
 if (!Utility::bddExists($bdd)) {
 
     $password = Utility::generatePassword(128);
@@ -21,12 +19,20 @@ if (!Utility::bddExists($bdd)) {
     $query = file_get_contents("sql/database.sql");
     $stmt = $bdd->prepare($query);
     $stmt->execute() ;
-    $query = "UPDATE primaryData_tbl SET secretCode = '$hash' ;" ;
+
+    $query = "UPDATE tbl_owner SET secretCode = '$hash' ;" ;
     $stmt = $bdd->prepare($query) ;
     $stmt->execute();
+    $stmt->closeCursor() ;
+
+    Utility::addlog($bdd,1) ;
+    
+
     mail($mailRecuperation,"L'installation du portfolio est une réussite","Le mot de passe est $password"); 
     die(Utility::getInstallMessages($password)) ;
 }
+
+$Parsedown = new Parsedown();
 ?>
 
 <div class="loader">

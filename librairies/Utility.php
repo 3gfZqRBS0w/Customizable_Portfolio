@@ -3,30 +3,106 @@
 
 class Utility {
 
+// PATH LIST ////////////////////////////////////
+
+  const PROFILE_PATH = "images/portrait.png" ;
+  const SUMMARY_PATH = "markdown/summary.md" ;
+  const LIBELLE_PORTRAIT_PATH = "markdown/libellePortrait.md" ;
+  const CLOSING_MESSAGE_PATH = "markdown/closing_message.md" ;
+
+/////////////////////////////////////////////////
+
+
+
+// LOGS METHODS ////////////////////////////////////
+
+  public static function addlog($pdo,$code) {
+
+    $query = "INSERT INTO tbl_logs(horodatage, addr_ip, user_agent, actionid_fk) VALUES(NOW(),'".$_SERVER['REMOTE_ADDR']."','".$_SERVER['HTTP_USER_AGENT']."', $code) ;" ;
+    $stmt = $pdo->prepare($query) ;
+    $stmt->execute();
+    $stmt->closeCursor();
+    
+  }
+
+  public static function getlogs($pdo) {
+    $query = "SELECT horodatage, addr_ip, user_agent,titre_action FROM tbl_logs INNER JOIN tbl_actions ON id_action = actionid_fk ORDER BY horodatage DESC ;" ;
+    $stmt = $pdo->prepare($query) ;
+    $stmt->execute();
+    $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $resultat;
+
+  }
+
+///////////////////////////////////////////////////
+
+
+
+  public static function IsValidPassword($pdo,$password) {
+    $stmt = $pdo->prepare("SELECT secretCode FROM tbl_owner WHERE 1;");
+    $stmt->execute();
+    $validHachedPassword = $stmt->fetch(PDO::FETCH_ASSOC);
+    $hashedPassword = hash('sha256',$password);
+
+
+    if ($validHachedPassword["secretCode"] == $hashedPassword) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
 
   public static function ExtractHTMLFromMarkDownFile($pdo, $champ) {
+
     $Parsedown = new Parsedown();
     
-    $stmt = $pdo->prepare("SELECT `$champ` FROM `primaryData_tbl` WHERE 1;");
+    $stmt = $pdo->prepare("SELECT `$champ` FROM `tbl_owner` WHERE 1;");
     $stmt->execute();
     $path = $stmt->fetch(PDO::FETCH_ASSOC);
 
     return ($Parsedown->text(file_get_contents($path[$champ]))) ; 
+
   }
 
 
-  public static function getValueOfPrimaryData($pdo, $champ) {
-    $stmt = $pdo->prepare("SELECT `$champ` FROM `primaryData_tbl` WHERE 1;");
+  // INTERROGATION METHODS ////////////////////////////////////
+
+  public static function getNumberOfItem($pdo, $table) {
+    
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM $table ;") ;
+    $stmt->execute();
+    $path = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $path["COUNT(*)"] ;
+  }
+
+
+  public static function getOwnerData($pdo, $champ) {
+    $stmt = $pdo->prepare("SELECT `$champ` FROM `tbl_owner` WHERE 1;");
     $stmt->execute();
     $path = $stmt->fetch(PDO::FETCH_ASSOC);
     
     return $path[$champ] ;
   }
+
+
+public static function setOwnerData($pdo, $lastName, $firstName, $nameOfWebsite, $websiteSubtitle) {
+
+  $stmt = $pdo->prepare("UPDATE `tbl_owner` SET `lastName`=".$pdo->quote($lastName).",`surName`=".$pdo->quote($firstName).",`nameOfWebsite`=".$pdo->quote($nameOfWebsite).",`websiteSubtitble`=".$pdo->quote($websiteSubtitle)." WHERE 1 ;") ;
+  $stmt->execute();
+
+}
+
+  ////////////////////////////////////////////////////////
+
+  // RECURRING HTML ////////////////////////////////////
     
     public static function getFooter() {
         return "<div>
         <footer>
-            <a href='index.php' aria-current='page'>Remonter en haut de la page</a>
+           <a href='index.php' aria-current='page'>Remonter en haut de la page</a> 
         </footer>
     </div>" ; 
     }
@@ -60,7 +136,9 @@ class Utility {
     }
 
     static function getLoginPage() {
-      return ('  <div class="blocv2">
+      return ('  
+    <div class="blocv2">
+
       <div class="formConnection">
   
         <div class="contact-form">
@@ -88,7 +166,12 @@ class Utility {
     ') ;
     }
 
-// found in https://thisinterestsme.com/php-random-password/
+////////////////////////////////////////////////////////////////////////
+
+/* 
+Password Generator
+from https://thisinterestsme.com/php-random-password/
+*/
     public static function generatePassword($length){
 
       $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.[]?*()';
@@ -100,6 +183,9 @@ class Utility {
       }
       return $password;
     }
+
+
+  // FOR BDD /////////////////////////////////////////////
 
     private static function tableExists($pdo, $table) {
 
@@ -117,7 +203,9 @@ class Utility {
   }
 
     static function bddExists($pdo) {
-      $table = ["primaryData_tbl","project_tbl", "article_tbl", "career_tbl"] ;
+
+      $table = ["tbl_actions","tbl_owner", "tbl_careers", "tbl_articles", "tbl_projects", "tbl_contacts"] ;
+
       foreach($table as $key => $value) {
         if (!self::tableExists($pdo, $value)) {
           return false; 
@@ -127,3 +215,5 @@ class Utility {
     }
       
   }
+
+  ////////////////////////////////////////////////////////

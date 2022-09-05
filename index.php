@@ -4,7 +4,7 @@
     require_once("config/recuperation.php") ;
     require_once("librairies/Parsedown.php") ; 
     require_once("librairies/Utility.php") ;
-
+//https://codepen.io/iamschulz/pen/ZEXyqPr
 
 require_once("init.php");
 
@@ -22,17 +22,17 @@ require_once("init.php");
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
 
-    <title>Portfolio | <?=Utility::getValueOfPrimaryData($bdd, "lastName")?> <?=Utility::getValueOfPrimaryData($bdd, "surName")?></title>
+    <title>Portfolio | <?=Utility::getOwnerData($bdd, "lastName")?> <?=Utility::getOwnerData($bdd, "surName")?></title>
 </head>
 
 <body>
     <?php
     session_start(); 
-    if (isset($_SESSION["codeSecret"])) {
-        echo(Utility::getHeader($PortfolioAdmin, Utility::getValueOfPrimaryData($bdd, "nameOfWebsite"), Utility::getValueOfPrimaryData($bdd, "websiteSubtitble"))) ;
+    if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
+        echo(Utility::getHeader($PortfolioAdmin, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble"))) ;
     }
     else {
-        echo(Utility::getHeader($Portfolio, Utility::getValueOfPrimaryData($bdd, "nameOfWebsite"), Utility::getValueOfPrimaryData($bdd, "websiteSubtitble"))) ;
+        echo(Utility::getHeader($Portfolio, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble"))) ;
     }
      
     ?>
@@ -40,15 +40,11 @@ require_once("init.php");
         <div class="bloc" id="bloc1">
             <div id="container1">
                 <div id="blocTexte1">
-                  <?php
-                   echo(Utility::ExtractHTMLFromMarkDownFile($bdd, "summaryPath")) ; 
-                  ?>
+                  <?=$Parsedown->text(file_get_contents(Utility::SUMMARY_PATH))?>
                 </div>
                 <div id="monPortrait">
-                    <img src=<?php echo(Utility::getValueOfPrimaryData($bdd, "profilePath")) ?>>
-                    <?php
-                   echo(Utility::ExtractHTMLFromMarkDownFile($bdd, "libellePortrait")) ; 
-                  ?>
+                    <img src=<?=Utility::PROFILE_PATH?>>
+                    <?=$Parsedown->text(file_get_contents(Utility::LIBELLE_PORTRAIT_PATH))?>
                 </div>
             </div>
         </div>
@@ -277,7 +273,7 @@ require_once("init.php");
             </p>
             <p>
                 <label>Adresse E-Mail</label>
-                <input type="email" name="email">
+                <input text="tefr" type="email" name="email">
             </p>
             <p>
                 <label>Numéro de Téléphone</label>
