@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS tbl_logs (
     FOREIGN KEY (actionid_fk) REFERENCES tbl_actions (id_action)
 ) ;
 
-INSERT INTO tbl_actions(titre_action) VALUES("Installation du site Internet"),("Tentative échouée de connexion"),("Connexion au Panel Réussis"), ("Visite de la page") ;
+INSERT INTO tbl_actions(titre_action) VALUES("Installation du site Internet"),("Tentative échouée de connexion"),("Connexion au Panel Réussis"), ("Visite de la page"),("Mise a jour du profil utilisateur"), ("Changement de la photo de profil"), ("Mise a jour du contene statique") ;
 
 CREATE TABLE IF NOT EXISTS tbl_careers (
     careerID INT PRIMARY KEY AUTO_INCREMENT,
@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS tbl_projects (
     fk_articleID INT,
     fk_logsID INT,
     title VARCHAR(50) NOT NULL,
+    photoPath VARCHAR(255) NOT NULL,
     textPath VARCHAR(255) NOT NULL,
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID),
     FOREIGN KEY (fk_careerID) REFERENCES tbl_careers (careerID),
@@ -66,4 +67,7 @@ CREATE TABLE IF NOT EXISTS tbl_contacts (
 
 -- Insert default values 
 INSERT INTO tbl_owner(lastName, surName, nameOfWebsite, websiteSubtitble) VALUES ("LASTNAME", "FIRSTNAME", "PORTFOLIO OF LASTNAME FIRSTNAME","SUBTITLE");
+
+
+--?R6YPHf!4Fw]LWeiu-gZo3r.j?Ou0Z6SCmT-wlP]iz.h?nCCma(aMKzqio--(cGvWSdPi5of)AOAwSsEaTAEiUMfd7mWDqHf1j[thGhFTt7k7Ikj1RNN9xgXo(6bcxZQ
 

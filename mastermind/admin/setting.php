@@ -28,24 +28,6 @@ if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION
 ?>
 
 
-<style>
-  .setting {
-    margin-left : 5vw;
-    margin-right : 5vw;
-    
-    text-align: center;
-  }
-
-  .notification {
-      
-
-      text-align: center;
-      position: relative;
-      width: 100%;
-
-    }
-
-</style>
   <link rel="stylesheet" type="text/css" href="../../styles/main.css">
   <link rel="stylesheet" type="text/css" href="../../styles/admin.css">
   <link rel="stylesheet" type="text/css" href="../../styles/panel.css">
@@ -60,6 +42,7 @@ if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION
         <?php
         if ( isset($_POST["lastName"]) && isset($_POST["surName"]) && isset($_POST["nameOfWebsite"]) && isset($_POST["websiteSubtitle"]) )
         {
+            Utility::addlog($bdd,5) ;
             $lastName = $_POST["lastName"];
             $surName = $_POST["surName"];
             $nameOfWebsite = $_POST["nameOfWebsite"];

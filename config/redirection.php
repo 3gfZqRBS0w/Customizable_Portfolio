@@ -27,6 +27,7 @@ $CheminPageAdminNonConnecte = [
 $CheminPageAdminConnecte = [
     "Dashboard" => "dashboard.php",
     "Profile" => "profile.php",
+    "Projects" => "projets.php",
     "Career" => "career.php",
     "Articles" => "articles.php",
     "Skills" => "skills.php",

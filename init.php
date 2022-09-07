@@ -2,6 +2,8 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
+//yN9ICIM3Q)BAX!IOr61)y3mm*t-]VnWnsoEIwIZ3mrDMgQVy0xFD(0VmUJmdrPn[1HFz.pvMnGi99K-(aDLEk4KPO-I]zG?X)L5acPA5AG!m0gkS5CYmH7eBi!no*MTs
+
 // Connexion à la bdd 
 try {
     $bdd = new PDO("mysql:host=$host;dbname=$nomBDD;charset=utf8", $nomUtilisateur, $motDePasse) ;

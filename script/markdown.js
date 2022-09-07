@@ -1,16 +1,3 @@
-const inputEl = document.querySelector('[data-el="input"]');
-const highlightEl = document.querySelector('[data-el="highlight"]');
-const outputEl = document.querySelector('[data-el="output"]');
-
-const inputEl0 = document.querySelector('[data-el="input2"]');
-const highlightEl0 = document.querySelector('[data-el="highlight2"]');
-const outputEl0 = document.querySelector('[data-el="output2"]');
-
-
-const inputEl1 = document.querySelector('[data-el="input3"]');
-const highlightEl1 = document.querySelector('[data-el="highlight3"]');
-const outputEl1 = document.querySelector('[data-el="output3"]');
-
 const converter = new showdown.Converter({
 	metadata: true,
 	parseImgDimensions: true,
@@ -36,15 +23,7 @@ const resizeTextarea = (textArea) => {
 	});
 };
 
-const highlight = (element) => {
-	window.requestAnimationFrame(() => {
-		const highlighted = hljs.highlight(
-			"markdown",
-			element.value
-		).value;
-		highlightEl.innerHTML = highlighted;
-	});
-};
+	
 
 const updateReadonly = (InElement, OutElement) => {
 	window.requestAnimationFrame(() => {
@@ -55,36 +34,25 @@ const updateReadonly = (InElement, OutElement) => {
 
 const init = (inputEl, outputEl) => {
 	inputEl.addEventListener("input", () => {
-		resizeTextarea(inputEl);
-		highlight(inputEl);
+		//resizeTextarea(inputEl);
 		updateReadonly(inputEl, outputEl);
 	});
 	inputEl.setAttribute('data-initialized', true);
 }
-
+var i = 0 ;
 document.addEventListener("DOMContentLoaded", () => {
-	init(inputEl, outputEl);
-	resizeTextarea(inputEl);
-	highlight(inputEl);
-	updateReadonly(inputEl, outputEl);
-
+	// Bad code I'm not a javascript developer :c 
+	var i = 0 ;
+	while (document.querySelector("[data-el='input"+(String(i))+"']") != null && document.querySelector("[data-el='output"+(String(i))+"']") != null) {
+		init(document.querySelector("[data-el='input"+(String(i))+"']"), document.querySelector("[data-el='output"+(String(i))+"']"));
+		resizeTextarea(document.querySelector("[data-el='input"+(String(i))+"']"));
+		updateReadonly(document.querySelector("[data-el='input"+(String(i))+"']"), document.querySelector("[data-el='output"+(String(i))+"']"));
+		i++;
+	}
 })
 
 
-document.addEventListener("DOMContentLoaded", () => {
-	init(inputEl0, outputEl0);
-	resizeTextarea(inputEl0);
-	highlight(inputEl0);
-	updateReadonly(inputEl0, outputEl0);
-})
 
-document.addEventListener("DOMContentLoaded", () => {
-	init(inputEl1, outputEl1);
-	resizeTextarea(inputEl1);
-	highlight(inputEl1);
-	updateReadonly(inputEl1, outputEl1);
-})
- 
 
 
 

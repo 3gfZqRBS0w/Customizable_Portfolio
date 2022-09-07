@@ -30,22 +30,16 @@
 
 
     <style>
-
-        
         .setting {
             margin-left: 2.5vw;
             margin-right: 2.5vw;
-
             text-align: center;
         }
 
         .notification {
-
-
             text-align: center;
             position: relative;
             width: 100%;
-
         }
 
         .container {
@@ -55,159 +49,19 @@
         }
 
 
-        .plain,
-        .text {
-            flex: 1 0 20rem;
-            
+        .plain, .text {
+            flex: 0.4 0 20rem;
             position: relative;
         }
 
-        [data-el="input"] {
-            border-width: 1px;
-            color: black;
-            caret-color: black;
-            white-space: break-spaces;
-            word-break: break-word;
-            resize: vertical;
-        }
 
-        [data-el="input"][data-initialized="true"] {
-           /*color: transparent;
-            resize: none;
-            overflow: hidden;*/
-        }
-
-        [data-el="highlight"] {
-            font-family: inherit;
-            line-height: inherit;
-            font-size: inherit;
-            margin: 0;
-            padding: 0;
-            white-space: break-spaces;
-            word-break: break-word;
-        }
-
-        .plain__highlights {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 90%;
-            border: 1px solid transparent;
-            pointer-events: none;
-        }
-
-        .plain__editor,
-        .plain__highlights {
-            width: 90%;
-            font-size: 1.1rem;
-            font-family: monospace;
-            margin: 0;
-            padding: 0.7rem 1.4ch;
-            line-height: 1.313;
-        }
-         /*-----------*/
-
-         .plain2,
-        .text2 {
-            flex: 1 0 20rem;
-            position: relative;
-        }
-
-         [data-el="input2"] {
-            border-width: 1px;
-            color: black;
-            caret-color: black;
-            white-space: break-spaces;
-            word-break: break-word;
-            resize: vertical;
-        }
-
-        [data-el="input2"][data-initialized="true"] {
-            /*color: transparent;
-            resize: none;
-            overflow: hidden;*/
-        }
-
-        [data-el="highlight2"] {
-            font-family: inherit;
-            line-height: inherit;
-            font-size: inherit;
-            margin: 0;
-            padding: 0;
-            white-space: break-spaces;
-            word-break: break-word;
-        }
-
-        .plain__highlights2 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 90%;
-            border: 1px solid transparent;
-            pointer-events: none;
-        }
-
-        .plain__editor2,
-        .plain__highlights2 {
-            width: 90%;
-            font-size: 1.1rem;
-            font-family: monospace;
-            margin: 0;
-            padding: 0.7rem 1.4ch;
-            line-height: 1.313;
-        }
-
-        /*---------------------------------*/
-
-        .plain3,
-        .text3 {
-            flex: 1 0 20rem;
-            position: relative;
-        }
-
-         [data-el="input3"] {
-            border-width: 1px;
-            color: black;
-            caret-color: black;
-            white-space: break-spaces;
-            word-break: break-word;
-            resize: vertical;
-        }
-
-        [data-el="input3"][data-initialized="true"] {
-            /*color: transparent;
-            resize: none;
-            overflow: hidden;*/
-        }
-
-
-        [data-el="highlight3"] {
-            font-family: inherit;
-            line-height: inherit;
-            font-size: inherit;
-            margin: 0;
-            padding: 0;
-            white-space: break-spaces;
-            word-break: break-word;
-        }
-
-        .plain__highlights3 {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 90%;
-            border: 1px solid transparent;
-            pointer-events: none;
-        }
-
-        .plain__editor3,
-        .plain__highlights3 {
-            width: 90%;
-            font-size: 1.1rem;
-            font-family: monospace;
-            margin: 0;
-            padding: 0.7rem 1.4ch;
-            line-height: 1.313;
+        label {
+            margin-top: 2.5vh;
+            margin-bottom: 2.5vh;
+            background-color: #E8F1F2;
+            padding: 0.5rem;
+            box-shadow: 0 4px 2px -2px black;
+            border-radius: 10px;
         }
     </style>
 
@@ -221,75 +75,92 @@
 
 <body>
     <?= (Utility::getHeader($CheminPageAdminConnecte, "Profile", "Customize your profile")) ?>
+    <div class="websiteOverview">
+    <h3 class="titleOfWebsiteOverview">Changing the profile image</h3>
+        <div class="contact-form setting">
+            <form action="" method="post">
+                <p>
+                    <input type="file" name="profilePicture">
+                </p>
+                <p>
+                    <button type="submit">Save</button>
+                </p>
+            </form>
+        </div>
+
+    </div>
+
+
+
 
     <div class="websiteOverview">
         <h3 class="titleOfWebsiteOverview">Profile Settings</h3>
         <?php
-        if (isset($_POST["lastName"]) && isset($_POST["surName"]) && isset($_POST["nameOfWebsite"]) && isset($_POST["websiteSubtitle"])) {
+        if (isset($_POST["welcomeMessage"]) && isset($_POST["UnderImage"]) && isset($_POST["EndMessage"])) {
+
+            Utility::addlog($bdd,7) ;
+
+            echo("<p class='notification' style='background-color: green;' >Mis a jour du profile.</p>") ;
+            file_put_contents("../../" . Utility::SUMMARY_PATH, $_POST["welcomeMessage"], LOCK_EX);
+            file_put_contents("../../" . Utility::LIBELLE_PORTRAIT_PATH, $_POST["UnderImage"], LOCK_EX);
+            file_put_contents("../../" . Utility::CLOSING_MESSAGE_PATH, $_POST["EndMessage"], LOCK_EX);
         }
         ?>
         <div>
             <div class="contact-form setting">
                 <form action="" method="post">
-                    <p>
-                        <label>Profile picture</label>
-                        <input type="file" name="profilePicture">
-                    </p>
-                    <p>
 
+
+                    <p>
                         <label>Welcome Message</label>
                     <div class="container">
                         <div class="plain">
-                            <textarea class="plain__editor" data-el="input"><?= file_get_contents("../../markdown/summary.md") ?></textarea>
-                          
+                            <textarea name="welcomeMessage" data-el="input0"><?= file_get_contents("../../".Utility::SUMMARY_PATH) ?></textarea>
                         </div>
                         <div class="text">
-                            <div data-el="output"></div>
+                            <div data-el="output0"></div>
                         </div>
                     </div>
 
                     </p>
 
+
+
                     <p>
                         <label>Under the image</label>
-                        <div class="container">
-                        <div class="plain2">
-                            <textarea class="plain__editor2" data-el="input2"><?= file_get_contents("../../markdown/libellePortrait.md") ?></textarea>
-    
+                    <div class="container">
+                        <div class="plain">
+                            <textarea name="UnderImage" data-el="input1"><?=file_get_contents("../../". Utility::LIBELLE_PORTRAIT_PATH)?></textarea>
                         </div>
-                        <div class="text2">
+                        
+                        <div id="monPortrait">
+                            <img src=<?="../../".Utility::PROFILE_PATH?>>
+                            <div class="text">
+                                <div data-el="output1"></div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    </p>
+
+
+
+                    <p>
+                        <label>End Message</label>
+                    <div class="container">
+                        <div class="plain">
+                            <textarea name="EndMessage" data-el="input2"><?= file_get_contents("../../".Utility::CLOSING_MESSAGE_PATH) ?></textarea>
+                        </div>
+
+
+                        
+                        <div class="text">
                             <div data-el="output2"></div>
                         </div>
                     </div>
                     </p>
 
-
-                    <p>
-                        <label>End Message</label>
-                        <div class="container">
-                        <div class="plain3">
-                            <textarea class="plain__editor3" data-el="input3"><?= file_get_contents("../../markdown/closing_message.md") ?></textarea>
-    
-                        </div>
-                        <div class="text3">
-                            <div data-el="output3"></div>
-                        </div>
-                    </div>
-                    </p>
-
-                    <p>
-                        <label>Message 4</label>
-                        <div class="container">
-                        <div class="plain3">
-                            <textarea class="plain__editor3" data-el="input3"><?= file_get_contents("../../markdown/closing_message.md") ?></textarea>
-    
-                        </div>
-                        <div class="text3">
-                            <div data-el="output3"></div>
-                        </div>
-                    </div>
-                    </p>
-                   
                     <p>
                         <button type="submit">Save</button>
                     </p>

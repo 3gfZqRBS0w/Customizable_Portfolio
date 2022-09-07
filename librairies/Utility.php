@@ -38,6 +38,22 @@ class Utility {
 
 
 
+
+//// INSERT METHODS //////////////////////////////////
+
+public static function addNewProject($pdo,$projectName, $picturePath) {
+  $query = "INSERT INTO tbl_projects(title, photoPath, textPath) VALUES (".$pdo->quote($projectName).", '.$picturePath.', 'Hello World : D')";
+  $stmt = $pdo->prepare($query) ;
+  $stmt->execute();
+
+}
+
+
+
+//////////////////////////////////////////////////////
+
+
+
   public static function IsValidPassword($pdo,$password) {
     $stmt = $pdo->prepare("SELECT secretCode FROM tbl_owner WHERE 1;");
     $stmt->execute();
@@ -70,6 +86,7 @@ class Utility {
   // INTERROGATION METHODS ////////////////////////////////////
 
   public static function getNumberOfItem($pdo, $table) {
+
     
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM $table ;") ;
     $stmt->execute();
@@ -92,6 +109,15 @@ public static function setOwnerData($pdo, $lastName, $firstName, $nameOfWebsite,
 
   $stmt = $pdo->prepare("UPDATE `tbl_owner` SET `lastName`=".$pdo->quote($lastName).",`surName`=".$pdo->quote($firstName).",`nameOfWebsite`=".$pdo->quote($nameOfWebsite).",`websiteSubtitble`=".$pdo->quote($websiteSubtitle)." WHERE 1 ;") ;
   $stmt->execute();
+
+}
+
+public static function getAllProjectsNames($pdo) {
+  $stmt = $pdo->prepare("SELECT title FROM tbl_projects ;");
+  $stmt->execute();
+  $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  return $resultat;
 
 }
 
@@ -148,7 +174,7 @@ public static function setOwnerData($pdo, $lastName, $firstName, $nameOfWebsite,
   
             <p>
               <label>Code Secret </label>
-              <input type="text" name="password">
+              <input type="password" name="password">
             </p>
             <p>
               <button>Soumettre</button>

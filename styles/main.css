@@ -238,12 +238,13 @@ a:hover {
 
 
 
-
+/*
 *,
 *:before,
 *:after {
     box-sizing: inherit;
 }
+*/
 
 .w3-container {
     margin: auto;
@@ -521,3 +522,17 @@ text-align: left;
     opacity: 0;
     transition: opacity 0.4s ease-out;
 }
+
+.setting {
+    margin-left : 5vw;
+    margin-right : 5vw;
+    
+    text-align: center;
+  }
+
+  .notification {
+    text-align: center;
+    /*position: absolute;*/
+    width: 100%;
+  }
+

@@ -44,7 +44,7 @@ session_start();
         <div class="elements">
             <div class="elementOfWebsiteOverview">
                 <div>
-                    <img src="../../images/vu.png"></img>
+                    <img class="panelImg" src="../../images/vu.png"></img>
                 </div>
 
                 <div class="childelementOfWebsiteOverview">
@@ -54,7 +54,7 @@ session_start();
             </div>
             <div class="elementOfWebsiteOverview">
                 <div>
-                    <img src="../../images/project.png"></img>
+                    <img class="panelImg" src="../../images/project.png"></img>
                 </div>
 
                 <div class="childelementOfWebsiteOverview">
@@ -65,7 +65,7 @@ session_start();
             </div>
             <div class="elementOfWebsiteOverview">
                 <div>
-                    <img src="../../images/career.png"></img>
+                    <img class="panelImg" src="../../images/career.png"></img>
                 </div>
 
                 <div class="childelementOfWebsiteOverview">
@@ -76,7 +76,7 @@ session_start();
             </div>
             <div class="elementOfWebsiteOverview">
                 <div>
-                    <img src="../../images/article.png"></img>
+                    <img class="panelImg" src="../../images/article.png"></img>
                 </div>
 
                 <div class="childelementOfWebsiteOverview">

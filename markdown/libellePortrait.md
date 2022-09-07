@@ -1,1 +1,1 @@
-<center>Lorem ipsum dolor sit amet, consectetur adipiscing elit, </center>
+<center>LASTNAME SURNAME, XX ans</center>
