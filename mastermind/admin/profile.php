@@ -44,7 +44,7 @@
 
         .container {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             text-align: left;
         }
 
@@ -63,6 +63,12 @@
             box-shadow: 0 4px 2px -2px black;
             border-radius: 10px;
         }
+
+        .imagePreview {
+            width: 100%;
+            min-width: 0px;
+        }
+
     </style>
 
 
@@ -134,7 +140,7 @@
                         </div>
                         
                         <div id="monPortrait">
-                            <img src=<?="../../".Utility::PROFILE_PATH?>>
+                            <img class="imagePreview" src=<?="../../".Utility::PROFILE_PATH?>>
                             <div class="text">
                                 <div data-el="output1"></div>
                             </div>

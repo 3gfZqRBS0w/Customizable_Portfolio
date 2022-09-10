@@ -39,7 +39,10 @@ class Utility {
 
 
 
-//// INSERT METHODS //////////////////////////////////
+//// INSERT, UPDATE AND DELETE QUERY METHODS //////////////////////////////////
+
+
+// for update or insert method projects
 
 public static function addNewProject($pdo,$projectName, $picturePath) {
   $query = "INSERT INTO tbl_projects(title, photoPath, textPath) VALUES (".$pdo->quote($projectName).", '.$picturePath.', 'Hello World : D')";
@@ -47,6 +50,23 @@ public static function addNewProject($pdo,$projectName, $picturePath) {
   $stmt->execute();
 
 }
+
+public static function editProjects($pdo,$projectTitle,$projectText) {
+  $query = "UPDATE tbl_projects SET title = ".$pdo->quote($projectTitle).", textPath = ".$pdo->quote($projectText)." WHERE title = ".$pdo->quote($projectTitle).";" ;
+  echo($query); 
+  $stmt = $pdo->prepare($query) ;
+  $stmt->execute();
+
+}
+
+public static function deleteProjects($pdo,$projectName) {
+  $query ="DELETE FROM tbl_projects WHERE title = ".$pdo->quote($projectName)." ; ";
+  $stmt = $pdo->prepare($query) ;
+  $stmt->execute();
+
+}
+
+
 
 
 
@@ -112,13 +132,23 @@ public static function setOwnerData($pdo, $lastName, $firstName, $nameOfWebsite,
 
 }
 
+// for project's interrogations 
+
 public static function getAllProjectsNames($pdo) {
   $stmt = $pdo->prepare("SELECT title FROM tbl_projects ;");
+  $stmt->execute();
+  $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultat;
+}
+
+public static function getProjectData($pdo, $project) {
+
+  $stmt = $pdo->prepare("SELECT title, photoPath, textPath FROM tbl_projects WHERE title=".$pdo->quote($project)." ;");
   $stmt->execute();
   $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
 
   return $resultat;
-
 }
 
   ////////////////////////////////////////////////////////
