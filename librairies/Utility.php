@@ -105,6 +105,44 @@ public static function deleteProjects($pdo,$projectName) {
 
   // INTERROGATION METHODS ////////////////////////////////////
 
+
+  public static function lastSuccessfulConnection($pdo, $ip) {
+
+    $query ="SELECT horodatage FROM tbl_logs WHERE addr_ip='$ip' AND actionid_fk=3 ;" ;
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $result["horodatage"] ;
+
+  }
+
+
+ 
+
+
+  public static function potentiallyBruteForceAttack($pdo, $ip) {
+
+    $date = $pdo->quote(Utility::lastSuccessfulConnection($pdo, "127.0.0.1")) ;
+    $query = "SELECT COUNT(*) FROM tbl_logs
+    WHERE actionid_fk=2 AND horodatage BETWEEN $date AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND addr_ip='$ip';" ;
+
+    
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ( $result["COUNT(*)"] > 10 ) {
+  return true ; 
+}
+else {
+  return false ; 
+}
+
+
+  }
+
+
   public static function getNumberOfItem($pdo, $table) {
 
     
@@ -192,19 +230,20 @@ public static function getProjectData($pdo, $project) {
     }
 
     static function getLoginPage() {
-      return ('  
-    <div class="blocv2">
+      return ("
+    <div class='blocv2'>
 
-      <div class="formConnection">
+      <div class='formConnection'>
   
-        <div class="contact-form">
+        <div class='contact-form'>
   
-          <form action="" method="POST">
+          <form action='' method='POST'>
             <h1>Page de connexion</h1>
   
             <p>
               <label>Code Secret </label>
-              <input type="password" name="password">
+              <input type='password' name='password'>
+              <div class='g-recaptcha' data-sitekey=".CLIENT_KEY."></div>
             </p>
             <p>
               <button>Soumettre</button>
@@ -214,12 +253,12 @@ public static function getProjectData($pdo, $project) {
   
       </div>
       <div>
-        <img src="../images/lampadaire.png">
+        <img src='../images/lampadaire.png'>
       </div>
     </div>
   
     </div>
-    ') ;
+    ") ;
     }
 
 ////////////////////////////////////////////////////////////////////////

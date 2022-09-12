@@ -1,1 +1,1 @@
-<center>LASTNAME SURNAME, XX ans</center>
+<center>Reiko Reiko, 18 ans</center>
