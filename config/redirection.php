@@ -19,6 +19,12 @@ $Portfolio = [
     "Contact" => "#bloc6",
 ] ;
 
+$PortfolioRetour = [
+    "Retour" => "index.php"
+] ;
+
+
+
 
 $CheminPageAdminNonConnecte = [
     "Retour" => "../index.php"
@@ -30,7 +36,7 @@ $CheminPageAdminConnecte = [
     "Projects" => "projets.php",
     "Career" => "career.php",
     "Articles" => "articles.php",
-    "Skills" => "skills.php",
+    "Skills" => "skill.php",
     "Setting" => "setting.php",
     "Portfolio" => "../../index.php",
     "Deconnexion" => "../deconnexion.php"

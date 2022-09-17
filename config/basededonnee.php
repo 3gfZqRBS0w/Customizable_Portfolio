@@ -9,8 +9,9 @@ $host = "127.0.0.1:3306";
 
 // PROTECTION BDD7
 
-const SECRET_KEY = "XXXXXX" ;
-const CLIENT_KEY = "XXXXXX" ;
+const SECRET_KEY = "XXXX" ;
+const CLIENT_KEY = "XXXX" ;
+ 
 
 
 ?>

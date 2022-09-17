@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS tbl_projects (
     fk_articleID INT,
     fk_logsID INT,
     title VARCHAR(50) NOT NULL,
-    photoPath VARCHAR(255) NOT NULL,
-    textPath VARCHAR(255) NOT NULL,
+    photoName VARCHAR(255) NOT NULL,
+    fullTextOfProject TEXT NOT NULL,
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID),
     FOREIGN KEY (fk_careerID) REFERENCES tbl_careers (careerID),
     FOREIGN KEY (fk_articleID) REFERENCES tbl_articles(articleID)
@@ -67,7 +67,4 @@ CREATE TABLE IF NOT EXISTS tbl_contacts (
 
 -- Insert default values 
 INSERT INTO tbl_owner(lastName, surName, nameOfWebsite, websiteSubtitble) VALUES ("LASTNAME", "FIRSTNAME", "PORTFOLIO OF LASTNAME FIRSTNAME","SUBTITLE");
-
-
---?R6YPHf!4Fw]LWeiu-gZo3r.j?Ou0Z6SCmT-wlP]iz.h?nCCma(aMKzqio--(cGvWSdPi5of)AOAwSsEaTAEiUMfd7mWDqHf1j[thGhFTt7k7Ikj1RNN9xgXo(6bcxZQ
 

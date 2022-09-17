@@ -2,8 +2,7 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-//yN9ICIM3Q)BAX!IOr61)y3mm*t-]VnWnsoEIwIZ3mrDMgQVy0xFD(0VmUJmdrPn[1HFz.pvMnGi99K-(aDLEk4KPO-I]zG?X)L5acPA5AG!m0gkS5CYmH7eBi!no*MTs
-
+//[0pnBbaXMvpcN4[D!17sZwcD3HnaCcjdFEmqwWA?2y)w(*2WupzDyyRQ]FT680LmVp2plFE5(nD1PI6ENEjgmy0cZ8!ejSyHL*FzJs]U2eH)*t[BKofjMSxDzEn.WpEt
 // Connexion à la bdd 
 try {
     $bdd = new PDO("mysql:host=$host;dbname=$nomBDD;charset=utf8", $nomUtilisateur, $motDePasse) ;
@@ -14,9 +13,10 @@ catch (PDOException $e) {
 
 if (!Utility::bddExists($bdd)) {
 
+
+
     $password = Utility::generatePassword(128);
     $hash = hash('sha256', $password); 
-
     echo("le hash renvoie ".$hash) ;
     $query = file_get_contents("sql/database.sql");
     $stmt = $bdd->prepare($query);

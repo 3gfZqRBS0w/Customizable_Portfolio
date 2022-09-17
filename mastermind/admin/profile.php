@@ -106,10 +106,14 @@
 
             Utility::addlog($bdd,7) ;
 
-            echo("<p class='notification' style='background-color: green;' >Mis a jour du profile.</p>") ;
             file_put_contents("../../" . Utility::SUMMARY_PATH, $_POST["welcomeMessage"], LOCK_EX);
             file_put_contents("../../" . Utility::LIBELLE_PORTRAIT_PATH, $_POST["UnderImage"], LOCK_EX);
-            file_put_contents("../../" . Utility::CLOSING_MESSAGE_PATH, $_POST["EndMessage"], LOCK_EX);
+            file_put_contents("../../" . Utility::CLOSING_MESSAGE_PATH, $_POST["EndMessage"], LOCK_EX); 
+            echo("<p class='notification' style='background-color: green;' >Profile updated</p>") ;
+
+ 
+
+            
         }
         ?>
         <div>

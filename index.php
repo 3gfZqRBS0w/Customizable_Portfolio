@@ -1,10 +1,9 @@
 <?php
-    require_once("config/basededonnee.php") ;
-    require_once("config/redirection.php") ;
-    require_once("config/recuperation.php") ;
-    require_once("librairies/Parsedown.php") ; 
-    require_once("librairies/Utility.php") ;
-//https://codepen.io/iamschulz/pen/ZEXyqPr
+require_once("config/basededonnee.php");
+require_once("config/redirection.php");
+require_once("config/recuperation.php");
+require_once("librairies/Parsedown.php");
+require_once("librairies/Utility.php");
 
 require_once("init.php");
 
@@ -21,37 +20,42 @@ require_once("init.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
+    <style>
 
-    <title>Portfolio | <?=Utility::getOwnerData($bdd, "lastName")?> <?=Utility::getOwnerData($bdd, "surName")?></title>
+
+
+    </style>
+
+
+    <title>Portfolio | <?= Utility::getOwnerData($bdd, "lastName") ?> <?= Utility::getOwnerData($bdd, "surName") ?></title>
 </head>
 
 <body>
     <?php
-    session_start(); 
+    session_start();
     if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
-        echo(Utility::getHeader($PortfolioAdmin, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble"))) ;
+        echo (Utility::getHeader($PortfolioAdmin, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
+    } else {
+        echo (Utility::getHeader($Portfolio, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
     }
-    else {
-        echo(Utility::getHeader($Portfolio, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble"))) ;
-    }
-     
+
     ?>
     <main>
         <div class="bloc" id="bloc1">
             <div id="container1">
                 <div id="blocTexte1">
-                  <?=$Parsedown->text(file_get_contents(Utility::SUMMARY_PATH))?>
+                    <?= $Parsedown->text(file_get_contents(Utility::SUMMARY_PATH)) ?>
                 </div>
                 <div id="monPortrait">
-                    <img src=<?=Utility::PROFILE_PATH?>>
-                    <?=$Parsedown->text(file_get_contents(Utility::LIBELLE_PORTRAIT_PATH))?>
+                    <img src=<?= Utility::PROFILE_PATH ?>>
+                    <?= $Parsedown->text(file_get_contents(Utility::LIBELLE_PORTRAIT_PATH)) ?>
                 </div>
             </div>
         </div>
-        <div style="padding-top:10vh; background: #E8F1F2;" >
-         <hr id="separationCategories">
+        <div style="padding-top:10vh; background: #E8F1F2;">
+            <hr id="separationCategories">
         </div>
-        
+
         <div class="bloc" id="bloc2">
             <div>
                 <h2>My school career</h2>
@@ -95,20 +99,28 @@ require_once("init.php");
 
         <div class="bloc" id="bloc3">
             <div class="categoryTitle">
-                <h2>My latest projects  </h2>
+                <h2><a href="projets.php">My latest projects (click to see all projects)</a></h2>
                 <hr style="width: 80%;">
             </div>
 
             <div class="container1">
                 <a href="google.fr">
-                    <img class="previewProject" id="element" src="images/web.jpg" alt="image inconnu">
+                    <figure class="wp-caption">
+                        <img class="previewProject" id="element" src="images/web.jpg" alt="Image" />
+                        <figcaption class="wp-caption-text">This is a caption text</figcaption>
+                    </figure>
                 </a>
                 <a href="google.fr">
-                    <img class="previewProject" id="element" src="images/web.jpg" alt="image inconnu">
+                    <figure class="wp-caption">
+                        <img class="previewProject" id="element" src="images/web.jpg" alt="Image" />
+                        <figcaption class="wp-caption-text">This is a caption text</figcaption>
+                    </figure>
                 </a>
-
                 <a href="google.fr">
-                    <img class="previewProject" id="element" src="images/web.jpg" alt="image inconnu">
+                    <figure class="wp-caption">
+                        <img class="previewProject" id="element" src="images/web.jpg" alt="Image" />
+                        <figcaption class="wp-caption-text">This is a caption text</figcaption>
+                    </figure>
                 </a>
             </div>
         </div>
@@ -196,30 +208,30 @@ require_once("init.php");
                                 </div>
                             </div>
                         </li>
-                    <ul class="competenceList">
-                        <li>Competence #2
-                            <div class="skillBar">
-                                <div style="width: 50%;" class="intoSkillBar">
-                                    <div style="background-color: yellow;" class="growUp">50 %</div>
+                        <ul class="competenceList">
+                            <li>Competence #2
+                                <div class="skillBar">
+                                    <div style="width: 50%;" class="intoSkillBar">
+                                        <div style="background-color: yellow;" class="growUp">50 %</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        </li>
-                        <li>Competence #3
-                            <div class="skillBar">
-                                <div style="width: 40%;" class="intoSkillBar">
-                                    <div style="background-color: yellow;" class="growUp">40 %</div>
+                            </li>
+                            </li>
+                            <li>Competence #3
+                                <div class="skillBar">
+                                    <div style="width: 40%;" class="intoSkillBar">
+                                        <div style="background-color: yellow;" class="growUp">40 %</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>Competence #4
-                            <div class="skillBar">
-                                <div style="width: 30%;" class="intoSkillBar">
-                                    <div style="background-color: red;" class="growUp">30 %</div>
+                            </li>
+                            <li>Competence #4
+                                <div class="skillBar">
+                                    <div style="width: 30%;" class="intoSkillBar">
+                                        <div style="background-color: red;" class="growUp">30 %</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
+                            </li>
+                        </ul>
                 </div>
 
                 <div class="blocOfSkill">
@@ -264,52 +276,52 @@ require_once("init.php");
             <div class="content">
 
 
-<div class="contact-wrapper animated bounceInUp">
-    <div class="contact-form">
-        <form action="">
-            <p>
-                <label>Nom/Prénom</label>
-                <input type="text" name="fullname">
-            </p>
-            <p>
-                <label>Adresse E-Mail</label>
-                <input text="tefr" type="email" name="email">
-            </p>
-            <p>
-                <label>Numéro de Téléphone</label>
-                <input type="tel" name="phone">
-            </p>
-            <p>
-                <label>Objet</label>
-                <input type="text" name="affair">
-            </p>
-            <p class="block">
-               <label>Message</label> 
-                <textarea name="message" rows="3"></textarea>
-            </p>
-            <p class="block">
-                <button>Soumettre</button>
-            </p>
-        </form>
-    </div>
-    <div class="contact-info">
-        <h2>TITLE</h2>
-        <hr>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        <ul>
-            <li>➔ mail@mail.com</li>
-        </ul>
-    </div>
-</div>
+                <div class="contact-wrapper animated bounceInUp">
+                    <div class="contact-form">
+                        <form action="">
+                            <p>
+                                <label>Nom/Prénom</label>
+                                <input type="text" name="fullname">
+                            </p>
+                            <p>
+                                <label>Adresse E-Mail</label>
+                                <input text="tefr" type="email" name="email">
+                            </p>
+                            <p>
+                                <label>Numéro de Téléphone</label>
+                                <input type="tel" name="phone">
+                            </p>
+                            <p>
+                                <label>Objet</label>
+                                <input type="text" name="affair">
+                            </p>
+                            <p class="block">
+                                <label>Message</label>
+                                <textarea name="message" rows="3"></textarea>
+                            </p>
+                            <p class="block">
+                                <button>Soumettre</button>
+                            </p>
+                        </form>
+                    </div>
+                    <div class="contact-info">
+                        <h2>TITLE</h2>
+                        <hr>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        <ul>
+                            <li>➔ mail@mail.com</li>
+                        </ul>
+                    </div>
+                </div>
 
-</div>
+            </div>
         </div>
-        
+
 
 
 
         <?php
-        echo(Utility::getFooter() ) ; 
+        echo (Utility::getFooter());
         ?>
 
 </body>

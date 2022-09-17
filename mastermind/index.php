@@ -60,6 +60,8 @@ require_once("../init.php");
             else {
               echo ("<p class='notification' style='position: absolute;background-color: red;' >Trop de tentative</p>");
             }
+
+            // PROBLEME ICI A CORRIGER
           }      else {
             echo ("<p class='notification' style='position: absolute;background-color: orange;' >Captcha incorrect.</p>");
           }

@@ -48,54 +48,106 @@ ini_set("display_errors", 1);
 
     <div class="websiteOverview">
         <h3 class="titleOfWebsiteOverview">Add Project</h3>
-
         <?php
 
-        // En cours de développement
+// Pour ajouter un projet a la liste déjà existante 
+if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
 
-        //  if (isset($_POST["submit"])) {
-        if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
+    $projetName = $_POST["nameOfProject"];
+    $tmpName = $_FILES['profilePicture']['tmp_name'];
+    $name = $_FILES['profilePicture']['name'];
+    $size = $_FILES['profilePicture']['size'];
+    $tabExtension = explode('.', $name);
+    $extension = strtolower(end($tabExtension));
+    $error = $_FILES['profilePicture']['error'];
+    $ifProjectExists = count(Utility::getProjectData($bdd, $projetName));
 
-            $nbOfPicture = Utility::getNumberOfItem($bdd, "tbl_projects");
-            $imagePath = "../../project_data/picture/$nbOfPicture.png";
-            $projetName = $_POST["nameOfProject"];
-            $check = getimagesize($_FILES["profilePicture"]["tmp_name"]);
+    $phpFileUploadErrors = array(
+        0 => 'There is no error, the file uploaded with success',
+        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+        3 => 'The uploaded file was only partially uploaded',
+        4 => 'No file was uploaded',
+        6 => 'Missing a temporary folder',
+        7 => 'Failed to write file to disk.',
+        8 => 'A PHP extension stopped the file upload.',
+    );
 
-            if ($check !== false) {
-                if (!file_exists($imagePath)) {
-                    if ($_FILES["profilePicture"]["size"] < 500000) {
-                        if ($_FILES["profilePicture"]["type"] == "image/png") {
-                            if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $imagePath)) {
+    $extensions = ['jpg', 'png', 'jpeg'];
+    if ($ifProjectExists < 1) {
+        if (in_array($extension, $extensions)) {
+            if ($error == 0) {
+                if ($size <= 500000) {
+                    $uniqueName = uniqid('', true);
 
-                                Utility::addNewProject($bdd, $projetName, $imagePath);
-                                echo ("<p class='notification' style='background-color: green;' >Project Added</p>");
-                            }
-                        } else {
-                            echo ("<p class='notification' style='background-color: red;' >png only</p>");
-                        }
-                    } else {
-                        echo ("<p class='notification' style='background-color: red;' >50 MB max.</p>");
-                    }
+                    $fileName = $uniqueName . "." . $extension;
+
+                    move_uploaded_file($tmpName, '../../upload/' . $fileName);
+
+                    Utility::addNewProject($bdd, $projetName, $fileName);
+
+                    echo ("<p class='notification' style='background-color: green;' >Project Added</p>");
                 } else {
-                    echo ("<p class='notification' style='background-color: red;' >Change the name of the file</p>
-
-                            ");
+                    echo ("<p class='notification' style='background-color: red;' >50MB max</p>");
                 }
             } else {
-                echo ("<p class='notification' style='background-color: red;' >format not recognizede</p>");
+                echo ("<p class='notification' style='background-color: red;' >".$phpFileUploadErrors[$error]."</p>");
             }
+        } else {
+            echo ("<p class='notification' style='background-color: red;' >File not recognized</p>");
         }
-        //}
-        ?>
+    } else {
+        echo ("<p class='notification' style='background-color: red;' >The project already exists</p>");
+    }
+}
+/*
+Old version of this part of code 
+
+    $nbOfPicture = Utility::getNumberOfItem($bdd, "tbl_projects");
+    $imagePath = "../../project_data/picture/$nbOfPicture.png";
+    $projetName = $_POST["nameOfProject"];
+    
+    //$check = getimagesize($_FILES["profilePicture"]["tmp_name"]);
 
 
+    if ($check !== false) {
+        if (!file_exists($imagePath)) {
+            if ($_FILES["profilePicture"]["size"] < 50000) {
+                if ($_FILES["profilePicture"]["type"] == "image/png") {
+                    if (move_uploaded_file($_FILES["profilePicture"]["tmp_name"], $imagePath)) {
+
+                        Utility::addNewProject($bdd, $projetName, $imagePath);
+                        echo ("<p class='notification' style='background-color: green;' >Project Added</p>");
+                    }
+                } else {
+                    echo ("<p class='notification' style='background-color: red;' >png only</p>");
+                }
+            } else {
+                echo ("<p class='notification' style='background-color: red;' >50 MB max.</p>");
+            }
+        } else {
+            echo ("<p class='notification' style='background-color: red;' >Change the name of the file</p>
+
+                    ");
+        }
+    } else {
+        echo ("<p class='notification' style='background-color: red;' >format not recognizede</p>");
+    }
+}
+
+*/
+
+
+
+//}
+?>
         <div class="contact-form setting">
             <form action="" method="post" enctype="multipart/form-data">
                 <p>
-                    <label for="nomProjet">Nom du projet</label>
+                    <label for="nomProjet">Project name</label>
                     <input id="projetName" placeholder="Nom du projet" value="" type="text" name="nameOfProject" required>
 
-                    <label>Image du projet</label>
+                    <label>Project image</label>
                     <input type="file" name="profilePicture" required>
                 </p>
 
@@ -118,9 +170,9 @@ ini_set("display_errors", 1);
             <div class='contact-form setting'>
             <form method='post' action=''>
             <p>
-            <label> Write the name of Project :" .$_POST['removeProject'] . " </label>
+            <label> Write the name of Project :" . $_POST['removeProject'] . " </label>
             <input name='nameOfProject' type='text' value='I DONT WANT TO DELETE THE PROJECT' required>
-            <button name='deleteReallyProject'value='".$_POST['removeProject']."' type='submit'>Submit</button>
+            <button name='deleteReallyProject'value='" . $_POST['removeProject'] . "' type='submit'>Submit</button>
             </p>
             
             </form>
@@ -128,17 +180,19 @@ ini_set("display_errors", 1);
             </div>
     
         ");
-        } 
-        else {
+        } else {
 
             if (isset($_POST['deleteReallyProject'])) {
                 if (isset($_POST['nameOfProject']) && isset($_POST["deleteReallyProject"])) {
-                    if ( $_POST["nameOfProject"] == $_POST["deleteReallyProject"] ) {
 
-                        echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
-                        Utility::deleteProjects($bdd,$_POST["deleteReallyProject"]) ; 
-                    }
-                    else {
+                    // If the input of user is correct, delete really project
+                    if ($_POST["nameOfProject"] == $_POST["deleteReallyProject"]) {
+                        if (Utility::deleteProjects($bdd, $_POST["deleteReallyProject"])) {
+                            echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
+                        } else {
+                            echo ("<p class='notification' style='background-color: red;' >Permission failure</p>");
+                        }
+                    } else {
                         echo ("<p class='notification' style='background-color: green;' >Project not deleted</p>");
                     }
                 }
@@ -156,20 +210,25 @@ ini_set("display_errors", 1);
                     if (isset($_POST['nameOfProject']) && isset($_POST['ProjectContent'])) {
                         Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
                         echo ("<p class='notification' style='background-color: green;' >Project updating.</p>");
-                        
                     }
                 }
                 $listOfProjects =  Utility::getAllProjectsNames($bdd);
 
-                foreach ($listOfProjects as $projet) {
+                if (count($listOfProjects) > 0) {
+                    foreach ($listOfProjects as $projet) {
+                        echo ("
+                <form action='' method='POST'>
+                 <div class='projetPreview'>
+                  <p>" . $projet["title"] . "</p>
+                  <button name='chooseProject'value='" . $projet["title"] . "' type='submit'>Edit</button>
+                 </div> 
+                </form>
+                ");
+                    }
+                } else {
                     echo ("
-            <form action='' method='POST'>
-             <div class='projetPreview'>
-              <p>" . $projet["title"] . "</p>
-              <button name='chooseProject'value='" . $projet["title"] . "' type='submit'>Edit</button>
-             </div> 
-            </form>
-            ");
+                    <p>You have not added any projects to the website</p>
+                    ");
                 }
             } else {
 
@@ -177,12 +236,12 @@ ini_set("display_errors", 1);
 
                 echo ("
 
-        <h3 class='titleOfWebsiteOverview'>Edit " . $dataOfProjects["title"] . "</h3>
+        <h3 class='titleOfWebsiteOverview'>Edit " . $dataOfProjects[0]["title"] . "</h3>
         <div class='contact-form setting'>
         
         <form action='' method='post'>
         <label>Project Title</label>
-        <input name='nameOfProject' type='text' value='" . $dataOfProjects["title"] . "' required>
+        <input name='nameOfProject' type='text' value='" . $dataOfProjects[0]["title"] . "' required>
 
            
         
@@ -193,7 +252,7 @@ ini_set("display_errors", 1);
         <div class='container'>
 
             <div class='plain'>
-                <textarea name='ProjectContent' data-el='input0'>" . $dataOfProjects["textPath"] . "</textarea>
+                <textarea name='ProjectContent' data-el='input0'>" . $dataOfProjects[0]["fullTextOfProject"] . "</textarea>
             </div>
             <div class='text'>
                 <div data-el='output0'></div>
@@ -204,28 +263,20 @@ ini_set("display_errors", 1);
         </p>
 
         <p>
-            <button style='margin-bottom: 2vh'name='saveProject' value='" . $dataOfProjects["title"] . "' type='submit'>Save</button>
+            <button style='margin-bottom: 2vh'name='saveProject' value='" . $dataOfProjects[0]["title"] . "' type='submit'>Save</button>
             <button value='submit' type='submit'>Cancel</button>
             </p>
         </form>
             <form action='' method='POST'>
 
-            <button style='margin-bottom: 2vh' name='removeProject' value='" . $dataOfProjects["title"] . "' type='submit'>Delete</button>
+            <button style='margin-bottom: 2vh' name='removeProject' value='" . $dataOfProjects[0]["title"] . "' type='submit'>Delete</button>
 
             </form>
         
     ");
             }
         }
-
-
-
-
-        ?>
-
-
-
-
+?>
 
     </div>
 

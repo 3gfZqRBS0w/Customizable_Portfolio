@@ -1,5 +1,5 @@
 <?php
-
+//1yu?wG7M-R[FOw)X04jmMJExHL1H(xbLVv7h5vK8s?eagryen5LKWkZ-zZlqDjh0kYi*j81t29ANYUpUKOn6)q9rFBIGcC7?[Ga7!e0O)ksvI!t1]iT[08m3kueh4*Py
 
 class Utility {
 
@@ -44,25 +44,37 @@ class Utility {
 
 // for update or insert method projects
 
-public static function addNewProject($pdo,$projectName, $picturePath) {
-  $query = "INSERT INTO tbl_projects(title, photoPath, textPath) VALUES (".$pdo->quote($projectName).", '.$picturePath.', 'Hello World : D')";
+public static function addNewProject($pdo,$projectName, $pictureName) {
+  $query = "INSERT INTO tbl_projects(title, photoName, fullTextOfProject) VALUES (".$pdo->quote($projectName).", ".$pdo->quote($pictureName).", 'Hello World : D')";
   $stmt = $pdo->prepare($query) ;
   $stmt->execute();
 
 }
 
 public static function editProjects($pdo,$projectTitle,$projectText) {
-  $query = "UPDATE tbl_projects SET title = ".$pdo->quote($projectTitle).", textPath = ".$pdo->quote($projectText)." WHERE title = ".$pdo->quote($projectTitle).";" ;
-  echo($query); 
+  $query = "UPDATE tbl_projects SET title = ".$pdo->quote($projectTitle).", fullTextOfProject = ".$pdo->quote($projectText)." WHERE title = ".$pdo->quote($projectTitle).";" ;
   $stmt = $pdo->prepare($query) ;
   $stmt->execute();
 
 }
 
 public static function deleteProjects($pdo,$projectName) {
+
+$imgName = self::getProjectData($pdo, $projectName)[0]["photoName"] ;
+
+if (unlink("../../upload/$imgName"))  {
   $query ="DELETE FROM tbl_projects WHERE title = ".$pdo->quote($projectName)." ; ";
   $stmt = $pdo->prepare($query) ;
   $stmt->execute();
+  return true; 
+}
+else {
+  return false; 
+}
+
+  
+
+
 
 }
 
@@ -119,11 +131,11 @@ public static function deleteProjects($pdo,$projectName) {
 
 
  
-
+//DELETE FROM tbl_logs WHERE actionid_fk=2 AND horodatage BETWEEN '2022-09-12 18:16:14' AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND addr_ip='127.0.0.1';
 
   public static function potentiallyBruteForceAttack($pdo, $ip) {
 
-    $date = $pdo->quote(Utility::lastSuccessfulConnection($pdo, "127.0.0.1")) ;
+    $date = $pdo->quote(Utility::lastSuccessfulConnection($pdo, $_SERVER['REMOTE_ADDR'])) ;
     $query = "SELECT COUNT(*) FROM tbl_logs
     WHERE actionid_fk=2 AND horodatage BETWEEN $date AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND addr_ip='$ip';" ;
 
@@ -182,16 +194,25 @@ public static function getAllProjectsNames($pdo) {
 
 public static function getProjectData($pdo, $project) {
 
-  $stmt = $pdo->prepare("SELECT title, photoPath, textPath FROM tbl_projects WHERE title=".$pdo->quote($project)." ;");
+  $stmt = $pdo->prepare("SELECT title, photoName, fullTextOfProject FROM tbl_projects WHERE title=".$pdo->quote($project)." ;");
   $stmt->execute();
-  $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+  $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  return $resultat;
+}
+
+public static function getAllProjectData($pdo) {
+
+  $stmt = $pdo->prepare("SELECT title, photoName, fullTextOfProject FROM tbl_projects;");
+  $stmt->execute();
+  $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   return $resultat;
 }
 
   ////////////////////////////////////////////////////////
 
-  // RECURRING HTML ////////////////////////////////////
+  // RECURRING HTML (PATTERN) ////////////////////////////////////
     
     public static function getFooter() {
         return "<div>
@@ -219,6 +240,17 @@ public static function getProjectData($pdo, $project) {
       </nav>" ; 
     }
 
+    static function displayPreviewProject($name, $imgPath ) {
+      echo("
+      <a href='projet.php?titleOfProject=$name'>
+                    <figure class='wp-caption'>
+                        <img style='margin-bottom: 2vh;' class='previewProject' id='element' src='".$imgPath."' alt='Image'/>
+                        <figcaption class='wp-caption-text'>".$name."</figcaption>
+                    </figure>
+                </a>
+      ") ;
+    }
+
     static function getInstallMessages($pass) {
 
     return (" <h1>Le site a correctement été installé sur le serveur</h1>
@@ -227,6 +259,12 @@ public static function getProjectData($pdo, $project) {
         ") ; 
 
      
+    }
+
+    static function getProjectPage($listOfCategory,$projectTitle, $projectText, $imgPath) {
+      return (Utility::getHeader($listOfCategory, $projectTitle, "")."
+
+      "); 
     }
 
     static function getLoginPage() {
@@ -238,11 +276,8 @@ public static function getProjectData($pdo, $project) {
         <div class='contact-form'>
   
           <form action='' method='POST'>
-            <h1>Page de connexion</h1>
-  
-            <p>
               <label>Code Secret </label>
-              <input type='password' name='password'>
+              <input style='margin-bottom: 2.5vh;' type='password' name='password'>
               <div class='g-recaptcha' data-sitekey=".CLIENT_KEY."></div>
             </p>
             <p>
