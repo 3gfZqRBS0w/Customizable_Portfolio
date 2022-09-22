@@ -20,22 +20,29 @@
     <?php
 
 
-$title = $_GET["titleOfProject"];
-$projetData = Utility::getProjectData($bdd, $title) ;
+    if ( isset($_POST["titleOfProjet"]) ) {
+        $title = $_POST["titleOfProjet"];
 
-echo(Utility::getHeader($PortfolioRetour, $title, "")) ;
+        $projetData = Utility::getProjectData($bdd, $title) ;
+        
+        echo(Utility::getHeader($PortfolioRetour, $projetData[0]["title"], "")) ;
+
+
+        echo(" <div class='bloc' id='bloc1'>
+        <div id='container1'>
+            <div id='blocTexte1'>
+                ".$Parsedown->text($projetData[0]["fullTextOfProject"])."
+            </div>
+        </div>") ; 
+    }
+
 
 
 
 
     
     ?>
- <div class="bloc" id="bloc1">
-            <div id="container1">
-                <div id="blocTexte1">
-                    <?= $Parsedown->text($projetData[0]["fullTextOfProject"]) ?>
-                </div>
-            </div>
+
 </div>
 </body>
 </html>

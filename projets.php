@@ -31,7 +31,7 @@
       $i = 0 ; 
 
       if ( count($allProjects) > 0) {
-         foreach ($allProjects  as $value) {
+         foreach ($allProjects as $value) {
             if ($i == 0) {
                echo("<div style='padding-top: 2vh;' class='container1'>") ;
                Utility::displayPreviewProject($value["title"],"upload/".$value["photoName"]) ;

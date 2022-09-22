@@ -241,13 +241,17 @@ public static function getAllProjectData($pdo) {
     }
 
     static function displayPreviewProject($name, $imgPath ) {
+
       echo("
-      <a href='projet.php?titleOfProject=$name'>
+      <form action='projet.php' method='POST'>
+      <input style='display: none;' name='titleOfProjet' value='$name'></input>
+      <a onclick='this.parentNode.submit()' >
                     <figure class='wp-caption'>
-                        <img style='margin-bottom: 2vh;' class='previewProject' id='element' src='".$imgPath."' alt='Image'/>
+                        <img  style='margin-bottom: 2vh;' class='previewProject' id='element' src='".$imgPath."' alt='Image'/>
                         <figcaption class='wp-caption-text'>".$name."</figcaption>
                     </figure>
                 </a>
+              </form>
       ") ;
     }
 
@@ -280,6 +284,7 @@ public static function getAllProjectData($pdo) {
               <input style='margin-bottom: 2.5vh;' type='password' name='password'>
               <div class='g-recaptcha' data-sitekey=".CLIENT_KEY."></div>
             </p>
+            <a href='resetPassword.php'>Forgot your password?</a>
             <p>
               <button>Soumettre</button>
             </p>
@@ -294,6 +299,35 @@ public static function getAllProjectData($pdo) {
   
     </div>
     ") ;
+    }
+
+    static function getResetPasswordPage() {
+      return ("
+      <div class='blocv2'>
+  
+        <div class='formConnection'>
+    
+          <div class='contact-form'>
+    
+            <form action='' method='POST'>
+                <label>Adresse email </label>
+                <input style='margin-bottom: 2.5vh;' type='email' name='attempt_email' required>
+                <div class='g-recaptcha' data-sitekey=".CLIENT_KEY."></div>
+              </p>
+              <p>
+                <button>Soumettre</button>
+              </p>
+            </form>password
+          </div>
+    
+        </div>
+        <div>
+          <img src='../images/lampadaire.png'>
+        </div>
+      </div>
+    
+      </div>
+      ") ;
     }
 
 ////////////////////////////////////////////////////////////////////////

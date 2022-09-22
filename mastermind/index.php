@@ -57,24 +57,17 @@ require_once("../init.php");
               Utility::addlog($bdd, 2);
             }
           }
-            else {
-              echo ("<p class='notification' style='position: absolute;background-color: red;' >Trop de tentative</p>");
+          else {
+            echo ("<p class='notification' style='position: absolute;background-color: red;' >Trop de tentative</p>");
             }
-
-            // PROBLEME ICI A CORRIGER
-          }      else {
+          }
+          else {
             echo ("<p class='notification' style='position: absolute;background-color: orange;' >Captcha incorrect.</p>");
           }
         } 
-        else {
-          echo ("<p class='notification' style='position: absolute;background-color: orange;' >Captcha incorrect.</p>");
-        }
       }
     }
     echo (Utility::getLoginPage()); 
-
-
-
   ?>
 
 </body>
