@@ -9,6 +9,11 @@ $config["db"] = [
     "host" => "127.0.0.1"
 ];
 
+$config["stockage"] = [
+    "maxProfileSize" => 500000,
+
+];
+
 
 // captcha configuration
 
@@ -26,7 +31,9 @@ $config["recuperation"] = [
 
 
 
-// translations
+/*
+Full translation in progress 
+*/
 $config["translations"]["en"] = [
     "lastName" => "Last Name",
     "firstName" => "First Name",
@@ -40,6 +47,23 @@ $config["translations"]["en"] = [
     "pdoErrors" => [
         1045 => "<h1>Wrong username or password.</h1><p>To configure the access to the database go to config.php where the panel is located.</p>",
         1049 => "<h1>The database does not exist.</h1><p>It must be created for the system to fill it.</p>"
+    ],
+    "phpFileUploadErrors" => [
+        0 => 'There is no error, the file uploaded with success',
+        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
+        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+        3 => 'The uploaded file was only partially uploaded',
+        4 => 'No file was uploaded',
+        6 => 'Missing a temporary folder',
+        7 => 'Failed to write file to disk.',
+        8 => 'A PHP extension stopped the file upload.',
+    ],
+
+    "notification" => [
+        "projectAdded" => "Ajout d'un project",
+        "projectAlreadyExists" => "The project already exists",
+        "limitFile" => "50MB max",
+        "fileNotRecognized" => "File not recognized",
     ],
 
     "mail" => [
@@ -66,7 +90,8 @@ $config["translations"]["en"] = [
         8 => "Add a project",
         9 => "Editing a project",
         10 => "Updated project",
-        11 => "Project deleted"
+        11 => "Project deleted",
+        12 => "Mot de passe reset"
     ],
     "navBar" => [
         "return" => "return",
@@ -139,6 +164,24 @@ $config["translations"]["fr"] = [
         1049 => "<h1>La base de donnée n'existe pas</h1><p>Il faut la crée pour que le site la remplisse</p>"
     ],
 
+    "phpFileUploadErrors" => [
+        0 => 'Le fichier a été télécharger avec succès',
+        1 => 'Le fichier est trop lourd (php.ini)',
+        2 => 'Le fichier est trop lourd (html)',
+        3 => 'Le fichier téléchargé na été que partiellement téléchargé',
+        4 => 'Aucun fichier na été téléchargé',
+        6 => 'Il manque un dossier temporaire',
+        7 => 'Échec de lécriture du fichier sur le disque.',
+        8 => 'Une extension PHP a arrêté le téléchargement du fichier.',
+    ],
+
+    "notification" => [
+        "projectAdded" => "Ajout d'un projet",
+        "projectAlreadyExists" => "Le projet existe déjà ",
+        "limitFile" => "50MB max",
+        "fileNotRecognized" => "Fichier n'est pas reconnue",
+    ],
+
     "mail" => [
         "setup" => [
             "subject" => "L'installation de votre Portfolio est un succès",
@@ -156,7 +199,8 @@ $config["translations"]["fr"] = [
         8 => "Ajout d'un nouveau projet",
         9 => "Edition d'un projet",
         10 => "Mise a jour d'un projet",
-        11 => "Un projet a été supprimer"
+        11 => "Un projet a été supprimer",
+        12 => "Mot de passe reset"
     ],
     "tab_logs" => [
         "timestamp" => "Horodatage",
@@ -224,12 +268,12 @@ $config["translations"]["fr"] = [
 
 /*
 
-
+for the German language ( example )
 $config["translations"]["de"] = [
     to be completed with same keys
 ];
 
-or
+or custom translations
 
 $config["translations"]["custom"] = [
     to be completed with same keys
@@ -242,11 +286,15 @@ $config["translations"]["selected"] = $config["translations"]["en"];
 
 $config["redirection"]["default"] = [
     $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",
-    $config["translations"]["selected"]["navBar"]["myprojects"] => "#bloc3",
-    $config["translations"]["selected"]["navBar"]["skills"]  => "#bloc4",
-    $config["translations"]["selected"]["navBar"]["article"]  => "#bloc5",
     $config["translations"]["selected"]["navBar"]["contact"] => "#bloc6"
 ];
+
+
+
+
+
+
+
 
 $config["redirection"]["admin"] = [
     $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",

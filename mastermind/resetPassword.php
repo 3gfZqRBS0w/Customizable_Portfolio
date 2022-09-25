@@ -38,26 +38,25 @@ require_once("../init.php");
       
         $attemptEmail = $_POST['attempt_email'];
         if ($responseKeys["success"]) {
-        if ($attemptEmail == $mailRecuperation) {
-            $newPassword = Utility::generatePassword(128);
-            /*
+            if ($attemptEmail == $config["recuperation"]["email"]) {
+            $newPassword = Utility::generatePassword(rand(16,255));
+         
             if (!mail($mailRecuperation, "Your new customizable panel code", "Your new code is $newPassword")) {
-                echo ("<p class='notification' style='position: absolute;background-color: green;'>Error</p>"); 
-            }
-            */ 
+                echo ("<p class='notification' style='position: absolute;background-color: green;'>Echec de l'envoie</p>"); 
+            }     
         }
-    }
-        else {
-            echo ("<p class='notification' style='position: absolute;background-color: green;'>Captcha incorrect</p>");
-        }
-
-    }
-        
         echo ("<p class='notification' style='position: absolute;background-color: green;'>if email is good, you will receive an email shortly</p>");
+    }
+    else {
+        echo ("<p class='notification' style='position: absolute;background-color: orange;'>Captcha incorrect</p>");
+    }
+}
+        
+        
 
     }
     ?>
-    <?=Utility::getResetPasswordPage($config["captcha"]["CLIENT_KEY"], $config["translation"]["selected"])?>
+    <?=Utility::getResetPasswordPage($config["captcha"]["CLIENT_KEY"], $config["translations"]["selected"])?>
     
 </body>
 </html>
@@ -65,3 +64,4 @@ require_once("../init.php");
 
 <script src='https://www.google.com/recaptcha/api.js' async defer></script>
 <script src="../script/app.js"></script>
+

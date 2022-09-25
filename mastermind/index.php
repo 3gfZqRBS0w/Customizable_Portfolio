@@ -4,7 +4,7 @@ session_start();
 
 require_once("../librairies/Utility.php");
 require_once("../librairies/Parsedown.php");
-require_once("../config.php") ;
+require_once("../config.php");
 require_once("../init.php");
 
 ?>
@@ -27,9 +27,11 @@ require_once("../init.php");
   <?php
   if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
     header('Location: admin/dashboard.php');
-  } else {
+  } 
+  else {
     echo (Utility::getHeader($config["redirection"]["return2"], $config["translations"]["selected"]["admin"]["adminArea"],  $config["translations"]["selected"]["admin"]["loginSubtitle"]));
-    if (isset($_POST['g-recaptcha-response'])) {
+    if (isset($_POST['g-recaptcha-response'])) 
+    {
 
       $secretKey = $config["captcha"]["SECRET_KEY"];
 
@@ -49,23 +51,27 @@ require_once("../init.php");
               $_SESSION['codeSecret'] = $_POST["password"];
               Utility::addlog($bdd, 3);
               header("Refresh: 5;url=index.php");
-            }
+            } 
             else {
               echo ("<p class='notification' style='position: absolute;background-color: red;' >Mot de passe incorrect.</p>");
               Utility::addlog($bdd, 2);
             }
-          }
-          else {
+          } else {
             echo ("<p class='notification' style='position: absolute;background-color: red;' >Trop de tentative</p>");
-            }
-          }
-          else {
-            echo ("<p class='notification' style='position: absolute;background-color: orange;' >Captcha incorrect.</p>");
           }
         } 
+        else {
+          echo ("<p class='notification' style='position: absolute;background-color: orange;' >Captcha incorrect.</p>");
+        }
+      }
+      else {
+        echo ("<p class='notification' style='position: absolute;background-color: orange;' >Captcha incorrect.</p>");
       }
     }
-    echo(Utility::getLoginPage($config["captcha"]["CLIENT_KEY"], $config["translations"]["selected"])); 
+  }
+  
+  
+  echo (Utility::getLoginPage($config["captcha"]["CLIENT_KEY"], $config["translations"]["selected"]));
   ?>
 
 </body>

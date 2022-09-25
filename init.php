@@ -20,7 +20,7 @@ catch (PDOException $e) {
 
 if (!Utility::bddExists($bdd)) {
 
-    $password = Utility::generatePassword(128);
+    $password = Utility::generatePassword(rand(16,255));
     $hash = hash('sha256', $password); 
 
 
@@ -48,8 +48,40 @@ if (!Utility::bddExists($bdd)) {
 
     die(Utility::getInstallMessages($password)) ;
 }
+else {
+    if (!Utility::tableIsEmpty($bdd, "tbl_projects")) {
+        $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["myprojects"]] = "#bloc3" ; 
+    }
+
+    if (!Utility::tableIsEmpty($bdd, "tbl_articles")) {
+        $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["article"]] = "#bloc5" ; 
+    }
+
+    if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
+        $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["skills"]] = "#bloc4";
+    }
+}
 
 $Parsedown = new Parsedown();
+
+if ( isset($_REQUEST["lang"]) ) {
+    if (is_array($config["translations"][$_REQUEST["lang"]])) {
+        $lang = $_REQUEST["lang"] ;
+        $config["translations"]["selected"] = $config["translations"][$lang] ;
+        setcookie("lang", $lang, time() + (86400 * 30), "/");
+    }
+}
+else {
+    if (isset($_COOKIE["lang"])) {
+        if (is_array($config["translations"][$_COOKIE["lang"]])) {
+            $lang = $_COOKIE["lang"] ; 
+            $config["translations"]["selected"] = $config["translations"][$lang] ;
+        }
+    }
+}
+
+
+
 ?>
 
 <div class="loader">

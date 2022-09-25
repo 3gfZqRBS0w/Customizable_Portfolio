@@ -23,7 +23,7 @@ ini_set("display_errors", 1);
 
     if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
         header('Location: ../index.php');
-        //die("<h1><b>Vous n'êtes pas connecté !</b></h1>") ;
+        exit(); 
 
     }
 
@@ -59,23 +59,11 @@ if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
     $extension = strtolower(end($tabExtension));
     $error = $_FILES['profilePicture']['error'];
     $ifProjectExists = count(Utility::getProjectData($bdd, $projetName));
-
-    $phpFileUploadErrors = array(
-        0 => 'There is no error, the file uploaded with success',
-        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
-        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
-        3 => 'The uploaded file was only partially uploaded',
-        4 => 'No file was uploaded',
-        6 => 'Missing a temporary folder',
-        7 => 'Failed to write file to disk.',
-        8 => 'A PHP extension stopped the file upload.',
-    );
-
     $extensions = ['jpg', 'png', 'jpeg'];
     if ($ifProjectExists < 1) {
         if (in_array($extension, $extensions)) {
             if ($error == 0) {
-                if ($size <= 500000) {
+                if ($size <= $config["stockage"]["maxProfileSize"]) {
                     $uniqueName = uniqid('', true);
 
                     $fileName = $uniqueName . "." . $extension;
@@ -84,18 +72,18 @@ if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
 
                     Utility::addNewProject($bdd, $projetName, $fileName);
 
-                    echo ("<p class='notification' style='background-color: green;' >Project Added</p>");
+                    echo ("<p class='notification' style='background-color: green;' >".$config["translations"]["selected"]["notification"]["projectAdded"]."</p>");
                 } else {
-                    echo ("<p class='notification' style='background-color: red;' >50MB max</p>");
+                    echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["notification"]["limitFile"]."</p>");
                 }
             } else {
-                echo ("<p class='notification' style='background-color: red;' >".$phpFileUploadErrors[$error]."</p>");
+                echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["phpFileUploadErrors"][$error]."</p>");
             }
         } else {
-            echo ("<p class='notification' style='background-color: red;' >File not recognized</p>");
+            echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["notification"]["fileNotRecognized"]."</p>");
         }
     } else {
-        echo ("<p class='notification' style='background-color: red;' >The project already exists</p>");
+        echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["notification"]["projectAlreadyExists"]."</p>");
     }
 }
 /*

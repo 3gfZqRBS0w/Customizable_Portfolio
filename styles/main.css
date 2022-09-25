@@ -30,12 +30,58 @@ a {
 
 hr {
     border: 1px solid;
-    width: 100%;
+    width: 100%; 
     height: 1px;
     background: #333;
+}
+
+
+
+@media(max-width: 600px) {
+    #titre {
+        margin-bottom: 10vw;
+    }
+    #subtitle {
+        display: none;
+    }
+
+    #blocTexte1 {
+
+        /*min-width: 500px;*/
+        padding-bottom: 5vh;
+        margin-left: 5vw;
+        margin-right: 5vw; 
+    }
 
 }
 
+@media(min-width: 600px) {
+    #subtitle {
+        display: block;
+    }
+
+    #blocTexte1 {
+        width: 50%;
+        /*min-width: 500px;*/
+        padding-bottom: 5vh;
+    }
+
+
+
+}
+
+
+@media(min-width: 1150px) {
+    #subtitle {
+        display: block;
+    }
+
+    #blocTexte1 {
+        width: 50%;
+        /*min-width: 500px;*/
+        padding-bottom: 5vh;
+    }
+}
 
 .navPortfolio {
 
@@ -76,27 +122,29 @@ hr {
 
 .veilleTechnologique {
     display: flex;
-    justify-content: center;
-    min-width: 100px;
-     
+    flex-wrap: wrap;
+    justify-content: space-around;
     
-    
-     
 }
 
 .articleVeille {
     background: white;
     border: white 0px solid;
     border: 2px solid;
+    transition: transform .2s;
+    min-width: 300px;
+    width: 80%;
     border-left: black 15px solid; 
     margin-left: 10vw ;
     margin-right: 10vw ;
-    padding: 2vh; 
+    padding: 2vh;
+    margin-bottom: 2vh;
 
 }
 
+
+
 .articleVeille:hover {
-    transition-delay: 1s;
     transform: scale(1.2);
 }
 
@@ -116,8 +164,6 @@ hr {
 }
 
 
-
-
 a:hover {
     text-decoration: underline;
     transition-delay: 0.25s;
@@ -125,19 +171,6 @@ a:hover {
 
 
 
-/* Contenue de la page */
-
-#bloc1 {}
-
-#bloc2 {
-
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#bloc3 {}
-
-#bloc4 {}
 
 .bloc {
     background-color: #E8F1F2;
@@ -145,6 +178,17 @@ a:hover {
     justify-content: space-around;
    padding-top: 8vh;
 }
+
+#bloc1 {}
+
+#bloc2 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#bloc3 {}
+
+#bloc4 {}
 
 
 #element {
@@ -189,11 +233,7 @@ a:hover {
     justify-content: space-around;
 }
 
-#blocTexte1 {
-    width: 50%;
-    /*min-width: 500px;*/
-    padding-bottom: 5vh;
-}
+
 
 .previewProject {
     min-width: 400px;
@@ -343,7 +383,7 @@ hr.blocOfSkills {
     text-align: center;
 }
 
-/*en js faire en sorte que quand on arrive ici l'anim se lance, tu m'enverras ton projet à la fin je te l'ajouterais*/
+
 .growUp {
     animation: growUp 1s linear forwards;
     background-color: rgb(129, 255, 127);
@@ -374,16 +414,12 @@ hr.blocOfSkills {
     flex-wrap: wrap;
     flex-direction: row;
     align-items: top;
-    /* tu align center ce qui n'est pas très jolie, un align top rend mieux */
     justify-content: center;
 }
 
 .blocOfSkill {
-    /* padding: 100px;  NONNNNNNNN pas de padding fixe c pas bon pour le responsive on est en display flex alors on fixe des marges en % à nos éléments, tu as 4 élémments donc 100/4 = 25 chque élément doit faire 25% mais on veut des marges donc chaque éléments vaudra 20% il nous reste 100 - 20*4 = 20% à dédier au marge, il y a des marges à gauche et a droite de chaque élément dont on fixe à 2.5% car 2.5*2 = 5 et 5*4 = 20 (ce dont il nous reste d'espaces pour fixer nos marges) */
     width: 20%;
     margin: 2.5%;
-
-    /*a partir de la on fixe une min-width (taille minimum) comme ca si on resert trop l'ecran le block ne fera plus 20% car illisible*/
     min-width: 300px;
 }
 
@@ -577,6 +613,35 @@ text-align: left;
         opacity: 1;
     
     }
+
+    .js {
+        display: flex;
+        position: absolute;
+        justify-content: flex-end;
+        z-index: 1000;
+    }
+    select {
+          background-color: white;
+          border: 1px solid rgb(197, 197, 197);
+          border-radius: 5px;
+          box-sizing: border-box;
+          color: #3E3D40;
+          display: block;
+          font-family: SourceSansPro, Helvetica, Arial, sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          height: 40px;  
+          min-width: 80px;
+          padding: 0 20px 0 16px;
+          position: absolute;
+          outline: none;
+        }
+
+      
+
+      
+
+    
 
 
 
