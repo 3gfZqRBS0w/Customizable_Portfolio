@@ -1,7 +1,5 @@
 <?php
-    require_once("config/basededonnee.php") ;
-    require_once("config/redirection.php") ;
-    require_once("config/recuperation.php") ;
+    require_once("config.php") ; 
     require_once("librairies/Parsedown.php") ; 
     require_once("librairies/Utility.php") ;
     require_once("init.php");
@@ -25,7 +23,7 @@
 
         $projetData = Utility::getProjectData($bdd, $title) ;
         
-        echo(Utility::getHeader($PortfolioRetour, $projetData[0]["title"], "")) ;
+        echo(Utility::getHeader($config["redirection"]["return"], $projetData[0]["title"], "")) ;
 
 
         echo(" <div class='bloc' id='bloc1'>

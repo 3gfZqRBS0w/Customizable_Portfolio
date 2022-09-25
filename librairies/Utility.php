@@ -5,10 +5,10 @@ class Utility {
 
 // PATH LIST ////////////////////////////////////
 
-  const PROFILE_PATH = "images/portrait.png" ;
-  const SUMMARY_PATH = "markdown/summary.md" ;
-  const LIBELLE_PORTRAIT_PATH = "markdown/libellePortrait.md" ;
-  const CLOSING_MESSAGE_PATH = "markdown/closing_message.md" ;
+  const PROFILE_PATH = "presentation/portrait.png" ;
+  const SUMMARY_PATH = "presentation/summary.md" ;
+  const LIBELLE_PORTRAIT_PATH = "presentation/libellePortrait.md" ;
+  const CLOSING_MESSAGE_PATH = "presentation/closing_message.md" ;
 
 /////////////////////////////////////////////////
 
@@ -26,7 +26,7 @@ class Utility {
   }
 
   public static function getlogs($pdo) {
-    $query = "SELECT horodatage, addr_ip, user_agent,titre_action FROM tbl_logs INNER JOIN tbl_actions ON id_action = actionid_fk ORDER BY horodatage DESC ;" ;
+    $query = "SELECT horodatage, addr_ip, user_agent, actionid_fk FROM tbl_logs ORDER BY horodatage DESC ;" ;
     $stmt = $pdo->prepare($query) ;
     $stmt->execute();
     $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -42,7 +42,6 @@ class Utility {
 //// INSERT, UPDATE AND DELETE QUERY METHODS //////////////////////////////////
 
 
-// for update or insert method projects
 
 public static function addNewProject($pdo,$projectName, $pictureName) {
   $query = "INSERT INTO tbl_projects(title, photoName, fullTextOfProject) VALUES (".$pdo->quote($projectName).", ".$pdo->quote($pictureName).", 'Hello World : D')";
@@ -72,10 +71,6 @@ else {
   return false; 
 }
 
-  
-
-
-
 }
 
 
@@ -83,6 +78,25 @@ else {
 
 
 //////////////////////////////////////////////////////
+
+
+
+
+
+  public static function ExtractHTMLFromMarkDownFile($pdo, $champ) {
+
+    $Parsedown = new Parsedown();
+    
+    $stmt = $pdo->prepare("SELECT `$champ` FROM `tbl_owner` WHERE 1;");
+    $stmt->execute();
+    $path = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return ($Parsedown->text(file_get_contents($path[$champ]))) ; 
+
+  }
+
+
+  // INTERROGATION METHODS ////////////////////////////////////
 
 
 
@@ -102,21 +116,6 @@ else {
   }
 
 
-  public static function ExtractHTMLFromMarkDownFile($pdo, $champ) {
-
-    $Parsedown = new Parsedown();
-    
-    $stmt = $pdo->prepare("SELECT `$champ` FROM `tbl_owner` WHERE 1;");
-    $stmt->execute();
-    $path = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return ($Parsedown->text(file_get_contents($path[$champ]))) ; 
-
-  }
-
-
-  // INTERROGATION METHODS ////////////////////////////////////
-
 
   public static function lastSuccessfulConnection($pdo, $ip) {
 
@@ -129,9 +128,6 @@ else {
 
   }
 
-
- 
-//DELETE FROM tbl_logs WHERE actionid_fk=2 AND horodatage BETWEEN '2022-09-12 18:16:14' AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND addr_ip='127.0.0.1';
 
   public static function potentiallyBruteForceAttack($pdo, $ip) {
 
@@ -182,7 +178,6 @@ public static function setOwnerData($pdo, $lastName, $firstName, $nameOfWebsite,
 
 }
 
-// for project's interrogations 
 
 public static function getAllProjectsNames($pdo) {
   $stmt = $pdo->prepare("SELECT title FROM tbl_projects ;");
@@ -267,33 +262,28 @@ public static function getAllProjectData($pdo) {
 
     static function getProjectPage($listOfCategory,$projectTitle, $projectText, $imgPath) {
       return (Utility::getHeader($listOfCategory, $projectTitle, "")."
-
       "); 
     }
 
-    static function getLoginPage() {
+    static function getLoginPage($clientKey, $translation) {
       return ("
     <div class='blocv2'>
-
       <div class='formConnection'>
-  
         <div class='contact-form'>
-  
           <form action='' method='POST'>
-              <label>Code Secret </label>
+              <label>".$translation["admin"]["secretCode"]." </label>
               <input style='margin-bottom: 2.5vh;' type='password' name='password'>
-              <div class='g-recaptcha' data-sitekey=".CLIENT_KEY."></div>
+              <div class='g-recaptcha' data-sitekey=$clientKey></div>
             </p>
-            <a href='resetPassword.php'>Forgot your password?</a>
+            <a href='resetPassword.php'>".$translation["admin"]["forgotPassword"]."</a>
             <p>
-              <button>Soumettre</button>
+              <button>".$translation["submit"]."</button>
             </p>
           </form>
         </div>
-  
       </div>
       <div>
-        <img src='../images/lampadaire.png'>
+        <img src='../assets/login.png'>
       </div>
     </div>
   
@@ -301,7 +291,7 @@ public static function getAllProjectData($pdo) {
     ") ;
     }
 
-    static function getResetPasswordPage() {
+    static function getResetPasswordPage($clientKey,$translation) {
       return ("
       <div class='blocv2'>
   
@@ -310,22 +300,21 @@ public static function getAllProjectData($pdo) {
           <div class='contact-form'>
     
             <form action='' method='POST'>
-                <label>Adresse email </label>
+                <label>".$translation["email"]." </label>
                 <input style='margin-bottom: 2.5vh;' type='email' name='attempt_email' required>
-                <div class='g-recaptcha' data-sitekey=".CLIENT_KEY."></div>
+                <div class='g-recaptcha' data-sitekey=$clientKey></div>
               </p>
               <p>
-                <button>Soumettre</button>
+                <button>".$translation["submit"]."</button>
               </p>
-            </form>password
+            </form>
           </div>
     
         </div>
         <div>
-          <img src='../images/lampadaire.png'>
+        <img src='../assets/login.png'>
         </div>
       </div>
-    
       </div>
       ") ;
     }

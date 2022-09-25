@@ -2,11 +2,9 @@
 session_start();
 
 
-require_once("../config/basededonnee.php");
-require_once("../config/redirection.php");
-require_once("../config/recuperation.php");
 require_once("../librairies/Utility.php");
 require_once("../librairies/Parsedown.php");
+require_once("../config.php") ;
 require_once("../init.php");
 
 ?>
@@ -30,10 +28,10 @@ require_once("../init.php");
   if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
     header('Location: admin/dashboard.php');
   } else {
-    echo (Utility::getHeader($CheminPageAdminNonConnecte, "ADMIN AREA", "LOGIN PAGE"));
+    echo (Utility::getHeader($config["redirection"]["return2"], $config["translations"]["selected"]["admin"]["adminArea"],  $config["translations"]["selected"]["admin"]["loginSubtitle"]));
     if (isset($_POST['g-recaptcha-response'])) {
 
-      $secretKey = SECRET_KEY;
+      $secretKey = $config["captcha"]["SECRET_KEY"];
 
       $captcha = $_POST['g-recaptcha-response'];
 
@@ -67,7 +65,7 @@ require_once("../init.php");
         } 
       }
     }
-    echo (Utility::getLoginPage()); 
+    echo(Utility::getLoginPage($config["captcha"]["CLIENT_KEY"], $config["translations"]["selected"])); 
   ?>
 
 </body>

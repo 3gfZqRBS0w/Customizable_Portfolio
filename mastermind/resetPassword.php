@@ -2,11 +2,9 @@
 session_start();
 
 
-require_once("../config/basededonnee.php");
-require_once("../config/redirection.php");
-require_once("../config/recuperation.php");
 require_once("../librairies/Utility.php");
 require_once("../librairies/Parsedown.php");
+require_once("../config.php") ;
 require_once("../init.php");
 
 ?>
@@ -22,13 +20,13 @@ require_once("../init.php");
     <title>Document</title>
 </head>
 <body>
-    <?=Utility::getHeader($PortfolioRetour, "RESET PASSWORD", "LOGIN PAGE")?>
+    <?=Utility::getHeader($config["redirection"]["return"], "RESET PASSWORD", "LOGIN PAGE")?>
     <?php
     
     if ( isset($_POST['attempt_email'])) {
         if (isset($_POST['g-recaptcha-response'])) {
 
-            $secretKey = SECRET_KEY;
+            $secretKey = $config["captcha"]["SECRET_KEY"];
       
             $captcha = $_POST['g-recaptcha-response'];
       
@@ -42,9 +40,11 @@ require_once("../init.php");
         if ($responseKeys["success"]) {
         if ($attemptEmail == $mailRecuperation) {
             $newPassword = Utility::generatePassword(128);
+            /*
             if (!mail($mailRecuperation, "Your new customizable panel code", "Your new code is $newPassword")) {
                 echo ("<p class='notification' style='position: absolute;background-color: green;'>Error</p>"); 
-            }  
+            }
+            */ 
         }
     }
         else {
@@ -57,7 +57,7 @@ require_once("../init.php");
 
     }
     ?>
-    <?=Utility::getResetPasswordPage()?>
+    <?=Utility::getResetPasswordPage($config["captcha"]["CLIENT_KEY"], $config["translation"]["selected"])?>
     
 </body>
 </html>

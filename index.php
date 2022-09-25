@@ -1,13 +1,8 @@
 <?php
-require_once("config/basededonnee.php");
-require_once("config/redirection.php");
-require_once("config/recuperation.php");
+require_once("config.php");
 require_once("librairies/Parsedown.php");
 require_once("librairies/Utility.php");
-
 require_once("init.php");
-
-
 ?>
 
 
@@ -20,13 +15,6 @@ require_once("init.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles/main.css">
 
-    <style>
-
-
-
-    </style>
-
-
     <title>Portfolio | <?= Utility::getOwnerData($bdd, "lastName") ?> <?= Utility::getOwnerData($bdd, "surName") ?></title>
 </head>
 
@@ -34,9 +22,9 @@ require_once("init.php");
     <?php
     session_start();
     if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
-        echo (Utility::getHeader($PortfolioAdmin, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
+        echo (Utility::getHeader($config["redirection"]["admin"], Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
     } else {
-        echo (Utility::getHeader($Portfolio, Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
+        echo (Utility::getHeader($config["redirection"]["default"], Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
     }
 
     ?>
@@ -76,7 +64,6 @@ require_once("init.php");
                         <div class="zigzag-timeline__milestone">20XX</div>
                         <p>Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed </p>
                         <p>20XX - 20XX</p>
-                        <p>Obtention du diplome avec la mention ASSEZ BIEN</p>
                     </div>
                 </div>
             </div>
@@ -97,34 +84,30 @@ require_once("init.php");
             </div>
         </div>
 
-        <div class="bloc" id="bloc3">
-            <div class="categoryTitle">
-                <h2><a href="projets.php">My latest projects (click to see all projects)</a></h2>
-                <hr style="width: 80%;">
-            </div>
 
-            <div class="container1">
-                <a href="google.fr">
-                    <figure class="wp-caption">
-                        <img class="previewProject" id="element" src="images/web.jpg" alt="Image" />
-                        <figcaption class="wp-caption-text">This is a caption text</figcaption>
-                    </figure>
-                </a>
-                <a href="google.fr">
-                    <figure class="wp-caption">
-                        <img class="previewProject" id="element" src="images/web.jpg" alt="Image" />
-                        <figcaption class="wp-caption-text">This is a caption text</figcaption>
-                    </figure>
-                </a>
-                <a href="google.fr">
-                    <figure class="wp-caption">
-                        <img class="previewProject" id="element" src="images/web.jpg" alt="Image" />
-                        <figcaption class="wp-caption-text">This is a caption text</figcaption>
-                    </figure>
-                </a>
+            <?php
+            $allProjects = Utility::getAllProjectData($bdd);
+            $i = 0;
+            if (count($allProjects) > 0) {
+                echo("<div class='bloc' id='bloc3'>
+                <div class='categoryTitle'>
+                    <h2><a href='projets.php'>My latest projects (click to see all projects)</a></h2>
+                    <hr style='width: 80%;'>
+                </div>
+                <div class='container1'>") ;
+
+                foreach ($allProjects as $value) {
+                    if ($i < 3) {
+                        Utility::displayPreviewProject($value["title"], "upload/" . $value["photoName"]);
+                        $i++;
+                    }
+                }
+            echo(" </div>
             </div>
-        </div>
-        </div>
+            </div>") ;
+            }
+            ?>
+           
 
 
         <div class="bloc" id="bloc4">

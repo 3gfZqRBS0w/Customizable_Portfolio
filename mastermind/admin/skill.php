@@ -10,9 +10,7 @@
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
 
-    require_once("../../config/basededonnee.php");
-    require_once("../../config/redirection.php");
-    require_once("../../config/recuperation.php");
+    require_once("../../config.php") ; 
     require_once("../../librairies/Utility.php");
     require_once("../../librairies/Parsedown.php");
     require_once("../../init.php");
@@ -27,7 +25,7 @@
     <link rel="stylesheet" type="text/css" href="../../styles/admin.css">
     <link rel="stylesheet" type="text/css" href="../../styles/panel.css">
 <body>
-<?= (Utility::getHeader($CheminPageAdminConnecte, "Skills", "Showcase your skills")) ?>
+<?= (Utility::getHeader($config["redirection"]["dashboard"], "Skills", "Showcase your skills")) ?>
     
 </body>
 

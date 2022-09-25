@@ -11,9 +11,8 @@
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
 
-    require_once("../../config/basededonnee.php");
-    require_once("../../config/redirection.php");
-    require_once("../../config/recuperation.php");
+
+    require_once("../../config.php") ; 
     require_once("../../librairies/Utility.php");
     require_once("../../librairies/Parsedown.php");
     require_once("../../init.php");
@@ -80,7 +79,7 @@
 </head>
 
 <body>
-    <?= (Utility::getHeader($CheminPageAdminConnecte, "Profile", "Customize your profile")) ?>
+    <?= (Utility::getHeader($config["redirection"]["dashboard"], "Profile", "Customize your profile")) ?>
     <div class="websiteOverview">
     <h3 class="titleOfWebsiteOverview">Changing the profile image</h3>
         <div class="contact-form setting">

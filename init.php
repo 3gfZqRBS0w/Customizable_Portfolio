@@ -1,26 +1,35 @@
 <?php
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+//sR3ujo-bKlgFDfzI)Cnezrzwov4jb(tvkQ!fZ5!(Gp9bO)OwZ21TRVEsOMCK4*Rlxhvc38.tsL8ki!UIVHq9Wof]plihzHc0R!1)mtyQm(vATlc920ZKh30aqdO[GUqD
 
-//[0pnBbaXMvpcN4[D!17sZwcD3HnaCcjdFEmqwWA?2y)w(*2WupzDyyRQ]FT680LmVp2plFE5(nD1PI6ENEjgmy0cZ8!ejSyHL*FzJs]U2eH)*t[BKofjMSxDzEn.WpEt
-// Connexion à la bdd 
 try {
-    $bdd = new PDO("mysql:host=$host;dbname=$nomBDD;charset=utf8", $nomUtilisateur, $motDePasse) ;
+    $bdd = new PDO("mysql:host=".$config["db"]["host"].";dbname=".$config["db"]["bddName"].";charset=utf8", $config["db"]["username"], $config["db"]["password"]) ;
 }
 catch (PDOException $e) {
-    die("Echec de la connexion : ".$e->getMessage());
+
+    switch ($e->getCode()) {
+        case 1045:
+            die($config["translations"]["selected"]["pdoErrors"][1045]) ;
+        break;
+        case 1049:
+            die($config["translations"]["selected"]["pdoErrors"][1049]) ; 
+        break;
+        default:
+        die($e->getMessage()); 
+    }
 }
 
 if (!Utility::bddExists($bdd)) {
 
-
-
     $password = Utility::generatePassword(128);
     $hash = hash('sha256', $password); 
-    echo("le hash renvoie ".$hash) ;
-    $query = file_get_contents("sql/database.sql");
+
+
+// creation of the tables of the database
+    $query = file_get_contents("customportfolio.sql");
     $stmt = $bdd->prepare($query);
     $stmt->execute() ;
+
+
 
     $query = "UPDATE tbl_owner SET secretCode = '$hash' ;" ;
     $stmt = $bdd->prepare($query) ;
@@ -30,7 +39,13 @@ if (!Utility::bddExists($bdd)) {
     Utility::addlog($bdd,1) ;
     
 
-    mail($mailRecuperation,"L'installation du portfolio est une réussite","Le mot de passe est $password"); 
+   mail(
+    $config["recuperation"]["email"],
+   $config["translations"]["selected"]["mail"]["setup"]["subject"], 
+   $config["translations"]["selected"]["mail"]["setup"]["message"].$password);
+
+
+
     die(Utility::getInstallMessages($password)) ;
 }
 

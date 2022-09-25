@@ -1,7 +1,5 @@
 <?php
-    require_once("config/basededonnee.php") ;
-    require_once("config/redirection.php") ;
-    require_once("config/recuperation.php") ;
+    require_once("config.php") ; 
     require_once("librairies/Parsedown.php") ; 
     require_once("librairies/Utility.php") ;
     require_once("init.php");
@@ -20,12 +18,7 @@
 </head>
 <body>
     <?php
-
-    if (isset($_POST["idOfProject"])) {
-
-    }
-    else {
-      echo(Utility::getHeader($PortfolioRetour, "My Projects", "All my projects")) ;
+      echo(Utility::getHeader($config["redirection"]["return"], "My Projects", "All my projects")) ;
       echo("<div id='listeDesProjets'>") ; 
       $allProjects = Utility::getAllProjectData($bdd);
       $i = 0 ; 
@@ -51,7 +44,7 @@
       else {
          echo("<p>Il n'y a aucun projet mis en ligne</p>") ; 
       }
-    }
+
     ?>
 
 

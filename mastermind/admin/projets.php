@@ -16,9 +16,7 @@ ini_set("display_errors", 1);
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
 
-    require_once("../../config/basededonnee.php");
-    require_once("../../config/redirection.php");
-    require_once("../../config/recuperation.php");
+    require_once("../../config.php") ; 
     require_once("../../librairies/Utility.php");
     require_once("../../librairies/Parsedown.php");
     require_once("../../init.php");
@@ -44,7 +42,7 @@ ini_set("display_errors", 1);
 
 
 <body>
-    <?= (Utility::getHeader($CheminPageAdminConnecte, "Projects", "Add your projects")) ?>
+    <?= (Utility::getHeader($config["redirection"]["dashboard"], "Projects", "Add your projects")) ?>
 
     <div class="websiteOverview">
         <h3 class="titleOfWebsiteOverview">Add Project</h3>

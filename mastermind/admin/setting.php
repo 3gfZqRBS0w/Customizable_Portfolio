@@ -10,13 +10,10 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-require_once("../../config/basededonnee.php") ;
-require_once("../../config/redirection.php") ;
-require_once("../../config/recuperation.php") ;
-require_once("../../librairies/Utility.php") ;
-require_once("../../librairies/Parsedown.php") ; 
+require_once("../../config.php") ; 
+require_once("../../librairies/Utility.php");
+require_once("../../librairies/Parsedown.php");
 require_once("../../init.php");
-
 if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
     header('Location: ../index.php');
     //die("<h1><b>Vous n'êtes pas connecté !</b></h1>") ;
@@ -35,7 +32,7 @@ if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION
 
 </head>
 <body>
-    <?=(Utility::getHeader($CheminPageAdminConnecte, "Settings", "Manage Your Settings")) ?>
+    <?=(Utility::getHeader($config["redirection"]["dashboard"], "Settings", "Manage Your Settings")) ?>
 
     <div class="websiteOverview">
         <h3 class="titleOfWebsiteOverview">Panel Settings</h3>
