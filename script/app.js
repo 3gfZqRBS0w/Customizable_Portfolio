@@ -10,9 +10,6 @@ window.addEventListener('load', () => {
     setTimeout(hide, 400); 
 })
 
-function detectChange(selectOS) {
-    console.log(selectOS.value)
-}
 
 
 

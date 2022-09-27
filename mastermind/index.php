@@ -1,10 +1,6 @@
 <?php
 session_start();
 
-
-require_once("../librairies/Utility.php");
-require_once("../librairies/Parsedown.php");
-require_once("../config.php");
 require_once("../init.php");
 
 ?>

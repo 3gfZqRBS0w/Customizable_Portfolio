@@ -5,7 +5,7 @@
 $config["db"] = [
     "username" => "admin",
     "password" => "password",
-    "bddName" => "customportfolio",
+    "bddName" => "customportfolio3",
     "host" => "127.0.0.1"
 ];
 
@@ -192,7 +192,7 @@ $config["translations"]["fr"] = [
         1 => "Installation du site internet",
         2 => "Echec de la tentative de connexion",
         3 => "Réussite de la connexion",
-        4 => "Consulte une page ",
+        4 => "Consulte une page",
         5 => "Mise a jour du profil utilisateur",
         6 => "Modification de la photo de profil",
         7 => "Mise à jour du message de bienvenue",
@@ -280,47 +280,3 @@ $config["translations"]["custom"] = [
 ];
 */
 $config["translations"]["selected"] = $config["translations"]["en"];
-
-
-// all redirections
-
-$config["redirection"]["default"] = [
-    $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",
-    $config["translations"]["selected"]["navBar"]["contact"] => "#bloc6"
-];
-
-
-
-
-
-
-
-
-$config["redirection"]["admin"] = [
-    $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",
-    $config["translations"]["selected"]["navBar"]["myprojects"] => "#bloc3",
-    $config["translations"]["selected"]["navBar"]["skills"]  => "#bloc4",
-    $config["translations"]["selected"]["navBar"]["article"]  => "#bloc5",
-    $config["translations"]["selected"]["navBar"]["contact"] => "#bloc6",
-    $config["translations"]["selected"]["navBar"]["panel"] => "mastermind"
-];
-
-$config["redirection"]["return"] = [
-    $config["translations"]["selected"]["navBar"]["return"] => "index.php"
-];
-
-$config["redirection"]["return2"] = [
-    $config["translations"]["selected"]["navBar"]["return"] => "../index.php"
-];
-
-$config["redirection"]["dashboard"] = [
-    $config["translations"]["selected"]["navBar"]["dashboard"]  => "dashboard.php",
-    $config["translations"]["selected"]["navBar"]["profile"]  => "profile.php",
-    $config["translations"]["selected"]["navBar"]["projects"] => "projets.php",
-    $config["translations"]["selected"]["navBar"]["career"] => "career.php",
-    $config["translations"]["selected"]["navBar"]["articles"] => "articles.php",
-    $config["translations"]["selected"]["navBar"]["skills"] => "skill.php",
-    $config["translations"]["selected"]["navBar"]["setting"] => "setting.php",
-    $config["translations"]["selected"]["navBar"]["portfolio"] => "../../index.php",
-    $config["translations"]["selected"]["navBar"]["disconnect"] => "../deconnexion.php"
-];

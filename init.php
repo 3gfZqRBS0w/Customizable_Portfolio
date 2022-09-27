@@ -1,5 +1,10 @@
 <?php
-//sR3ujo-bKlgFDfzI)Cnezrzwov4jb(tvkQ!fZ5!(Gp9bO)OwZ21TRVEsOMCK4*Rlxhvc38.tsL8ki!UIVHq9Wof]plihzHc0R!1)mtyQm(vATlc920ZKh30aqdO[GUqD
+//R1nS5406fOUp4XjELKoEL[BV6BNH3pC91?0eiIqS1IZCt)cgVdUAaJkmcL7cT3iKxn!FKB]f7t0Ezw]U9J!B9Y9A9f!o1IwRxE!8IrmbQYy]UX-HoX)02wGX5jpU4o3*L.na1UHP-LqyAYJnxT9C0zPWEx.2k!.!7MKOu(RxZ[6jmEBo?1mmpP0NxxAj8jg-4p54Qpr*)5zHaIHGc[eXCd?du*73T-3wzR
+
+require_once(__DIR__."/config.php");
+require_once(__DIR__."/librairies/Parsedown.php");
+require_once(__DIR__."/librairies/Utility.php");
+//__DIR__ .
 
 try {
     $bdd = new PDO("mysql:host=".$config["db"]["host"].";dbname=".$config["db"]["bddName"].";charset=utf8", $config["db"]["username"], $config["db"]["password"]) ;
@@ -25,11 +30,14 @@ if (!Utility::bddExists($bdd)) {
 
 
 // creation of the tables of the database
-    $query = file_get_contents("customportfolio.sql");
+    $query = file_get_contents(__DIR__."/customportfolio.sql");
     $stmt = $bdd->prepare($query);
     $stmt->execute() ;
 
-
+    foreach( $config["translations"]["en"]["logs"] as $key => $value) {
+        $stmt = $bdd->prepare("INSERT INTO tbl_actions(titre_action) VALUES('".$value."')") ;
+        $stmt->execute();
+    }
 
     $query = "UPDATE tbl_owner SET secretCode = '$hash' ;" ;
     $stmt = $bdd->prepare($query) ;
@@ -64,6 +72,9 @@ else {
 
 $Parsedown = new Parsedown();
 
+
+// for Languages
+
 if ( isset($_REQUEST["lang"]) ) {
     if (is_array($config["translations"][$_REQUEST["lang"]])) {
         $lang = $_REQUEST["lang"] ;
@@ -80,6 +91,52 @@ else {
     }
 }
 
+// for check if is visitor
+
+
+/*
+if ( !isset($_COOKIE["visitor"])) {
+    Utility::addlog($bdd, 4) ;
+    setcookie("lang", $lang, time() + (86400 * 1), "/");
+}
+*/
+
+// ALL REDIRECTION
+
+$config["redirection"]["default"] = [
+    $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",
+    $config["translations"]["selected"]["navBar"]["contact"] => "#bloc6"
+];
+
+$config["redirection"]["admin"] = [
+    $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",
+    $config["translations"]["selected"]["navBar"]["myprojects"] => "#bloc3",
+    $config["translations"]["selected"]["navBar"]["skills"]  => "#bloc4",
+    $config["translations"]["selected"]["navBar"]["article"]  => "#bloc5",
+    $config["translations"]["selected"]["navBar"]["contact"] => "#bloc6",
+    $config["translations"]["selected"]["navBar"]["panel"] => "mastermind"
+];
+
+$config["redirection"]["return"] = [
+    $config["translations"]["selected"]["navBar"]["return"] => "index.php"
+];
+
+$config["redirection"]["return2"] = [
+    $config["translations"]["selected"]["navBar"]["return"] => "../index.php"
+];
+
+$config["redirection"]["dashboard"] = [
+    $config["translations"]["selected"]["navBar"]["dashboard"]  => "dashboard.php",
+    $config["translations"]["selected"]["navBar"]["profile"]  => "profile.php",
+    $config["translations"]["selected"]["navBar"]["projects"] => "projets.php",
+    $config["translations"]["selected"]["navBar"]["career"] => "career.php",
+    $config["translations"]["selected"]["navBar"]["articles"] => "articles.php",
+    $config["translations"]["selected"]["navBar"]["skills"] => "skill.php",
+    $config["translations"]["selected"]["navBar"]["setting"] => "setting.php",
+    $config["translations"]["selected"]["navBar"]["portfolio"] => "../../index.php",
+    $config["translations"]["selected"]["navBar"]["disconnect"] => "../deconnexion.php"
+];
+
 
 
 ?>
@@ -91,7 +148,6 @@ else {
         <span class="lettre">T</span>   
         <span class="lettre">O</span>
         <span class="lettre">M</span>
-
         <span class="lettre">P</span>
         <span class="lettre">O</span>
         <span class="lettre">R</span>

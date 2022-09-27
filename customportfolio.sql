@@ -37,7 +37,6 @@ CREATE TABLE IF NOT EXISTS tbl_articles (
     articleID INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     publicationDate DATETIME,
-    imagesPath VARCHAR(255) NOT NULL,
     fk_logsID INT,
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
 );
@@ -65,10 +64,10 @@ CREATE TABLE IF NOT EXISTS tbl_contacts (
 
 
 -- Insert default values
-
-INSERT INTO tbl_actions(titre_action) VALUES("Installation du site Internet"),("Tentative échouée de connexion"),("Connexion au Panel Réussis"), ("Visite de la page"),("Mise a jour du profil utilisateur"), ("Changement de la photo de profil"), ("Mise a jour du contene statique") ;
-
-
+/*
+INSERT INTO tbl_actions(tit);re_action) VALUES("Installation du site Internet"),("Tentative échouée de connexion"),("Connexion au Panel Réussis"), ("Visite de la page"),("Mise a jour du profil utilisateur"), ("Changement de la photo de profil"), ("Mise a jour du contene stat);ique") ;
+);
+*/
 INSERT INTO tbl_owner(lastName, surName, nameOfWebsite, websiteSubtitble) 
 VALUES ("LASTNAME", "FIRSTNAME", "PORTFOLIO OF LASTNAME FIRSTNAME","SUBTITLE");
 

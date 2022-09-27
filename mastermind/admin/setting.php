@@ -10,9 +10,6 @@
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-require_once("../../config.php") ; 
-require_once("../../librairies/Utility.php");
-require_once("../../librairies/Parsedown.php");
 require_once("../../init.php");
 if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
     header('Location: ../index.php');
@@ -78,9 +75,20 @@ if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION
             </p>
         </form>
     </div>
-   
+    </div>
     </div>
 
+    <div class="websiteOverview">
+        <h3 class="titleOfWebsiteOverview">2FA Setup</h3>
+        <div class="contact-form setting">
+            <form action="" method="post">
+                <p>
+                    <label>Connect your authentificator app<br>Using an authentificator app like Google Authentificator, Authy or Duo, scan the QR code. It will display 6 code which you need to enter below</label>
+                    
+                </p>
+            </form>
+        </div>
+    </div>
 
 </body>
 

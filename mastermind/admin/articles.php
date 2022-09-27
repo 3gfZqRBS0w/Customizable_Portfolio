@@ -9,10 +9,6 @@
 
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
-
-    require_once("../../config.php") ; 
-    require_once("../../librairies/Utility.php");
-    require_once("../../librairies/Parsedown.php");
     require_once("../../init.php");
 
     if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
@@ -26,6 +22,33 @@
     <link rel="stylesheet" type="text/css" href="../../styles/panel.css">
 <body>
 <?= (Utility::getHeader($config["redirection"]["dashboard"], "Article", "Publish your article")) ?>
+
+<div class="websiteOverview">
+        <h3 class="titleOfWebsiteOverview">Add Article</h3>
+
+
+<div class="contact-form setting">
+<?php
+
+if ( isset( $_POST["articleTitle"])) {
+    
+}
+
+
+?>
+
+            <form action="" method="post" enctype="multipart/form-data">
+                <p>
+                    <label for="articleTitle">Article title</label>
+                    <input id="articleTitle" placeholder="Nom de l'article" value="" type="text" name="articleTitle" required>
+                </p>
+
+                <p>
+                    <button value="submit" type="submit">Save</button>
+                </p>
+            </form>
+        </div>
+    </div>
     
 </body>
 

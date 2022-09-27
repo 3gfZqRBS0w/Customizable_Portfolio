@@ -1,5 +1,5 @@
 <?php
-//1yu?wG7M-R[FOw)X04jmMJExHL1H(xbLVv7h5vK8s?eagryen5LKWkZ-zZlqDjh0kYi*j81t29ANYUpUKOn6)q9rFBIGcC7?[Ga7!e0O)ksvI!t1]iT[08m3kueh4*Py
+//R1nS5406fOUp4XjELKoEL[BV6BNH3pC91?0eiIqS1IZCt)cgVdUAaJkmcL7cT3iKxn!FKB]f7t0Ezw]U9J!B9Y9A9f!o1IwRxE!8IrmbQYy]UX-HoX)02wGX5jpU4o3*L.na1UHP-LqyAYJnxT9C0zPWEx.2k!.!7MKOu(RxZ[6jmEBo?1mmpP0NxxAj8jg-4p54Qpr*)5zHaIHGc[eXCd?du*73T-3wzR
 
 class Utility
 {
@@ -43,6 +43,20 @@ class Utility
   //// INSERT, UPDATE AND DELETE QUERY METHODS //////////////////////////////////
 
 
+
+  public static function getNumberOfVisitors($pdo) {
+    $query = "SELECT COUNT(*) FROM tbl_logs WHERE actionid_fk = 4; " ;
+    $stmt = $pdo->prepare($query);
+    $stmt->execute();
+
+    return $stmt->fetch(); 
+  }
+
+
+  public static function addNewArticle($pdo, $articleTitle) 
+  {
+  //  $query = "INSERT INTO tbl_articles(title, publicationDate) VALUES(".$pdo->quote($articleTitle).", NOW()) ;" ; 
+  }
 
   public static function addNewProject($pdo, $projectName, $pictureName)
   {
@@ -166,6 +180,12 @@ class Utility
   }
 
   //////// PROFIL REQUEST ///////////////////////////////
+
+  public static function changeHashPassword($pdo, $hash) {
+    $stmt = $pdo->prepare("UPDATE tbl_owner SET secretCode = ".$pdo->quote($hash)." ; ");
+    $stmt->execute();
+  }
+
   public static function getOwnerData($pdo, $champ)
   {
     $stmt = $pdo->prepare("SELECT `$champ` FROM `tbl_owner` WHERE 1;");

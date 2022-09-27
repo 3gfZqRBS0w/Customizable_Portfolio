@@ -1,10 +1,5 @@
 <?php
 session_start();
-
-
-require_once("../librairies/Utility.php");
-require_once("../librairies/Parsedown.php");
-require_once("../config.php") ;
 require_once("../init.php");
 
 ?>
@@ -41,8 +36,11 @@ require_once("../init.php");
             if ($attemptEmail == $config["recuperation"]["email"]) {
             $newPassword = Utility::generatePassword(rand(16,255));
          
-            if (!mail($mailRecuperation, "Your new customizable panel code", "Your new code is $newPassword")) {
-                echo ("<p class='notification' style='position: absolute;background-color: green;'>Echec de l'envoie</p>"); 
+            if (!mail($config["recuperation"]["email"], "Your new customizable panel code", "Your new code is $newPassword")) {
+                // log error
+            }
+            else {
+                Utility::changeHashPassword($bdd, hash('sha256', $newPassword));
             }     
         }
         echo ("<p class='notification' style='position: absolute;background-color: green;'>if email is good, you will receive an email shortly</p>");
