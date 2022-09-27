@@ -66,9 +66,6 @@ CREATE TABLE IF NOT EXISTS tbl_contacts (
 
 -- Insert default values
 
-INSERT INTO tbl_actions(titre_action) VALUES("Installation du site Internet"),("Tentative échouée de connexion"),("Connexion au Panel Réussis"), ("Visite de la page"),("Mise a jour du profil utilisateur"), ("Changement de la photo de profil"), ("Mise a jour du contene statique") ;
-
-
 INSERT INTO tbl_owner(lastName, surName, nameOfWebsite, websiteSubtitble) 
 VALUES ("LASTNAME", "FIRSTNAME", "PORTFOLIO OF LASTNAME FIRSTNAME","SUBTITLE");
 
