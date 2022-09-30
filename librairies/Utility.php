@@ -1,5 +1,4 @@
 <?php
-//R1nS5406fOUp4XjELKoEL[BV6BNH3pC91?0eiIqS1IZCt)cgVdUAaJkmcL7cT3iKxn!FKB]f7t0Ezw]U9J!B9Y9A9f!o1IwRxE!8IrmbQYy]UX-HoX)02wGX5jpU4o3*L.na1UHP-LqyAYJnxT9C0zPWEx.2k!.!7MKOu(RxZ[6jmEBo?1mmpP0NxxAj8jg-4p54Qpr*)5zHaIHGc[eXCd?du*73T-3wzR
 
 class Utility
 {
@@ -12,6 +11,9 @@ class Utility
   const CLOSING_MESSAGE_PATH = "presentation/closing_message.md";
 
   /////////////////////////////////////////////////
+
+
+  const TABLES_NAME = ["tbl_actions", "tbl_owner", "tbl_careers", "tbl_articles", "tbl_projects", "tbl_contacts"];
 
 
 
@@ -56,6 +58,9 @@ class Utility
   public static function addNewArticle($pdo, $articleTitle) 
   {
   //  $query = "INSERT INTO tbl_articles(title, publicationDate) VALUES(".$pdo->quote($articleTitle).", NOW()) ;" ; 
+
+  $stmt = $pdo->prepare("INSERT INTO tbl_articles(title, publicationDate, fullTextOfArticles) VALUES(".$pdo->quote($articleTitle).", NOW(), 'hello');") ;
+  $stmt->execute();
   }
 
   public static function addNewProject($pdo, $projectName, $pictureName)
@@ -72,19 +77,18 @@ class Utility
     $stmt->execute();
   }
 
-  public static function deleteProjects($pdo, $projectName)
+  public static function deleteData($pdo, $title, $tbl)
   {
-
-    $imgName = self::getProjectData($pdo, $projectName)[0]["photoName"];
-
-    if (unlink("../../upload/$imgName")) {
-      $query = "DELETE FROM tbl_projects WHERE title = " . $pdo->quote($projectName) . " ; ";
-      $stmt = $pdo->prepare($query);
+    if ( $tbl == "tbl_projects" ) {
+      $imgName = self::getData($pdo, $title, "tbl_projects")[0]["photoName"];
+      if (!unlink(__DIR__."/upload/$imgName")) {
+        return false ; 
+      }
+    }
+      $stmt = $pdo->prepare("DELETE FROM $tbl WHERE title = " . $pdo->quote($title) . " ; ");
       $stmt->execute();
       return true;
-    } else {
-      return false;
-    }
+
   }
 
   //////////////////////////////////////////////////////
@@ -203,34 +207,46 @@ class Utility
     $stmt->execute();
   }
 
+
+  
+
   //// PROJECT REQUEST ///////////////////////////////////
-  public static function getAllProjectsNames($pdo)
+  public static function getAllNames($pdo, $table)
   {
-    $stmt = $pdo->prepare("SELECT title FROM tbl_projects ;");
+    $stmt = $pdo->prepare("SELECT title FROM $table ;");
     $stmt->execute();
     $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $resultat;
   }
 
-  public static function getProjectData($pdo, $project)
+
+  public static function getData($pdo, $title, $tbl)
   {
 
-    $stmt = $pdo->prepare("SELECT title, photoName, fullTextOfProject FROM tbl_projects WHERE title=" . $pdo->quote($project) . " ;");
-    $stmt->execute();
-    $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if (in_array($tbl, self::TABLES_NAME)) {
+
+      $stmt = $pdo->prepare("SELECT * FROM $tbl WHERE title=" . $pdo->quote($title) . " ;");
+      $stmt->execute();
+      $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $resultat;
+
+    }
+
+    
   }
 
-  public static function getAllProjectData($pdo)
+  public static function getAllData($pdo, $tbl)
   {
 
-    $stmt = $pdo->prepare("SELECT title, photoName, fullTextOfProject FROM tbl_projects;");
+    if (in_array($tbl, self::TABLES_NAME)) {
+    $stmt = $pdo->prepare("SELECT * FROM $tbl ;");
     $stmt->execute();
     $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     return $resultat;
+    }
   }
 
   ////////////////////////////////////////////////////////
@@ -406,10 +422,7 @@ from https://thisinterestsme.com/php-random-password/
 
   static function bddExists($pdo)
   {
-
-    $table = ["tbl_actions", "tbl_owner", "tbl_careers", "tbl_articles", "tbl_projects", "tbl_contacts"];
-
-    foreach ($table as $key => $value) {
+    foreach (self::TABLES_NAME as $key => $value) {
       if (!self::tableExists($pdo, $value)) {
         return false;
       }

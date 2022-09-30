@@ -1,9 +1,15 @@
 <?php
+
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 //R1nS5406fOUp4XjELKoEL[BV6BNH3pC91?0eiIqS1IZCt)cgVdUAaJkmcL7cT3iKxn!FKB]f7t0Ezw]U9J!B9Y9A9f!o1IwRxE!8IrmbQYy]UX-HoX)02wGX5jpU4o3*L.na1UHP-LqyAYJnxT9C0zPWEx.2k!.!7MKOu(RxZ[6jmEBo?1mmpP0NxxAj8jg-4p54Qpr*)5zHaIHGc[eXCd?du*73T-3wzR
 
 require_once(__DIR__."/config.php");
 require_once(__DIR__."/librairies/Parsedown.php");
 require_once(__DIR__."/librairies/Utility.php");
+require_once(__DIR__."/librairies/Projects.php");
 //__DIR__ .
 
 try {
@@ -70,8 +76,10 @@ else {
     }
 }
 
-$Parsedown = new Parsedown();
+// initialize object
 
+$Parsedown = new Parsedown();
+$Projects = new Projects($bdd);
 
 // for Languages
 

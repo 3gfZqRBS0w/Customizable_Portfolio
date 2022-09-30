@@ -55,7 +55,7 @@ if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
     $tabExtension = explode('.', $name);
     $extension = strtolower(end($tabExtension));
     $error = $_FILES['profilePicture']['error'];
-    $ifProjectExists = count(Utility::getProjectData($bdd, $projetName));
+    $ifProjectExists = count(Utility::getData($bdd, $projetName, "tbl_projects"));
     $extensions = ['jpg', 'png', 'jpeg'];
     if ($ifProjectExists < 1) {
         if (in_array($extension, $extensions)) {
@@ -67,7 +67,9 @@ if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
 
                     move_uploaded_file($tmpName, '../../upload/' . $fileName);
 
-                    Utility::addNewProject($bdd, $projetName, $fileName);
+                    //Utility::addNewProject($bdd, $projetName, $fileName);
+
+                    $Projects->New($projetName, $fileName) ; 
 
                     echo ("<p class='notification' style='background-color: green;' >".$config["translations"]["selected"]["notification"]["projectAdded"]."</p>");
                 } else {
@@ -170,10 +172,11 @@ Old version of this part of code
 
                     // If the input of user is correct, delete really project
                     if ($_POST["nameOfProject"] == $_POST["deleteReallyProject"]) {
-                        if (Utility::deleteProjects($bdd, $_POST["deleteReallyProject"])) {
+                        //if (Utility::deleteData($bdd, $_POST["deleteReallyProject"], "tbl_projects")) {
+                        if ($Projects->Remove($_POST["deleteReallyProject"])) {
                             echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
                         } else {
-                            echo ("<p class='notification' style='background-color: red;' >Permission failure</p>");
+                            echo ("<p class='notification' style='background-color: red;' >Unable to delete this project</p>");
                         }
                     } else {
                         echo ("<p class='notification' style='background-color: green;' >Project not deleted</p>");
@@ -191,11 +194,13 @@ Old version of this part of code
 
                 if (isset($_POST['saveProject'])) {
                     if (isset($_POST['nameOfProject']) && isset($_POST['ProjectContent'])) {
-                        Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
+                       // Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
+
+                       $Projects->Edit($_POST['nameOfProject'], $_POST['ProjectContent']) ; 
                         echo ("<p class='notification' style='background-color: green;' >Project updating.</p>");
                     }
                 }
-                $listOfProjects =  Utility::getAllProjectsNames($bdd);
+                $listOfProjects =  Utility::getAllNames($bdd, "tbl_projects");
 
                 if (count($listOfProjects) > 0) {
                     foreach ($listOfProjects as $projet) {
@@ -215,7 +220,7 @@ Old version of this part of code
                 }
             } else {
 
-                $dataOfProjects = Utility::getProjectData($bdd, $_POST['chooseProject']);
+                $dataOfProjects = Utility::getData($bdd, $_POST['chooseProject'], "tbl_projects");
 
                 echo ("
 

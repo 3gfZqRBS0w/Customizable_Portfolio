@@ -37,6 +37,7 @@ CREATE TABLE IF NOT EXISTS tbl_articles (
     articleID INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     publicationDate DATETIME,
+    fullTextOfArticles TEXT NOT NULL,
     fk_logsID INT,
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
 );

@@ -21,7 +21,7 @@
     if ( isset($_POST["titleOfProjet"]) ) {
         $title = $_POST["titleOfProjet"];
 
-        $projetData = Utility::getProjectData($bdd, $title) ;
+        $projetData = Utility::getData($bdd, $title, "tbl_projects") ;
         
         echo(Utility::getHeader($config["redirection"]["return"], $projetData[0]["title"], "")) ;
 

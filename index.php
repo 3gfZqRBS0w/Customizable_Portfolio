@@ -83,7 +83,7 @@ require_once(__DIR__."/init.php");
 
 
             <?php
-            $allProjects = Utility::getAllProjectData($bdd);
+            $allProjects = Utility::getAllData($bdd, "tbl_projects");
             $i = 0;
             if (count($allProjects) > 0) {
                 echo("<div class='bloc' id='bloc3'>
