@@ -96,7 +96,7 @@
                         <th><?= $config["translations"]["selected"]["tab_logs"]["action"] ?></th>
                     </tr>
                     <?php
-                    $logs = Utility::getlogs($bdd);
+                    $logs = $Logs->GetLogs() ; 
                     foreach ($logs as $key => $value) {
                         echo ("
     <tr>

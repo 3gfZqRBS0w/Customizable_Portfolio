@@ -20,72 +20,61 @@ ini_set("display_errors", 1);
 
     if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
         header('Location: ../index.php');
-        exit(); 
-
+        exit();
     }
 
     ?>
     <link rel="stylesheet" type="text/css" href="../../styles/main.css">
     <link rel="stylesheet" type="text/css" href="../../styles/admin.css">
     <link rel="stylesheet" type="text/css" href="../../styles/panel.css">
-    <style>
-        .projetPreview {
-            width: 90vw;
-            height: 12.5vh;
-            margin-top: 2.5vh;
-            border: 1px solid black;
-        }
-    </style>
-
 
 <body>
+
     <?= (Utility::getHeader($config["redirection"]["dashboard"], "Projects", "Add your projects")) ?>
 
     <div class="websiteOverview">
         <h3 class="titleOfWebsiteOverview">Add Project</h3>
         <?php
 
-// Pour ajouter un projet a la liste déjà existante 
-if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
-
-    $projetName = $_POST["nameOfProject"];
-    $tmpName = $_FILES['profilePicture']['tmp_name'];
-    $name = $_FILES['profilePicture']['name'];
-    $size = $_FILES['profilePicture']['size'];
-    $tabExtension = explode('.', $name);
-    $extension = strtolower(end($tabExtension));
-    $error = $_FILES['profilePicture']['error'];
-    $ifProjectExists = count(Utility::getData($bdd, $projetName, "tbl_projects"));
-    $extensions = ['jpg', 'png', 'jpeg'];
-    if ($ifProjectExists < 1) {
-        if (in_array($extension, $extensions)) {
-            if ($error == 0) {
-                if ($size <= $config["stockage"]["maxProfileSize"]) {
-                    $uniqueName = uniqid('', true);
-
-                    $fileName = $uniqueName . "." . $extension;
-
-                    move_uploaded_file($tmpName, '../../upload/' . $fileName);
-
-                    //Utility::addNewProject($bdd, $projetName, $fileName);
-
-                    $Projects->New($projetName, $fileName) ; 
-
-                    echo ("<p class='notification' style='background-color: green;' >".$config["translations"]["selected"]["notification"]["projectAdded"]."</p>");
+        ///// ADD PROJECT 
+        // Pour ajouter un projet a la liste déjà existante 
+        if (isset($_POST["nameOfProject"]) && isset($_FILES["profilePicture"])) {
+            $projetName = $_POST["nameOfProject"];
+            $tmpName = $_FILES['profilePicture']['tmp_name'];
+            $name = $_FILES['profilePicture']['name'];
+            $size = $_FILES['profilePicture']['size'];
+            $tabExtension = explode('.', $name);
+            $extension = strtolower(end($tabExtension));
+            $error = $_FILES['profilePicture']['error'];
+            $ifProjectExists = count(Utility::getData($bdd, $projetName, "tbl_projects"));
+            $extensions = ['jpg', 'png', 'jpeg'];
+            if ($ifProjectExists < 1) {
+                if (in_array($extension, $extensions)) {
+                    if ($error == 0) {
+                        if ($size <= $config["stockage"]["maxProfileSize"]) {
+                            $uniqueName = uniqid('', true);
+                            $fileName = $uniqueName . "." . $extension;
+                            if ($Projects->New($projetName, $fileName)) {
+                                move_uploaded_file($tmpName, '../../upload/' . $fileName);
+                                echo ("<p class='notification' style='background-color: green;' >" . $config["translations"]["selected"]["notification"]["projectAdded"] . "</p>");
+                            } else {
+                                echo ("<p class='notification' style='background-color: red;' >Already existing project</p>");
+                            }
+                            //older method : Utility::addNewProject($bdd, $projetName, $fileName);
+                        } else {
+                            echo ("<p class='notification' style='background-color: red;' >" . $config["translations"]["selected"]["notification"]["limitFile"] . "</p>");
+                        }
+                    } else {
+                        echo ("<p class='notification' style='background-color: red;' >" . $config["translations"]["selected"]["phpFileUploadErrors"][$error] . "</p>");
+                    }
                 } else {
-                    echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["notification"]["limitFile"]."</p>");
+                    echo ("<p class='notification' style='background-color: red;' >" . $config["translations"]["selected"]["notification"]["fileNotRecognized"] . "</p>");
                 }
             } else {
-                echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["phpFileUploadErrors"][$error]."</p>");
+                echo ("<p class='notification' style='background-color: red;' >" . $config["translations"]["selected"]["notification"]["projectAlreadyExists"] . "</p>");
             }
-        } else {
-            echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["notification"]["fileNotRecognized"]."</p>");
         }
-    } else {
-        echo ("<p class='notification' style='background-color: red;' >".$config["translations"]["selected"]["notification"]["projectAlreadyExists"]."</p>");
-    }
-}
-/*
+        /*
 Old version of this part of code 
 
     $nbOfPicture = Utility::getNumberOfItem($bdd, "tbl_projects");
@@ -121,11 +110,8 @@ Old version of this part of code
 }
 
 */
-
-
-
-//}
-?>
+        //}
+        ?>
         <div class="contact-form setting">
             <form action="" method="post" enctype="multipart/form-data">
                 <p>
@@ -148,7 +134,7 @@ Old version of this part of code
 
         <?php
 
-
+// /////////////////////////////////////////REMOVE PROJECT CODE/////////////////////////////////// 
         if (isset($_POST['removeProject'])) {
             echo ("<h3 class='titleOfWebsiteOverview'>Are you sure</h3>
 
@@ -165,6 +151,7 @@ Old version of this part of code
             </div>
     
         ");
+
         } else {
 
             if (isset($_POST['deleteReallyProject'])) {
@@ -184,7 +171,7 @@ Old version of this part of code
                 }
             }
 
-
+// ////////////////////////////////////////////////////////////////////////////////////////////////
             if (!isset($_POST['chooseProject'])) {
 
                 echo ("        
@@ -194,10 +181,13 @@ Old version of this part of code
 
                 if (isset($_POST['saveProject'])) {
                     if (isset($_POST['nameOfProject']) && isset($_POST['ProjectContent'])) {
-                       // Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
-
-                       $Projects->Edit($_POST['nameOfProject'], $_POST['ProjectContent']) ; 
-                        echo ("<p class='notification' style='background-color: green;' >Project updating.</p>");
+                        // Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
+                        if ($Projects->Edit($_POST["saveProject"],$_POST['nameOfProject'], $_POST['ProjectContent'])) {
+                            echo ("<p class='notification' style='background-color: green;' >Project updating.</p>");
+                        }
+                        else {
+                            echo ("<p class='notification' style='background-color: red;' >failure of the project update</p>");
+                        }
                     }
                 }
                 $listOfProjects =  Utility::getAllNames($bdd, "tbl_projects");
@@ -220,16 +210,18 @@ Old version of this part of code
                 }
             } else {
 
-                $dataOfProjects = Utility::getData($bdd, $_POST['chooseProject'], "tbl_projects");
+                $data = $Projects->GetAllPosts();
+
+                //Utility::getData($bdd, $_POST['chooseProject'], "tbl_projects");
 
                 echo ("
 
-        <h3 class='titleOfWebsiteOverview'>Edit " . $dataOfProjects[0]["title"] . "</h3>
+        <h3 class='titleOfWebsiteOverview'>Edit " . $data[0]["title"] . "</h3>
         <div class='contact-form setting'>
         
         <form action='' method='post'>
         <label>Project Title</label>
-        <input name='nameOfProject' type='text' value='" . $dataOfProjects[0]["title"] . "' required>
+        <input name='nameOfProject' type='text' value='" . $data[0]["title"] . "' required>
 
            
         
@@ -240,7 +232,7 @@ Old version of this part of code
         <div class='container'>
 
             <div class='plain'>
-                <textarea name='ProjectContent' data-el='input0'>" . $dataOfProjects[0]["fullTextOfProject"] . "</textarea>
+                <textarea name='ProjectContent' data-el='input0'>" . $data[0]["fullTextOfProject"] . "</textarea>
             </div>
             <div class='text'>
                 <div data-el='output0'></div>
@@ -251,20 +243,20 @@ Old version of this part of code
         </p>
 
         <p>
-            <button style='margin-bottom: 2vh'name='saveProject' value='" . $dataOfProjects[0]["title"] . "' type='submit'>Save</button>
+            <button style='margin-bottom: 2vh'name='saveProject' value='".$data[0]["title"]."' type='submit'>Save</button>
             <button value='submit' type='submit'>Cancel</button>
             </p>
         </form>
             <form action='' method='POST'>
 
-            <button style='margin-bottom: 2vh' name='removeProject' value='" . $dataOfProjects[0]["title"] . "' type='submit'>Delete</button>
+            <button style='margin-bottom: 2vh' name='removeProject' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
 
             </form>
         
     ");
             }
         }
-?>
+        ?>
 
     </div>
 

@@ -10,6 +10,9 @@ require_once(__DIR__."/config.php");
 require_once(__DIR__."/librairies/Parsedown.php");
 require_once(__DIR__."/librairies/Utility.php");
 require_once(__DIR__."/librairies/Projects.php");
+require_once(__DIR__."/librairies/Logs.php");
+
+
 //__DIR__ .
 
 try {
@@ -28,6 +31,10 @@ catch (PDOException $e) {
         die($e->getMessage()); 
     }
 }
+
+
+
+
 
 if (!Utility::bddExists($bdd)) {
 
@@ -79,7 +86,9 @@ else {
 // initialize object
 
 $Parsedown = new Parsedown();
+
 $Projects = new Projects($bdd);
+$Logs = new Logs($bdd);
 
 // for Languages
 
