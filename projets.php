@@ -20,7 +20,8 @@
     <?php
       echo(Utility::getHeader($config["redirection"]["return"], "My Projects", "All my projects")) ;
       echo("<div id='listeDesProjets'>") ; 
-      $allProjects = Utility::getAllData($bdd, "tbl_projects");
+      $allProjects = $Projects->GetAllPosts(); 
+      
       $i = 0 ; 
 
       if ( count($allProjects) > 0) {

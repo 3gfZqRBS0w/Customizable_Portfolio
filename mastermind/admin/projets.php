@@ -54,11 +54,15 @@ ini_set("display_errors", 1);
                         if ($size <= $config["stockage"]["maxProfileSize"]) {
                             $uniqueName = uniqid('', true);
                             $fileName = $uniqueName . "." . $extension;
-                            if ($Projects->New($projetName, $fileName)) {
-                                move_uploaded_file($tmpName, '../../upload/' . $fileName);
-                                echo ("<p class='notification' style='background-color: green;' >" . $config["translations"]["selected"]["notification"]["projectAdded"] . "</p>");
+                            if (strlen($projetName) > 0 && strlen($projetName) < 30) {
+                                if ($Projects->New($projetName, $fileName)) {
+                                    move_uploaded_file($tmpName, '../../upload/' . $fileName);
+                                    echo ("<p class='notification' style='background-color: green;' >" . $config["translations"]["selected"]["notification"]["projectAdded"] . "</p>");
+                                } else {
+                                    echo ("<p class='notification' style='background-color: red;' >Already existing project</p>");
+                                }   
                             } else {
-                                echo ("<p class='notification' style='background-color: red;' >Already existing project</p>");
+                                echo ("<p class='notification' style='background-color: red;' >The title must contain maximum 30 characters .</p>");
                             }
                             //older method : Utility::addNewProject($bdd, $projetName, $fileName);
                         } else {
@@ -179,18 +183,18 @@ Old version of this part of code
         <div class='contact-form setting'>
         ");
 
-                if (isset($_POST['saveProject'])) {
-                    if (isset($_POST['nameOfProject']) && isset($_POST['ProjectContent'])) {
-                        // Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
-                        if ($Projects->Edit($_POST["saveProject"],$_POST['nameOfProject'], $_POST['ProjectContent'])) {
-                            echo ("<p class='notification' style='background-color: green;' >Project updating.</p>");
-                        }
-                        else {
-                            echo ("<p class='notification' style='background-color: red;' >failure of the project update</p>");
-                        }
-                    }
+        if (isset($_POST['saveProject'])) {
+            if (isset($_POST['nameOfProject']) && isset($_POST['ProjectContent'])) {
+                // Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
+                if ($Projects->Edit($_POST["saveProject"],$_POST['nameOfProject'], $_POST['ProjectContent'])) {
+                    echo ("<p class='notification' style='background-color: green;' >Project updating.</p>");
                 }
-                $listOfProjects =  Utility::getAllNames($bdd, "tbl_projects");
+                else {
+                    echo ("<p class='notification' style='background-color: red;' >failure of the project update</p>");
+                }
+            }
+        }
+                $listOfProjects =  $Projects->GetAllPosts() ; 
 
                 if (count($listOfProjects) > 0) {
                     foreach ($listOfProjects as $projet) {

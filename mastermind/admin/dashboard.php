@@ -17,6 +17,7 @@
     require_once("../../init.php");
     if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
         header('Location: ../index.php');
+        exit() ;
         //die("<h1><b>Vous n'êtes pas connecté !</b></h1>") ;
 
     }

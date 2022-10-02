@@ -14,6 +14,7 @@
 
     if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
         header('Location: ../index.php');
+        exit() ;
         //die("<h1><b>Vous n'êtes pas connecté !</b></h1>") ;
 
     }
@@ -28,14 +29,22 @@
     <div class="websiteOverview">
         <h3 class="titleOfWebsiteOverview">Add Article</h3>
         <?php
+
+
         if (isset($_POST["articleTitle"])) {
             $articleTitle = $_POST["articleTitle"];
-            if (strlen($articleTitle) > 0 && strlen($articleTitle) < 50) {
-                Utility::addNewArticle($bdd, $articleTitle);
-                echo ("<p class='notification' style='background-color: green;' >Article added</p>");
-                // success
+    
+            if (strlen($articleTitle) > 0 && strlen($articleTitle) < 30) {
+                if ($Articles->New($articleTitle)) {
+                    echo ("<p class='notification' style='background-color: green;' >Article added</p>");
+                }
+                else {
+                    echo ("<p class='notification' style='background-color: green;' >Already existing article</p>");
+
+                }
+               // Utility::addNewArticle($bdd, $articleTitle);
             } else {
-                echo ("<p class='notification' style='background-color: red;' >The title must contain maximum 50 characters .</p>");
+                echo ("<p class='notification' style='background-color: red;' >The title must contain maximum 30 characters .</p>");
             }
         }
         ?>
@@ -62,20 +71,36 @@
     <div class="websiteOverview">
         
             <?php
-            $listOfProjects =  Utility::getAllNames($bdd, "tbl_articles");
+
+if (!isset($_POST['chooseProject'])) {
+
+    echo("<h3 class='titleOfWebsiteOverview'>Choose your article</h3>
+    <div class='contact-form setting'>") ; 
+
+    if (isset($_POST['saveArticle'])) {
+        if (isset($_POST['articleContent']) && $_POST['newTitle']) {
+            if ($Articles->Edit($_POST['saveArticle'],$_POST['newTitle'],$_POST['articleContent'] )) {
+                echo ("<p class='notification' style='background-color: green;' >Article update.</p>");
+            }
+            else {
+                echo ("<p class='notification' style='background-color: red;' >failure of the article update</p>");
+            }
+        }
+        
+    }
 
 
-            if (!isset($_POST['chooseProject'])) {
-                if (count($listOfProjects) > 0) {
-                    foreach ($listOfProjects as $projet) {
+            $data =  $Articles->GetAllPosts();
+
+          
+
+                if (count($data) > 0) {
+                    foreach ($data as $post) {
                         echo ("
-
-                        <h3 class='titleOfWebsiteOverview'>Choose your article</h3>
-        <div class='contact-form setting'>
             <form action='' method='POST'>
              <div class='projetPreview'>
-              <p>" . $projet["title"] . "</p>
-              <button name='chooseProject'value='" . $projet["title"] . "' type='submit'>Edit</button>
+              <p>" . $post["title"] . "</p>
+              <button name='chooseProject'value='" . $post["title"] . "' type='submit'>Edit</button>
              </div> 
             </form>
             ");
@@ -87,24 +112,25 @@
                 }
             } else {
 
-                $dataOfProjects = Utility::getData($bdd, $_POST['chooseProject'], "tbl_articles");
+               // $data = Utility::getData($bdd, $_POST['chooseProject'], "tbl_articles");
 
+               $data = $Articles->getPost($_POST['chooseProject']) ;
                 echo ("
 
-                <h3 class='titleOfWebsiteOverview'>Edit ".$dataOfProjects[0]["title"]." </h3>
+                <h3 class='titleOfWebsiteOverview'>Edit ".$data[0]["title"]." </h3>
 
         
         <div class='contact-form setting'>
         
         <form action='' method='post'>
         <label>Project Title</label>
-        <input name='nameOfProject' type='text' value='" . $dataOfProjects[0]["title"] . "' required>
+        <input name='newTitle' type='text' value='" . $data[0]["title"] . "' required>
             <label>Article Content</label>
 
         <div class='container'>
 
             <div class='plain'>
-                <textarea name='ProjectContent' data-el='input0'>" . $dataOfProjects[0]["fullTextOfArticles"] . "</textarea>
+                <textarea name='articleContent' data-el='input0'>" . $data[0]["fullTextOfArticles"] . "</textarea>
             </div>
             <div class='text'>
                 <div data-el='output0'></div>
@@ -115,13 +141,13 @@
         </p>
 
         <p>
-            <button style='margin-bottom: 2vh'name='saveProject' value='" . $dataOfProjects[0]["title"] . "' type='submit'>Save</button>
+            <button style='margin-bottom: 2vh' name='saveArticle' value='" . $data[0]["title"] . "' type='submit'>Save</button>
             <button value='submit' type='submit'>Cancel</button>
             </p>
         </form>
             <form action='' method='POST'>
 
-            <button style='margin-bottom: 2vh' name='removeProject' value='" . $dataOfProjects[0]["title"] . "' type='submit'>Delete</button>
+            <button style='margin-bottom: 2vh' name='removeProject' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
 
             </form>
         
@@ -136,6 +162,9 @@
 
 </body>
 
+<script src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js'></script>
+<script src="../../script/markdown.js"></script>
 <script src="../../script/app.js"></script>
 
 </html>

@@ -22,7 +22,8 @@ require_once("../init.php");
 <body>
   <?php
   if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
-    header('Location: admin/dashboard.php');
+
+      header('Location: admin/dashboard.php');
   } 
   else {
     echo (Utility::getHeader($config["redirection"]["return2"], $config["translations"]["selected"]["admin"]["adminArea"],  $config["translations"]["selected"]["admin"]["loginSubtitle"]));

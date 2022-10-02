@@ -48,7 +48,6 @@ require_once(__DIR__."/init.php");
                 <div class="w3-container">
                     <div class="zigzag-timeline__item">
                         <div>
-
                         </div>
                         <h3>School #1</h3>
                         <div class="zigzag-timeline__milestone">Future</div>
@@ -227,35 +226,56 @@ require_once(__DIR__."/init.php");
             </div>
 
         </div>
-        <div class="bloc" id="bloc5">
-            <div class="categoryTitle">
+        
+
+            <?php
+            
+            $allArticle = $Articles->GetAllPosts();
+
+
+            if ( count($allArticle) > 0) {
+                echo("<div class='bloc' id='bloc5'>
+            <div class='categoryTitle'>
                 <h2>My latest articles</h2>
-                <hr style="width: 80%;">
+                <hr style='width: 80%;'>
             </div>
-            <div class="veilleTechnologique">
+            <div class='veilleTechnologique'>") ; 
+            $i = 0 ;
+            
+            foreach ( $allArticle as $Article ) {
+                if ($i < 3) {
+
+                    echo("
+                    <div class='articleVeille'>
+                    <h3><a>➔ ".$Article["title"]."</a></h3>
+                    <hr>
+                    <p>".substr($Article["fullTextOfArticles"],0,692) ."...</p>
+                </div>
+                    ") ; 
+                    
+                    $i++ ;
+                }
+                else {
+                    break ; 
+                }
+                
+            }
+
+
+            echo("</div>
+            </div>") ; 
+            }
+            ?>
+
+                <!--
                 <div class="articleVeille">
                     <h3><a>➔ Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h3>
                     <hr>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet mattis vulputate enim nulla. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Vestibulum lectus mauris ultrices eros in. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ornare suspendisse sed nisi lacus sed. Nullam eget felis eget nunc lobortis. Augue mauris augue neque gravida in fermentum et sollicitudin ac. Euismod elementum nisi quis eleifend. Id faucibus nisl tincidunt eget nullam. Purus gravida quis blandit turpis cursus in hac habitasse platea. Aliquam etiam erat velit scelerisque. Tellus elementum sagittis vitae et leo duis ut diam quam. Dui faucibus in ornare quam. Iaculis at erat pellentesque adipiscing commodo elit.</p>
                 </div>
 
-
-
-
-                <div class="articleVeille">
-                    <h3><a>➔ Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h3>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet mattis vulputate enim nulla. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Vestibulum lectus mauris ultrices eros in. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ornare suspendisse sed nisi lacus sed. Nullam eget felis eget nunc lobortis. Augue mauris augue neque gravida in fermentum et sollicitudin ac. Euismod elementum nisi quis eleifend. Id faucibus nisl tincidunt eget nullam. Purus gravida quis blandit turpis cursus in hac habitasse platea. Aliquam etiam erat velit scelerisque. Tellus elementum sagittis vitae et leo duis ut diam quam. Dui faucibus in ornare quam. Iaculis at erat pellentesque adipiscing commodo elit.</p>
-                </div>
-
-
-                <div class="articleVeille">
-                    <h3><a>➔ Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h3>
-                    <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet mattis vulputate enim nulla. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Vestibulum lectus mauris ultrices eros in. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ornare suspendisse sed nisi lacus sed. Nullam eget felis eget nunc lobortis. Augue mauris augue neque gravida in fermentum et sollicitudin ac. Euismod elementum nisi quis eleifend. Id faucibus nisl tincidunt eget nullam. Purus gravida quis blandit turpis cursus in hac habitasse platea. Aliquam etiam erat velit scelerisque. Tellus elementum sagittis vitae et leo duis ut diam quam. Dui faucibus in ornare quam. Iaculis at erat pellentesque adipiscing commodo elit.</p>
-                </div>
-            </div>
-        </div>
+        -->
+            
 
         <div class="bloc" id="bloc5">
             <div class="categoryTitle">

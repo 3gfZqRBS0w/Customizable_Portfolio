@@ -57,7 +57,6 @@ class Utility
 
   public static function addNewArticle($pdo, $articleTitle) 
   {
-  //  $query = "INSERT INTO tbl_articles(title, publicationDate) VALUES(".$pdo->quote($articleTitle).", NOW()) ;" ; 
 
   $stmt = $pdo->prepare("INSERT INTO tbl_articles(title, publicationDate, fullTextOfArticles) VALUES(".$pdo->quote($articleTitle).", NOW(), 'hello');") ;
   $stmt->execute();
@@ -76,6 +75,7 @@ class Utility
     $stmt = $pdo->prepare($query);
     $stmt->execute();
   }
+
 
   public static function deleteData($pdo, $title, $tbl)
   {
@@ -350,6 +350,35 @@ class Utility
     </div>
     ");
   }
+
+
+  static function getQRCodePage($clientKey, $translation)
+  {
+    return ("
+    <div class='blocv2'>
+      <div class='formConnection'>
+        <div class='contact-form'>
+          <form action='' method='POST'>
+              <label>" . $translation["admin"]["secretCode"] . " </label>
+              <input minlength='6' maxlength='6' value='000000' type='text' placeholder='QRCODE' name='qrCode' required>
+              <div class='g-recaptcha' data-sitekey=$clientKey></div>
+            </p>
+            <a href='resetPassword.php'>" . $translation["admin"]["forgotPassword"] . "</a>
+            <p>
+              <button>" . $translation["submit"] . "</button>
+            </p>
+          </form>
+        </div>
+      </div>
+      <div>
+        <img src='../assets/login.png'>
+      </div>
+    </div>
+
+    </div>
+    ");
+  }
+
 
   static function getResetPasswordPage($clientKey, $translation)
   {

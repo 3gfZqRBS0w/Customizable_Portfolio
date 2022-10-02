@@ -19,11 +19,55 @@ abstract class Post {
     abstract public function New($title, $picture) ;
     abstract public function Remove($title) ;
     abstract public function Edit($oldtitle, $title, $text) ;
-    abstract public function GetAllPosts() ;
-    abstract public function GetPostsNames() ;
-    abstract public function GetPost($title) ;
     abstract protected function GetPostNumber() ; 
-    abstract protected function PostExists($title) ;
+
+    protected function PostExists($title)
+    {
+
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . ";");
+        $stmt->execute();
+        $res = $stmt->fetch()["COUNT(*)"];
+
+        if ($res  == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function GetPostsNames()
+    {
+        $stmt = $this->pdo->prepare("SELECT title FROM $this->tableName ;");
+        $stmt->execute();
+        $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $resultat;
+    }
+
+
+
+    public function  GetAllPosts()
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->tableName ;");
+        $stmt->execute();
+        $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $resultat;
+    }
+
+    public function GetPost($title)
+    {
+        if ($this->CheckLengthTitle($title)) {
+            $stmt = $this->pdo->prepare("SELECT * FROM $this->tableName WHERE title=" . $this->pdo->quote($title) . " ;");
+            $stmt->execute();
+            $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $resultat;
+        }
+        return array();
+    }
+
+
 
     protected function CheckLengthTitle($title) {
         if ( strlen($title) > 0 && strlen($title) < 32 ) {

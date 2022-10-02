@@ -10,7 +10,10 @@ require_once(__DIR__."/config.php");
 require_once(__DIR__."/librairies/Parsedown.php");
 require_once(__DIR__."/librairies/Utility.php");
 require_once(__DIR__."/librairies/Projects.php");
+require_once(__DIR__."/librairies/Articles.php");
 require_once(__DIR__."/librairies/Logs.php");
+require_once(__DIR__."/librairies/Owner.php");
+require_once(__DIR__."/vendor/autoload.php"); 
 
 
 //__DIR__ .
@@ -51,7 +54,6 @@ if (!Utility::bddExists($bdd)) {
         $stmt = $bdd->prepare("INSERT INTO tbl_actions(titre_action) VALUES('".$value."')") ;
         $stmt->execute();
     }
-
     $query = "UPDATE tbl_owner SET secretCode = '$hash' ;" ;
     $stmt = $bdd->prepare($query) ;
     $stmt->execute();
@@ -86,9 +88,15 @@ else {
 // initialize object
 
 $Parsedown = new Parsedown();
-
 $Projects = new Projects($bdd);
+$Articles = new Articles($bdd);
+$Owner = new Owner($bdd);
 $Logs = new Logs($bdd);
+
+use OTPHP\TOTP ;
+
+
+$otp = TOTP::create("JGCMUMLKXNAJRKF2PUEPACUF7TDPKNETVIV5VFSTSEJ6ZAN6LMFQBTUUEKHIFB6J7A3DCLGWX2E5J454IUIX53O6NHTQLJBCDCRELLY");
 
 // for Languages
 

@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS tbl_owner (
     surName VARCHAR(50) NOT NULL,
     secretCode CHAR(255),
     nameOfWebsite VARCHAR(50) NOT NULL,
-    websiteSubtitble VARCHAR(50) NOT NULL
+    websiteSubtitble VARCHAR(50) NOT NULL,
+    qrcodeCheck BOOLEAN DEFAULT 0,
+    mailCheck BOOLEAN DEFAULT 0
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_logs (
@@ -49,6 +51,7 @@ CREATE TABLE IF NOT EXISTS tbl_projects (
     title VARCHAR(50) NOT NULL,
     photoName VARCHAR(255) NOT NULL,
     fullTextOfProject TEXT NOT NULL,
+    PRIMARY KEY(title),
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID),
     FOREIGN KEY (fk_careerID) REFERENCES tbl_careers (careerID),
     FOREIGN KEY (fk_articleID) REFERENCES tbl_articles(articleID)
