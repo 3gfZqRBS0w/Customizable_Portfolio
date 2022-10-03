@@ -5,6 +5,8 @@ require_once("../init.php");
 
 
 
+
+
 ?>
 
 
@@ -25,6 +27,8 @@ require_once("../init.php");
         $attempt= $_POST["qrCode"] ; 
         if (strlen($_POST["qrCode"]) == 6) {
             if ($otp->verify($attempt)) {
+
+                $_SESSION['qrCode'] = true ;
                 echo("<p class='notification' style='background-color: green;' >Bon code</p>") ;
                 header("Refresh: 5;url=index.php");
             }

@@ -23,10 +23,11 @@ class Owner {
         $stmt = $this->pdo->prepare("SELECT qrcodeCheck FROM $this->tableName WHERE 1 ;") ;
         $stmt->execute() ;
         $res =  $stmt->fetch() ;
-        if ($res[0]) {
-            return false ;
+
+        if ($res[0] == 1) {
+            return true ;
         }
-        return true ; 
+        return false ; 
     }
 
     public function CheckMail() {

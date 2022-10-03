@@ -21,8 +21,14 @@ require_once("../init.php");
 
 <body>
   <?php
+  
   if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
+    if ($Owner->CheckQRCode() && !isset($_SESSION["qrCode"])) {
+      header('Location: 2fa.php');
+    }
+    else {
       header('Location: admin/dashboard.php');
+    }
   } 
   else {
     echo (Utility::getHeader($config["redirection"]["return2"], $config["translations"]["selected"]["admin"]["adminArea"],  $config["translations"]["selected"]["admin"]["loginSubtitle"]));
@@ -45,7 +51,7 @@ require_once("../init.php");
             if (hash('sha256', $_POST["password"]) == Utility::getOwnerData($bdd, "secretCode")) {
               $_SESSION['codeSecret'] = $_POST["password"];
               echo ("<p class='notification' style='position: absolute;background-color: green;'>Mot de passe correct. redirection dans cinq secondes </p>");
-              if ( $Owner->CheckQRCode()) {
+              if ( !$Owner->CheckQRCode()) {
                 header("Refresh: 5;url=index.php");
               } else {
                 header("Refresh: 5;url=2fa.php");

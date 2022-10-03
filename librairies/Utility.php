@@ -363,7 +363,6 @@ class Utility
               <input minlength='6' maxlength='6' value='000000' type='text' placeholder='QRCODE' name='qrCode' required>
               <div class='g-recaptcha' data-sitekey=$clientKey></div>
             </p>
-            <a href='resetPassword.php'>" . $translation["admin"]["forgotPassword"] . "</a>
             <p>
               <button>" . $translation["submit"] . "</button>
             </p>

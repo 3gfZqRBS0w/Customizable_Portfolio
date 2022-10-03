@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__."/init.php");
+
 ?>
 
 
@@ -18,7 +19,10 @@ require_once(__DIR__."/init.php");
 <body>
     <?php
     session_start();
-    if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
+    
+
+
+    if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]) && ($Owner->CheckQRCode() || isset($_SESSION["qrCode"]))) {
         echo (Utility::getHeader($config["redirection"]["admin"], Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
     } else {
         echo (Utility::getHeader($config["redirection"]["default"], Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));

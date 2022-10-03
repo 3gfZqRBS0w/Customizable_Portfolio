@@ -11,12 +11,10 @@
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
     require_once("../../init.php");
+    print_r($_SESSION) ;
 
-    if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
-        header('Location: ../index.php');
-        exit() ;
-        //die("<h1><b>Vous n'êtes pas connecté !</b></h1>") ;
-
+    if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]) && ( !$Owner->CheckQRCode() || isset($_SESSION["qrCode"])) )) {
+            header('Location: ../../index.php');
     }
     ?>
     <link rel="stylesheet" type="text/css" href="../../styles/main.css">
