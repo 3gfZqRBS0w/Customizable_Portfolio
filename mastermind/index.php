@@ -22,7 +22,6 @@ require_once("../init.php");
 <body>
   <?php
   if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"])) {
-
       header('Location: admin/dashboard.php');
   } 
   else {
@@ -44,10 +43,16 @@ require_once("../init.php");
         if (isset($_POST["password"])) {
           if (!Utility::potentiallyBruteForceAttack($bdd, $ip)) {
             if (hash('sha256', $_POST["password"]) == Utility::getOwnerData($bdd, "secretCode")) {
-              echo ("<p class='notification' style='position: absolute;background-color: green;'>Mot de passe correct. redirection dans cinq secondes </p>");
               $_SESSION['codeSecret'] = $_POST["password"];
+              echo ("<p class='notification' style='position: absolute;background-color: green;'>Mot de passe correct. redirection dans cinq secondes </p>");
+              if ( $Owner->CheckQRCode()) {
+                header("Refresh: 5;url=index.php");
+              } else {
+                header("Refresh: 5;url=2fa.php");
+              }
+              
               Utility::addlog($bdd, 3);
-              header("Refresh: 5;url=index.php");
+              
             } 
             else {
               echo ("<p class='notification' style='position: absolute;background-color: red;' >Mot de passe incorrect.</p>");

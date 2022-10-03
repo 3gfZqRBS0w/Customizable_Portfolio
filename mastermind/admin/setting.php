@@ -12,10 +12,10 @@ ini_set("display_errors", 1);
 
 require_once("../../init.php");
 if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]))) {
-    header('Location: ../index.php');
-    exit() ; 
-    //die("<h1><b>Vous n'êtes pas connecté !</b></h1>") ;
-    
+    if (!$Owner->CheckQRCode() || isset($_SESSION["codeSecret"])) {
+        header('Location: ../index.php');
+    exit() ;
+    } 
 }
 ?>
 
@@ -80,7 +80,7 @@ if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION
 
 
 
-if ($Owner->CheckQRCode()) {
+if (!$Owner->CheckQRCode()) {
 
    
 
@@ -103,7 +103,7 @@ if ($Owner->CheckQRCode()) {
 
             }
             else {
-                echo("<p class='notification' style='background-color: red;' >Mauvais code".$otp->now()."</p>") ;
+                echo("<p class='notification' style='background-color: red;' >Mauvais code</p>") ;
             }
         }
         else {
@@ -140,12 +140,7 @@ if ($Owner->CheckQRCode()) {
     
     ") ; 
 }
- 
-
-
-
-
-    ?>
+ ?>
 
 </body>
 
