@@ -24,8 +24,8 @@ class Projects extends Post
 
     public function Edit($oldtitle,$title, $text)
     {
-        if ($this->CheckLengthTitle($title)) {
-            if ($this->PostExists($oldtitle) and !$this->PostExists($title)) {
+        if ($this->CheckLengthTitle($title)) {  
+            if ( $oldtitle==$title || ($this->PostExists($oldtitle) and !$this->PostExists($title)) ) {
                 $stmt = $this->pdo->prepare("UPDATE " . $this->tableName . " SET title = " . $this->pdo->quote($title) . ", fullTextOfProject = " . $this->pdo->quote($text) . " WHERE title = " . $this->pdo->quote($oldtitle) . ";");
                 $stmt->execute();
                 return true;

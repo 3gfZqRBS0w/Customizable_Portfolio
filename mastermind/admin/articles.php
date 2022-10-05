@@ -11,7 +11,6 @@
     error_reporting(E_ALL);
     ini_set("display_errors", 1);
     require_once("../../init.php");
-    print_r($_SESSION) ;
 
     if (!(isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]) && ( !$Owner->CheckQRCode() || isset($_SESSION["qrCode"])) )) {
             header('Location: ../../index.php');

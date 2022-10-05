@@ -1,10 +1,7 @@
 <?php
-
-
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-//R1nS5406fOUp4XjELKoEL[BV6BNH3pC91?0eiIqS1IZCt)cgVdUAaJkmcL7cT3iKxn!FKB]f7t0Ezw]U9J!B9Y9A9f!o1IwRxE!8IrmbQYy]UX-HoX)02wGX5jpU4o3*L.na1UHP-LqyAYJnxT9C0zPWEx.2k!.!7MKOu(RxZ[6jmEBo?1mmpP0NxxAj8jg-4p54Qpr*)5zHaIHGc[eXCd?du*73T-3wzR
 
 require_once(__DIR__."/config.php");
 require_once(__DIR__."/librairies/Parsedown.php");
@@ -14,9 +11,6 @@ require_once(__DIR__."/librairies/Articles.php");
 require_once(__DIR__."/librairies/Logs.php");
 require_once(__DIR__."/librairies/Owner.php");
 require_once(__DIR__."/vendor/autoload.php"); 
-
-
-//__DIR__ .
 
 try {
     $bdd = new PDO("mysql:host=".$config["db"]["host"].";dbname=".$config["db"]["bddName"].";charset=utf8", $config["db"]["username"], $config["db"]["password"]) ;
@@ -38,11 +32,11 @@ catch (PDOException $e) {
 
 
 
-
 if (!Utility::bddExists($bdd)) {
 
     $password = Utility::generatePassword(rand(16,255));
-    $hash = hash('sha256', $password); 
+    $hash = hash('sha256', $password);
+
 
 
 // creation of the tables of the database
@@ -54,10 +48,14 @@ if (!Utility::bddExists($bdd)) {
         $stmt = $bdd->prepare("INSERT INTO tbl_actions(titre_action) VALUES('".$value."')") ;
         $stmt->execute();
     }
-    $query = "UPDATE tbl_owner SET secretCode = '$hash' ;" ;
-    $stmt = $bdd->prepare($query) ;
+
+
+
+
+    $stmt = $bdd->prepare("INSERT INTO tbl_owner(lastName, surName, nameOfWebsite, websiteSubtitble, secretCode, secretQrCode) VALUES('LASTNAME', 'FIRSTNAME', 'PORTFOLIO OF LASTNAME FIRSTNAME','SUBTITLE','".$hash."', '".$otp->create()->getSecret()."')") ;
     $stmt->execute();
     $stmt->closeCursor() ;
+
 
     Utility::addlog($bdd,1) ;
     
@@ -95,8 +93,7 @@ $Logs = new Logs($bdd);
 
 use OTPHP\TOTP ;
 
-
-$otp = TOTP::create("JGCMUMLKXNAJRKF2PUEPACUF7TDPKNETVIV5VFSTSEJ6ZAN6LMFQBTUUEKHIFB6J7A3DCLGWX2E5J454IUIX53O6NHTQLJBCDCRELLY");
+$otp = TOTP::create($Owner->GetQRSecret());
 
 // for Languages
 

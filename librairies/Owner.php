@@ -30,6 +30,13 @@ class Owner {
         return false ; 
     }
 
+    public function GetQRSecret() {
+        $stmt = $this->pdo->prepare("SELECT secretQrCode FROM tbl_owner WHERE 1 ; ") ;
+        $stmt->execute() ;
+
+        return $stmt->fetch()["secretQrCode"] ;
+    }
+
     public function CheckMail() {
         $stmt = $this->pdo->prepare("SELECT qrcodeCheck FROM $this->tableName WHERE 1 ;") ;
         $stmt->execute() ; 

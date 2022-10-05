@@ -108,7 +108,9 @@ if (!$Owner->CheckQRCode()) {
         }
     }
 
+
     echo("
+    
     
     <div class='contact-form setting'>
         <form action='' method='post'>
@@ -122,7 +124,11 @@ if (!$Owner->CheckQRCode()) {
 
                 <label>Code</label>
                 <input minlength='6' maxlength='6' value='000000' type='text' placeholder='QRCODE' name='qrCode' required>
+                <label>Secret Message for reset 2FA</label>
+                ".$Owner->GetQRSecret()."
                 </div>
+
+
 
                 <div>
                 <img id='qrcode' src='$link'_urlalt=''>
@@ -136,6 +142,37 @@ if (!$Owner->CheckQRCode()) {
 </div>
     
     ") ; 
+}
+else {
+    echo("
+
+        
+    <div class='websiteOverview'>
+    <h3 class='titleOfWebsiteOverview'>2FA Setup</h3>
+    
+    <div class='contact-form setting'>
+        <form action='' method='post'>
+        <p>
+                <label>2FA</label>
+                
+            </p>
+            <div class='container'>
+                <div>
+                <p>To disable dual authentication you must enter the secret key</p>
+
+                <label>Code</label>
+                <input minlength='1' maxlength='255' type='text' placeholder='QRCODE' name='qrCode' required>
+                </div>
+            </div>
+            <p>
+            <button type='submit'>Save</button>
+        </p>
+        </form>
+    </div>
+</div>
+    
+    ") ; 
+
 }
  ?>
 

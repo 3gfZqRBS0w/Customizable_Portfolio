@@ -309,6 +309,22 @@ class Utility
       ");
   }
 
+  static function displayPreviewArticle($name, $text) {
+    echo("
+
+    <form action='article.php' method='POST'>
+    <input style='display: none;' name='titleOfArticle' value='$name'></input>
+    <a onclick='this.parentNode.submit()'>
+    <div class='articleVeille'>
+    <h3>$name</h3>
+    <hr>
+    <p>".substr($text,0,692) ."...</p>
+</div>
+    </a>
+</form>
+    ") ; 
+  }
+
   static function getInstallMessages($pass)
   {
 

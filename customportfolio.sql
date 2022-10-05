@@ -1,3 +1,5 @@
+START TRANSACTION;
+
 CREATE TABLE IF NOT EXISTS tbl_actions (
     id_action INT NOT NULL AUTO_INCREMENT,
     titre_action VARCHAR(255) NOT NULL,
@@ -9,6 +11,7 @@ CREATE TABLE IF NOT EXISTS tbl_owner (
     lastName VARCHAR(50) NOT NULL,
     surName VARCHAR(50) NOT NULL,
     secretCode CHAR(255),
+    secretQrCode VARCHAR(255) NOT NULL,
     nameOfWebsite VARCHAR(50) NOT NULL,
     websiteSubtitble VARCHAR(50) NOT NULL,
     qrcodeCheck BOOLEAN DEFAULT 0,
@@ -26,14 +29,20 @@ CREATE TABLE IF NOT EXISTS tbl_logs (
 
 
 CREATE TABLE IF NOT EXISTS tbl_careers (
-    careerID INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     typeOfCareer VARCHAR(50) NOT NULL, 
-    titleOfEvent VARCHAR(50) NOT NULL,
-    eventTextPath VARCHAR(255) NOT NULL,
-    ImagesPath VARCHAR(255) NOT NULL,
     fk_logsID INT,
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
 ) ;
+
+CREATE TABLE IF NOT EXISTS tbl_carreersEvent (
+     titleOfEvent VARCHAR(50) NOT NULL,
+     eventText VARCHAR(255) NOT NULL,
+     startDate DATE,
+     endDate DATE,
+     fk_idCareer INT NOT NULL,
+     FOREIGN KEY (fk_idCareer) REFERENCES tbl_careers(id) 
+) ; 
 
 CREATE TABLE IF NOT EXISTS tbl_articles (
     articleID INT PRIMARY KEY AUTO_INCREMENT,
@@ -53,7 +62,7 @@ CREATE TABLE IF NOT EXISTS tbl_projects (
     fullTextOfProject TEXT NOT NULL,
     PRIMARY KEY(title),
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID),
-    FOREIGN KEY (fk_careerID) REFERENCES tbl_careers (careerID),
+    FOREIGN KEY (fk_careerID) REFERENCES tbl_careers (id),
     FOREIGN KEY (fk_articleID) REFERENCES tbl_articles(articleID)
 );
 
@@ -66,12 +75,4 @@ CREATE TABLE IF NOT EXISTS tbl_contacts (
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
 ) ;
 
-
--- Insert default values
-/*
-INSERT INTO tbl_actions(tit);re_action) VALUES("Installation du site Internet"),("Tentative échouée de connexion"),("Connexion au Panel Réussis"), ("Visite de la page"),("Mise a jour du profil utilisateur"), ("Changement de la photo de profil"), ("Mise a jour du contene stat);ique") ;
-);
-*/
-INSERT INTO tbl_owner(lastName, surName, nameOfWebsite, websiteSubtitble) 
-VALUES ("LASTNAME", "FIRSTNAME", "PORTFOLIO OF LASTNAME FIRSTNAME","SUBTITLE");
-
+COMMIT;

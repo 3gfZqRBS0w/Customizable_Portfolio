@@ -1,6 +1,9 @@
 <?php
 require_once(__DIR__."/init.php");
-
+/*
+$abc = $otp->create();
+echo "The OTP secret is: {$abc->getSecret()}\n";    
+*/
 ?>
 
 
@@ -248,14 +251,7 @@ require_once(__DIR__."/init.php");
             
             foreach ( $allArticle as $Article ) {
                 if ($i < 3) {
-
-                    echo("
-                    <div class='articleVeille'>
-                    <h3><a>➔ ".$Article["title"]."</a></h3>
-                    <hr>
-                    <p>".substr($Article["fullTextOfArticles"],0,692) ."...</p>
-                </div>
-                    ") ; 
+                    Utility::displayPreviewArticle($Article["title"],$Article["fullTextOfArticles"] ) ; 
                     
                     $i++ ;
                 }
