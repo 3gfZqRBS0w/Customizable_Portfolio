@@ -69,19 +69,7 @@ if (!Utility::bddExists($bdd)) {
 
     die(Utility::getInstallMessages($password)) ;
 }
-else {
-    if (!Utility::tableIsEmpty($bdd, "tbl_projects")) {
-        $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["myprojects"]] = "#bloc3" ; 
-    }
 
-    if (!Utility::tableIsEmpty($bdd, "tbl_articles")) {
-        $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["article"]] = "#bloc5" ; 
-    }
-
-    if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
-        $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["skills"]] = "#bloc4";
-    }
-}
 
 // initialize object
 
@@ -91,37 +79,11 @@ $Articles = new Articles($bdd);
 $Owner = new Owner($bdd);
 $Logs = new Logs($bdd);
 
+
+
 use OTPHP\TOTP ;
 
 $otp = TOTP::create($Owner->GetQRSecret());
-
-// for Languages
-
-if ( isset($_REQUEST["lang"]) ) {
-    if (is_array($config["translations"][$_REQUEST["lang"]])) {
-        $lang = $_REQUEST["lang"] ;
-        $config["translations"]["selected"] = $config["translations"][$lang] ;
-        setcookie("lang", $lang, time() + (86400 * 30), "/");
-    }
-}
-else {
-    if (isset($_COOKIE["lang"])) {
-        if (is_array($config["translations"][$_COOKIE["lang"]])) {
-            $lang = $_COOKIE["lang"] ; 
-            $config["translations"]["selected"] = $config["translations"][$lang] ;
-        }
-    }
-}
-
-// for check if is visitor
-
-
-/*
-if ( !isset($_COOKIE["visitor"])) {
-    Utility::addlog($bdd, 4) ;
-    setcookie("lang", $lang, time() + (86400 * 1), "/");
-}
-*/
 
 // ALL REDIRECTION
 
@@ -158,6 +120,53 @@ $config["redirection"]["dashboard"] = [
     $config["translations"]["selected"]["navBar"]["portfolio"] => "../../index.php",
     $config["translations"]["selected"]["navBar"]["disconnect"] => "../deconnexion.php"
 ];
+
+
+
+
+
+
+if ($Projects->GetPostNumber() > 0) {
+    $config["redirection"]["default"] = array_merge($config["redirection"]["default"], array($config["translations"]["selected"]["navBar"]["myprojects"] => "#bloc3")) ; 
+    
+}
+
+if ($Articles->GetPostNumber() > 0) {
+    $config["redirection"]["default"] = array_merge($config["redirection"]["default"], array($config["translations"]["selected"]["navBar"]["article"] =>"#bloc5")) ; 
+}
+
+if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
+    $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["skills"]] = "#bloc4";
+}
+
+// for Languages
+
+if ( isset($_REQUEST["lang"]) ) {
+    if (is_array($config["translations"][$_REQUEST["lang"]])) {
+        $lang = $_REQUEST["lang"] ;
+        $config["translations"]["selected"] = $config["translations"][$lang] ;
+        setcookie("lang", $lang, time() + (86400 * 30), "/");
+    }
+}
+else {
+    if (isset($_COOKIE["lang"])) {
+        if (is_array($config["translations"][$_COOKIE["lang"]])) {
+            $lang = $_COOKIE["lang"] ; 
+            $config["translations"]["selected"] = $config["translations"][$lang] ;
+        }
+    }
+}
+
+// for check if is visitor
+
+
+/*
+if ( !isset($_COOKIE["visitor"])) {
+    Utility::addlog($bdd, 4) ;
+    setcookie("lang", $lang, time() + (86400 * 1), "/");
+}
+*/
+
 
 
 

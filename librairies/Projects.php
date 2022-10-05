@@ -55,14 +55,4 @@ class Projects extends Post
         return $this->GetPost($title)[0]["photoName"];
     }
 
-    protected function GetPostNumber()
-    {
-
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM $this->tableName;");
-        $stmt->execute();
-        $res = $stmt->fetch()["COUNT(*)"];
-
-        return $res;
-    }
-
 }

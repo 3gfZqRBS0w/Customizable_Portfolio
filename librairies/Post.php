@@ -19,7 +19,6 @@ abstract class Post {
     abstract public function New($title, $picture) ;
     abstract public function Remove($title) ;
     abstract public function Edit($oldtitle, $title, $text) ;
-    abstract protected function GetPostNumber() ; 
 
     protected function PostExists($title)
     {
@@ -43,6 +42,7 @@ abstract class Post {
 
         return $resultat;
     }
+
 
 
 
@@ -76,6 +76,16 @@ abstract class Post {
         else {
             return false ; 
         } 
+    }
+
+    public function GetPostNumber()
+    {
+
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM $this->tableName;");
+        $stmt->execute();
+        $res = $stmt->fetch()["COUNT(*)"];
+
+        return $res;
     }
 
 }

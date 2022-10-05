@@ -39,8 +39,4 @@ class Articles extends Post {
     }
     return false; 
     }
-
-    public function GetPostNumber() {
-
-    }
 }
