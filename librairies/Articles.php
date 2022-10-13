@@ -6,7 +6,7 @@ class Articles extends Post {
 
     protected $tableName = "tbl_articles";
 
-    public function New($title, $picture = null) {
+    public function New($title, $picture = null,$eventText = null,$dateStart = null, $dateEnd = null, $careerEventID = null) {
 
         if ($this->CheckLengthTitle($title)) {
             if (!$this->PostExists($title)) {

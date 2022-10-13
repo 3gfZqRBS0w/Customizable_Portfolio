@@ -1,24 +1,33 @@
 <?php
 
+//to adapt
+
 require_once("Post.php");
 
-class Projects extends Post
+class CarrierEvent extends Post
 {
 
-    protected $tableName = "tbl_projects";
+    protected $tableName = "tbl_carreersEvent";
 
 
-    public function New($title, $picture, $eventText = null,$dateStart = null, $dateEnd = null, $careerEventID = null)
+
+    public function New($title,$eventText,$dateStart, $dateEnd, $careerEventID, $picture = null)
     {
 
         if ($this->CheckLengthTitle($title)) {
             if (!$this->PostExists($title)) {
-                $stmt = $this->pdo->prepare("INSERT INTO " . $this->tableName . "(title, photoName, fullTextOfProject) VALUES (" . $this->pdo->quote($title) . ", " . $this->pdo->quote($picture) . ", '" . $this->defaultText . "')");;
-                $stmt = $stmt->execute();
+                $stmt = $this->pdo->prepare("INSERT INTO " . $this->tableName . "(title) VALUES (".$this->pdo->quote($title).") ; ");
+               $stmt->execute();
                 return true;
             }
-        }
+        } 
         return false;
+    }
+
+    public function GetAllCarrierEvents($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM " . $this->tableName . " WHERE fk_idCareer = ".$this->pdo->quote($id).";");
+            $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
     }
 
 
@@ -50,9 +59,16 @@ class Projects extends Post
         return false;
     }
 
+    public function GetAllCareerEvent($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM $this->tableName WHERE fk_idCareer = ".$this->pdo->quote($id)."; ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    }
+
+
     private function GetPictureName($title)
     {
         return $this->GetPost($title)[0]["photoName"];
     }
-
 }

@@ -1,5 +1,42 @@
+<!--
+        <div class="bloc" id="bloc2">
+            <div>
+                <h2>My school career</h2>
+                <hr><br>
+                <div class="w3-container">
+                    <div class="experience">
+                        <h3>School #1</h3>
+                        <p>Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed</p>
+                        <p>20XX - 20XX</p>
+                    </div>
+
+                    <div class="experience">
+                        <h3>School #2</h3>
+                        <div>20XX</div>
+                        <p>Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed </p>
+                        <p>20XX - 20XX</p>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>My professional experiences</h2>
+                <hr><br>
+                <div class="w3-container">
+                    <div class="experience">
+                        <h3>Internship #1 - Job</h3>
+                        <p>Company</p>
+                        <p>Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed </p>
+                        <p>XX XXX au XX XXX 20XX</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+-->
+
+
 <?php
-require_once(__DIR__."/init.php");
+require_once(__DIR__ . "/init.php");
 /*
 $abc = $otp->create();
 echo "The OTP secret is: {$abc->getSecret()}\n";    
@@ -19,10 +56,12 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
     <title>Portfolio | <?= Utility::getOwnerData($bdd, "lastName") ?> <?= Utility::getOwnerData($bdd, "surName") ?></title>
 </head>
 
+
 <body>
+
     <?php
     session_start();
-    
+
 
 
     if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]) && ($Owner->CheckQRCode() || isset($_SESSION["qrCode"]))) {
@@ -49,70 +88,84 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
         </div>
 
         <div class="bloc" id="bloc2">
+
+
             <div>
                 <h2>My school career</h2>
                 <hr><br>
-                <div class="w3-container">
-                    <div class="zigzag-timeline__item">
-                        <div>
+                <div >
+                    <details>
+                        <summary>School #1</summary>
+                        <div class="description">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione adipisci illum error, hic expedita numquam impedit explicabo vitae iure quae vero autem quia quibusdam tempora atque harum perferendis praesentium dolor!</p>
                         </div>
-                        <h3>School #1</h3>
-                        <div class="zigzag-timeline__milestone">Future</div>
-                        <p>Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed</p>
-                        <p>20XX - 20XX</p>
-                    </div>
-
-                    <div class="zigzag-timeline__item">
-                        <h3>School #2</h3>
-                        <div class="zigzag-timeline__milestone">20XX</div>
-                        <p>Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed </p>
-                        <p>20XX - 20XX</p>
-                    </div>
+                    </details>
+                    <details>
+                        <summary>School #2</summary>
+                        <div class="description">
+                            <p>Consequuntur earum pariatur dolorem repellat temporibus ducimus sunt suscipit repudiandae cupiditate in accusantium recusandae tempora sint eligendi, perferendis aspernatur architecto voluptas laborum adipisci neque voluptates consequatur. </p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>School #3</summary>
+                        <div class="description">
+                            <p>Tenetur, ex delectus, perferendis aperiam voluptatem consequuntur molestiae ratione rerum vitae ab modi, minus placeat quis dignissimos. Dolorem quaerat odit, iusto laboriosam possimus, in architecto aliquam commodi sapiente saepe sequi at eligendi hic reprehenderit repellendus quos!</p>
+                        </div>
+                    </details>
                 </div>
             </div>
-
             <div>
                 <h2>My professional experiences</h2>
                 <hr><br>
-                <div class="w3-container">
-                    <div class="zigzag-timeline__item">
-                        <h3>Internship #1 - Job</h3>
-                        <p>Company</p>
-                        <p>Praesent semper feugiat nibh sed. Ac tortor vitae purus faucibus ornare suspendisse sed </p>
-                        <div class="zigzag-timeline__milestone">Future</div>
-                        <p>XX XXX au XX XXX 20XX</p>
-                        <a class='nav-link' href="index.php">Rapport de Stage</a>
-                    </div>
+                <div >
+                    <details>
+                        <summary>School #1</summary>
+                        <div class="description">
+                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione adipisci illum error, hic expedita numquam impedit explicabo vitae iure quae vero autem quia quibusdam tempora atque harum perferendis praesentium dolor!</p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>School #2</summary>
+                        <div class="description">
+                            <p>Consequuntur earum pariatur dolorem repellat temporibus ducimus sunt suscipit repudiandae cupiditate in accusantium recusandae tempora sint eligendi, perferendis aspernatur architecto voluptas laborum adipisci neque voluptates consequatur. </p>
+                        </div>
+                    </details>
+                    <details>
+                        <summary>School #3</summary>
+                        <div class="description">
+                            <p>Tenetur, ex delectus, perferendis aperiam voluptatem consequuntur molestiae ratione rerum vitae ab modi, minus placeat quis dignissimos. Dolorem quaerat odit, iusto laboriosam possimus, in architecto aliquam commodi sapiente saepe sequi at eligendi hic reprehenderit repellendus quos!</p>
+                        </div>
+                    </details>
                 </div>
             </div>
         </div>
 
 
-            <?php
-            $allProjects = Utility::getAllData($bdd, "tbl_projects");
-            $i = 0;
-            if (count($allProjects) > 0) {
-                echo("<div class='bloc' id='bloc3'>
+        <?php
+        $allProjects = Utility::getAllData($bdd, "tbl_projects");
+        $i = 0;
+        if (count($allProjects) > 0) {
+            echo ("<div class='bloc' id='bloc3'>
                 <div class='categoryTitle'>
                     <h2><a href='projets.php'>My latest projects (click to see all projects)</a></h2>
                     <hr style='width: 80%;'>
                 </div>
-                <div class='container1'>") ;
+                <div class='container1'>");
 
-                foreach ($allProjects as $value) {
-                    if ($i < 3) {
-                        Utility::displayPreviewProject($value["title"], "upload/" . $value["photoName"]);
-                        $i++;
-                    }
+            foreach ($allProjects as $value) {
+                if ($i < 3) {
+                    Utility::displayPreviewProject($value["title"], "upload/" . $value["photoName"]);
+                    $i++;
                 }
-            echo(" </div>
-            </div>
-            </div>") ;
             }
-            ?>
-           
+            echo (" </div>
+            </div>
+            </div>");
+        }
+        ?>
 
 
+        <!--
         <div class="bloc" id="bloc4">
             <div class="categoryTitle">
                 <h2>My skills and qualifications</h2>
@@ -233,41 +286,41 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
             </div>
 
         </div>
-        
 
-            <?php
-            
-            $allArticle = $Articles->GetAllPosts();
+        -->
 
 
-            if ( count($allArticle) > 0) {
-                echo("<div class='bloc' id='bloc5'>
+        <?php
+
+        $allArticle = $Articles->GetAllPosts();
+
+
+        if (count($allArticle) > 0) {
+            echo ("<div class='bloc' id='bloc5'>
             <div class='categoryTitle'>
-                <h2>My latest articles</h2>
+                <h2><a href='articles.php'>My latest articles</a></h2>
                 <hr style='width: 80%;'>
             </div>
-            <div class='veilleTechnologique'>") ; 
-            $i = 0 ;
-            
-            foreach ( $allArticle as $Article ) {
+            <div class='veilleTechnologique'>");
+            $i = 0;
+
+            foreach ($allArticle as $Article) {
                 if ($i < 3) {
-                    Utility::displayPreviewArticle($Article["title"],$Article["fullTextOfArticles"] ) ; 
-                    
-                    $i++ ;
+                    Utility::displayPreviewArticle($Article["title"], $Article["fullTextOfArticles"]);
+
+                    $i++;
+                } else {
+                    break;
                 }
-                else {
-                    break ; 
-                }
-                
             }
 
 
-            echo("</div>
-            </div>") ; 
-            }
-            ?>
+            echo ("</div>
+            </div>");
+        }
+        ?>
 
-                <!--
+        <!--
                 <div class="articleVeille">
                     <h3><a>➔ Lorem ipsum dolor sit amet, consectetur adipiscing elit</a></h3>
                     <hr>
@@ -275,7 +328,7 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
                 </div>
 
         -->
-            
+
 
         <div class="bloc" id="bloc5">
             <div class="categoryTitle">

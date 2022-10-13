@@ -8,9 +8,16 @@ require_once(__DIR__."/librairies/Parsedown.php");
 require_once(__DIR__."/librairies/Utility.php");
 require_once(__DIR__."/librairies/Projects.php");
 require_once(__DIR__."/librairies/Articles.php");
+require_once(__DIR__."/librairies/CarrierType.php");
+require_once(__DIR__."/librairies/CarrierEvent.php");
 require_once(__DIR__."/librairies/Logs.php");
 require_once(__DIR__."/librairies/Owner.php");
-require_once(__DIR__."/vendor/autoload.php"); 
+require_once(__DIR__."/vendor/autoload.php");
+
+use OTPHP\TOTP ;
+$otp = TOTP::create();
+
+
 
 try {
     $bdd = new PDO("mysql:host=".$config["db"]["host"].";dbname=".$config["db"]["bddName"].";charset=utf8", $config["db"]["username"], $config["db"]["password"]) ;
@@ -33,7 +40,6 @@ catch (PDOException $e) {
 
 
 if (!Utility::bddExists($bdd)) {
-
     $password = Utility::generatePassword(rand(16,255));
     $hash = hash('sha256', $password);
 
@@ -76,12 +82,12 @@ if (!Utility::bddExists($bdd)) {
 $Parsedown = new Parsedown();
 $Projects = new Projects($bdd);
 $Articles = new Articles($bdd);
+$Carrier = new CarrierType($bdd);
+$CarrierEvent = new CarrierEvent($bdd);
 $Owner = new Owner($bdd);
 $Logs = new Logs($bdd);
 
 
-
-use OTPHP\TOTP ;
 
 $otp = TOTP::create($Owner->GetQRSecret());
 

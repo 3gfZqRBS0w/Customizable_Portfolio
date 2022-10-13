@@ -281,6 +281,13 @@ a:hover {
 }
 
 
+.experience {
+    border: 1px solid ;
+    padding:3%;
+    margin-bottom: 3vh;
+}
+
+
 
 /*
 *,
@@ -293,62 +300,9 @@ a:hover {
 .w3-container {
     margin: auto;
     padding: 0.01em 16px;
-    width: 60%;
-}
-
-.zigzag-timeline__item {
-    /* Used to position the milestone */
-    position: relative;
-    /*padding: 50px;*/
-    /* Border */
-    border-bottom: 3px solid #333;
-
-    /* Take full width */
-    width: 100%;
-    padding: 3vh;
-
-    /*padding-left: 48px;
-padding-right: 48px;*/
-}
-
-p,
-h3 {
-    display: block;
-    margin-block-start: 0em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-}
-
-.zigzag-timeline__milestone {
-    position: absolute;
-    top: 50%;
-    border: 3px solid rgb(0, 0, 0);
-    height: 1.6rem;
-    background: #FFF;
-    text-align: center;
-    padding: 10px;
-}
-
-
-.zigzag-timeline__item:nth-child(2n) {
-    border-left: 3px solid #71717A;
 
 }
 
-.zigzag-timeline__item:nth-child(2n) .zigzag-timeline__milestone {
-    left: 0;
-    transform: translate(-50%, -50%);
-}
-
-/* Styles for odd items */
-.zigzag-timeline__item:nth-child(2n + 1) {
-    border-right: 3px solid #71717A;
-}
-
-.zigzag-timeline__item:nth-child(2n + 1) .zigzag-timeline__milestone {
-    right: 0;
-    transform: translate(50%, -50%);
-}
 
 .container1 {
     display: flex;
@@ -501,7 +455,6 @@ text-align: left;
 }
 
 
-/* loader */
 
 .loader {
     position: absolute;
@@ -637,12 +590,28 @@ text-align: left;
           outline: none;
         }
 
-      
-
-      
-
-    
 
 
+        summary {
+            font-weight: 600;
+            border: 1px solid; 
+            padding: 2rem;
+            margin-bottom: 1.2rem;
+            cursor: pointer;
+            
+           }
 
- 
+
+           details { 
+            width: 40vw;
+            min-width: 300px;
+        }
+
+           @media(max-width: 675px) { 
+            details { 
+                width: 90vw;
+                min-width: 300px;
+            }
+
+           }
+

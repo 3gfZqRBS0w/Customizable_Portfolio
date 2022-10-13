@@ -30,13 +30,13 @@ CREATE TABLE IF NOT EXISTS tbl_logs (
 
 CREATE TABLE IF NOT EXISTS tbl_careers (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    typeOfCareer VARCHAR(50) NOT NULL, 
+    title VARCHAR(50) NOT NULL, 
     fk_logsID INT,
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_carreersEvent (
-     titleOfEvent VARCHAR(50) NOT NULL,
+     title VARCHAR(50) NOT NULL,
      eventText VARCHAR(255) NOT NULL,
      startDate DATE,
      endDate DATE,

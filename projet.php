@@ -35,5 +35,4 @@
 </div>
 </body>
 </html>
-
 <script src="script/app.js"></script>

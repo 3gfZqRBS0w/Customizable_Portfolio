@@ -5,7 +5,7 @@
 $config["db"] = [
     "username" => "admin",
     "password" => "password",
-    "bddName" => "customportfolio12",
+    "bddName" => "custom",
     "host" => "127.0.0.1"
 ];
 
