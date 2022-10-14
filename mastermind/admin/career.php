@@ -62,16 +62,13 @@
 
         <?php
 
-
-        if (isset($_POST["chooseCarrier"])) {
-
-
-            $id = $Carrier->GetCarrierTypeIDByTitle($_POST["chooseCarrier"]) ;
-
+// Pour choisir son type de carrière
+        if (isset($_POST["chooseCarrierType"])) 
+        {
             echo ("<h3 class='titleOfWebsiteOverview'>Choose your Event</h3>
     <div class='contact-form setting'>");
 
-            $data =  $CarrierEvent->GetAllCarrierEvents($Carrier->GetCarrierTypeIDByTitle($_POST["chooseCarrier"]));
+            $data =  $CarrierEvent->GetAllCarrierEvents($Carrier->GetCarrierTypeIDByTitle($_POST["chooseCarrierType"]));
 
             if (count($data) <= 0) {
                 echo ("<p>
@@ -79,52 +76,71 @@
         </p>");
             } else {
 
-                /*
-        foreach ($data as $post) {
-            // A compléter
-
-
-        }*/
+                
+                foreach ($data as $post) {
+                    echo ("
+        <form action='' method='POST'>
+         <div class='projetPreview'>
+          <p>" . $post["title"] . "</p>
+          <button name='editCareerEvent'value='" . $post["title"] . "' type='submit'>Edit</button>
+         </div> 
+        </form>
+        ");
+                }
             }
-
+            $id = $Carrier->GetCarrierTypeIDByTitle($_POST["chooseCarrierType"]) ;
+    
             echo ("<form action='' method='POST'>
+
+            <label>Action sur les types de carrières</label>
     <p>
-    <button name='AddCareerEvent'value='" . $_POST["chooseCarrier"] . "' type='submit'>Add Career Event</button>
+    <button name='AddCareerEvent'value='" . $_POST["chooseCarrierType"] . "' type='submit'>Add Career Event</button>
+    </p>
+
+    <p>
+     <button name='DeleteCareerEvent'value='" . $_POST["chooseCarrierType"] . "' type='submit'>Delete Career Type</button>
     </p>
 
     <p>
     <button type='submit'>CANCEL</button>
     </p>
     </form>");
-        } elseif (isset($_POST["AddCareerEvent"])) {
+        }
+        elseif (isset($_POST["AddCareerEvent"])) 
+        {
             echo ("<h3 class='titleOfWebsiteOverview'>Add Carreer Event</h3>");
-            if (isset($_POST["start"]) && $_POST["end"] && $_POST["titleEvent"]) {
+            if (isset($_POST["startDate"]) && $_POST["endDate"] && $_POST["titleEvent"]) {
+                if ($CarrierEvent->New($_POST["titleEvent"], $_POST["startDate"], $_POST["endDate"], $Carrier->GetCarrierTypeIDByTitle($_POST["AddCareerEvent"]))) {
+                    echo ("<p class='notification' style='background-color: green;' >Career Added.</p>");
+                }
+                else {
+                    echo ("<p class='notification' style='background-color: red;' >Career not Added</p>");
+                }
 
             }
 
-echo("
-<div class='contact-form setting'>
-<form method='post' action=''>
-<p>
-<label>Titre</label>
-<input name='titleEvent' placeholder='Title of Event' type='text' required>
-</p>
+            $id = $Carrier->GetCarrierTypeIDByTitle($_POST["AddCareerEvent"]) ;
 
-<div style='display: flex; justify-content: space-evenly;'>
-<div style='width: 30%;'>
-<label for='start'>Start date</label>
-<input type='date' id='start' name='startDate'>
-</div>
-<div style='width: 30%;'>
-<label for='end'>End date</label>
-<input type='date' id='end' name='endDate'>
-</div>
-
-</div>
-
-<p>
-<button name='AddCareerEvent' value='$id' type='submit'>Add</button>
-</p>
+            echo ("
+            <div class='contact-form setting'>
+             <form method='post' action=''>
+             <p>
+              <label>Titre</label>
+              <input name='titleEvent' placeholder='Title of Event' type='text' required>
+            </p>
+            <div style='display: flex; justify-content: space-evenly;'>
+              <div style='width: 30%;'>
+                <label for='start'>Start date</label>
+                 <input type='date' id='start' name='startDate' required>
+                 </div>
+                 <div style='width: 30%;'>
+                  <label for='end'>End date</label>
+                  <input type='date' id='end' name='endDate' required>
+                 </div>
+                 </div>
+                <p>
+                <button name='AddCareerEvent' value='" . $_POST["AddCareerEvent"] . "' type='submit'>Add</button>
+                </p>
 
 
 
@@ -147,7 +163,73 @@ echo("
 
 
 ");
-        } elseif (!isset($_POST['chooseProjectType'])) {
+        }
+        elseif( isset($_POST['editCareerEvent'])) {
+
+            $data = $CarrierEvent->getPost($_POST['editCareerEvent']);
+            echo ("<h3 class='titleOfWebsiteOverview'>Edit " . $data[0]["title"] . " </h3>");
+            
+            if (isset($_POST["careerContent"]) && isset($_POST["startDate"]) && isset($_POST["endDate"]) && isset($_POST["newTitle"])) {
+                if ($CarrierEvent->Edit($_POST['editCareerEvent'],$_POST["newTitle"],$_POST["careerContent"], $_POST["startDate"], $_POST["endDate"])) {
+                    echo ("<p class='notification' style='background-color: green;' >Career Update</p>");
+                } else {
+                    echo ("<p class='notification' style='background-color: red;' >failure of the career update</p>");
+                }
+
+
+            }
+            
+            
+            
+            echo("    
+    <div class='contact-form setting'>
+    
+    <form action='' method='post'>
+    <label>Career Event Title</label>
+    <input name='newTitle' type='text' value='" . $data[0]["title"] . "' required>
+        <label>Article Content</label>
+
+    <div class='container'>
+
+        <div class='plain'>
+            <textarea name='careerContent' data-el='input0'>" . $data[0]["eventText"] . "</textarea>
+        </div>
+        <div class='text'>
+            <div data-el='output0'></div>
+        </div>
+
+    </div>
+
+    <div style='display: flex; justify-content: space-evenly;'>
+    <div style='width: 30%;'>
+      <label for='start'>Start date</label>
+       <input type='date' value='" . $data[0]["startDate"] . "' id='start' name='startDate' required>
+       </div>
+       <div style='width: 30%;'>
+        <label for='end'>End date</label>
+        <input value='" . $data[0]["endDate"] ."' type='date' id='end' name='endDate' required>
+       </div>
+       </div>
+    
+    
+
+    </p>
+
+    <p>
+        <button style='margin-bottom: 2vh' name='editCareerEvent' value='" . $data[0]["title"] . "' type='submit'>Save</button>
+        <button value='submit' type='submit'>Cancel</button>
+        </p>
+    </form>
+        <form action='' method='POST'>
+
+        <button style='margin-bottom: 2vh' name='removeProject' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
+
+        </form>
+");
+
+
+        }
+        elseif (!isset($_POST['chooseProjectType'])) {
 
             echo ("<h3 class='titleOfWebsiteOverview'>Choose your Career Type</h3>
 <div class='contact-form setting'>");
@@ -173,7 +255,7 @@ echo("
         <form action='' method='POST'>
          <div class='projetPreview'>
           <p>" . $post["title"] . "</p>
-          <button name='chooseCarrier'value='" . $post["title"] . "' type='submit'>Edit</button>
+          <button name='chooseCarrierType'value='" . $post["title"] . "' type='submit'>Edit</button>
          </div> 
         </form>
         ");
@@ -185,43 +267,6 @@ echo("
             }
         } else {
 
-            $data = $Carrier->getPost($_POST['chooseProjectType']);
-            echo ("
-
-            <h3 class='titleOfWebsiteOverview'>Edit " . $data[0]["title"] . " </h3>
-
-    
-    <div class='contact-form setting'>
-    
-    <form action='' method='post'>
-    <label>Project Title</label>
-    <input name='newTitle' type='text' value='" . $data[0]["title"] . "' required>
-        <label>Article Content</label>
-
-    <div class='container'>
-
-        <div class='plain'>
-            <textarea name='articleContent' data-el='input0'>" . $data[0]["fullTextOfArticles"] . "</textarea>
-        </div>
-        <div class='text'>
-            <div data-el='output0'></div>
-        </div>
-
-    </div>
-
-    </p>
-
-    <p>
-        <button style='margin-bottom: 2vh' name='saveArticle' value='" . $data[0]["title"] . "' type='submit'>Save</button>
-        <button value='submit' type='submit'>Cancel</button>
-        </p>
-    </form>
-        <form action='' method='POST'>
-
-        <button style='margin-bottom: 2vh' name='removeProject' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
-
-        </form>
-");
         }
 
 

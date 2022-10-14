@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS tbl_careers (
 
 CREATE TABLE IF NOT EXISTS tbl_carreersEvent (
      title VARCHAR(50) NOT NULL,
-     eventText VARCHAR(255) NOT NULL,
+     eventText TEXT NOT NULL,
      startDate DATE,
      endDate DATE,
      fk_idCareer INT NOT NULL,

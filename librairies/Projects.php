@@ -8,7 +8,7 @@ class Projects extends Post
     protected $tableName = "tbl_projects";
 
 
-    public function New($title, $picture, $eventText = null,$dateStart = null, $dateEnd = null, $careerEventID = null)
+    public function New($title, $picture,$dateStart = null, $dateEnd = null, $careerEventID = null)
     {
 
         if ($this->CheckLengthTitle($title)) {
@@ -22,7 +22,7 @@ class Projects extends Post
     }
 
 
-    public function Edit($oldtitle,$title, $text)
+    public function Edit($oldtitle,$title, $text,$dateStart = null, $dateEnd = null )
     {
         if ($this->CheckLengthTitle($title)) {  
             if ( $oldtitle==$title || ($this->PostExists($oldtitle) and !$this->PostExists($title)) ) {

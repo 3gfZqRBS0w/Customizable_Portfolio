@@ -23,7 +23,7 @@ class CarrierType extends Post
     }
 
 
-    public function Edit($oldtitle,$title, $text)
+    public function Edit($oldtitle,$title, $text, $dateStart = null, $dateEnd = null)
     {
         if ($this->CheckLengthTitle($title)) {  
             if ( $oldtitle==$title || ($this->PostExists($oldtitle) and !$this->PostExists($title)) ) {
@@ -52,7 +52,6 @@ class CarrierType extends Post
     }
 
     public function GetCarrierTypeIDByTitle($title) { 
-
         $stmt = $this->pdo->prepare("SELECT id FROM $this->tableName WHERE title = ".$this->pdo->quote($title).";");
         $stmt->execute();
         $res = $stmt->fetch()["id"] ; 

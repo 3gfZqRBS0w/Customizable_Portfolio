@@ -11,12 +11,12 @@ class CarrierEvent extends Post
 
 
 
-    public function New($title,$eventText,$dateStart, $dateEnd, $careerEventID, $picture = null)
+    public function New($title,$dateStart, $dateEnd, $careerEventID, $picture = null)
     {
 
         if ($this->CheckLengthTitle($title)) {
             if (!$this->PostExists($title)) {
-                $stmt = $this->pdo->prepare("INSERT INTO " . $this->tableName . "(title) VALUES (".$this->pdo->quote($title).") ; ");
+                $stmt = $this->pdo->prepare("INSERT INTO " . $this->tableName . "(eventText, title, startDate, endDate, fk_idCareer) VALUES (".$this->pdo->quote($this->defaultText).",".$this->pdo->quote($title).", ".$this->pdo->quote($dateStart).",".$this->pdo->quote($dateEnd).", ".$this->pdo->quote($careerEventID)." ) ; ");
                $stmt->execute();
                 return true;
             }
@@ -31,11 +31,11 @@ class CarrierEvent extends Post
     }
 
 
-    public function Edit($oldtitle,$title, $text)
+    public function Edit($oldtitle,$title, $text, $dateStart, $dateEnd )
     {
         if ($this->CheckLengthTitle($title)) {  
             if ( $oldtitle==$title || ($this->PostExists($oldtitle) and !$this->PostExists($title)) ) {
-                $stmt = $this->pdo->prepare("UPDATE " . $this->tableName . " SET title = " . $this->pdo->quote($title) . ", fullTextOfProject = " . $this->pdo->quote($text) . " WHERE title = " . $this->pdo->quote($oldtitle) . ";");
+                $stmt = $this->pdo->prepare("UPDATE " . $this->tableName . " SET title = " . $this->pdo->quote($title) . ", eventText = " . $this->pdo->quote($text) . ",startDate = ".$this->pdo->quote($dateStart).", endDate = ".$this->pdo->quote($dateEnd)." WHERE title = " . $this->pdo->quote($oldtitle) . ";");
                 $stmt->execute();
                 return true;
             }
@@ -57,6 +57,12 @@ class CarrierEvent extends Post
             }
         }
         return false;
+    }
+
+    public function IDtoTitle($id) {
+        $stmt = $this->pdo->prepare("SELECT title FROM $this->tableName WHERE id = " . $this->pdo->quote($id) . "; ");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function GetAllCareerEvent($id) {
