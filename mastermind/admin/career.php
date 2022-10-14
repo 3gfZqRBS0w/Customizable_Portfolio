@@ -22,11 +22,12 @@
 <body>
     <?= (Utility::getHeader($config["redirection"]["dashboard"], "Career", "Inform your career")) ?>
 
+
+    
     <div class="websiteOverview">
+    <!-- Pour rajouter des types de carrières -->
         <h3 class="titleOfWebsiteOverview">Add Carrier Type</h3>
         <?php
-
-        // FOR INSERT CARRIER TYPE IN DATABASES 
         if (isset($_POST["carrierType"])) {
             $carrierType = $_POST["carrierType"];
 
@@ -166,18 +167,39 @@
         }
         elseif( isset($_POST['editCareerEvent'])) {
 
+
+
             $data = $CarrierEvent->getPost($_POST['editCareerEvent']);
+
             echo ("<h3 class='titleOfWebsiteOverview'>Edit " . $data[0]["title"] . " </h3>");
+
+
             
+
             if (isset($_POST["careerContent"]) && isset($_POST["startDate"]) && isset($_POST["endDate"]) && isset($_POST["newTitle"])) {
-                if ($CarrierEvent->Edit($_POST['editCareerEvent'],$_POST["newTitle"],$_POST["careerContent"], $_POST["startDate"], $_POST["endDate"])) {
+               
+                
+                $res = $CarrierEvent->Edit($_POST['editCareerEvent'],$_POST["newTitle"],$_POST["careerContent"], $_POST["startDate"], $_POST["endDate"]) ;
+
+                if ( $_POST['newTitle'] != $_POST['editCareerEvent']) {
+                    $_POST['editCareerEvent'] = $_POST['newTitle'] ;
+                    $data = $CarrierEvent->getPost($_POST['editCareerEvent']);
+
+                }
+                
+            
+                if ($res) {
                     echo ("<p class='notification' style='background-color: green;' >Career Update</p>");
+                    
                 } else {
                     echo ("<p class='notification' style='background-color: red;' >failure of the career update</p>");
                 }
-
-
             }
+
+            
+           
+
+            
             
             
             

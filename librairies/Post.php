@@ -64,7 +64,6 @@ abstract class Post {
 
             return $resultat;
         }
-        return array();
     }
 
 

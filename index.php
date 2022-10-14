@@ -85,15 +85,44 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
         </div>
         <div style="padding-top:10vh; background: #E8F1F2;">
             <hr id="separationCategories">
-        </div>
+</div>
+<div class="bloc" id="bloc2">
+        <?php
 
-        <div class="bloc" id="bloc2">
+         foreach($Carrier->GetAllPosts() as $key => $value ) {
+
+            echo("<div><h2>".$value["title"]."</h2><div>");
+
+            foreach($CarrierEvent->GetAllCarrierEvents($value["id"]) as $key => $value ) {
+
+                echo("<details>
+                <summary>".$value["title"]."</summary>
+                <div class='description'>
+                ".$value["eventText"]."
+                </div>
+            </details>") ;
+
+            }
+            
+            
+            echo("
+            </div>
+            </div>
+            ") ;
+
+         }
+        ?>
+</div>
 
 
+
+        <!--
+
+        
             <div>
                 <h2>My school career</h2>
                 <hr><br>
-                <div >
+                <div>
                     <details>
                         <summary>School #1</summary>
                         <div class="description">
@@ -139,6 +168,8 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
                 </div>
             </div>
         </div>
+
+-->
 
 
         <?php
