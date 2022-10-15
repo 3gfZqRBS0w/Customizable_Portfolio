@@ -83,7 +83,6 @@ $Parsedown = new Parsedown();
 $Projects = new Projects($bdd);
 $Articles = new Articles($bdd);
 $Carrier = new CarrierType($bdd);
-$CarrierEvent = new CarrierEvent($bdd);
 $Owner = new Owner($bdd);
 $Logs = new Logs($bdd);
 
@@ -141,9 +140,7 @@ if ($Articles->GetPostNumber() > 0) {
     $config["redirection"]["default"] = array_merge($config["redirection"]["default"], array($config["translations"]["selected"]["navBar"]["article"] =>"#bloc5")) ; 
 }
 
-if ($CarrierEvent->GetPostNumber() > 0 ) {
 
-}
 
 if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
     $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["skills"]] = "#bloc4";

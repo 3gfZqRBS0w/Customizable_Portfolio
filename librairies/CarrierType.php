@@ -7,6 +7,13 @@ class CarrierType extends Post
 {
 
     protected $tableName = "tbl_careers";
+    protected $carrierEvent ;
+
+    function __construct($pdo)
+    {
+        $this->pdo = $pdo;
+        $this->carrierEvent = new CarrierEvent($pdo);
+    }
 
 
     public function New($title, $picture = null,$eventText = null,$dateStart = null, $dateEnd = null, $careerEventID = null)
@@ -40,8 +47,7 @@ class CarrierType extends Post
     {
         if ($this->CheckLengthTitle($title)) {
             if ($this->PostExists($title)) {
-                $imgName = $this->GetPictureName($title); 
-                if (unlink(__DIR__ . "/../upload/$imgName")) {
+                if ($this->carrierEvent->RemoveByID($this->GetCarrierTypeIDByTitle($title))) {
                     $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
                     $stmt->execute();
                     return true;
@@ -57,6 +63,10 @@ class CarrierType extends Post
         $res = $stmt->fetch()["id"] ; 
         return $res ;
  
+    }
+
+    public function GetEvent() {
+        return $this->carrierEvent ; 
     }
 
 

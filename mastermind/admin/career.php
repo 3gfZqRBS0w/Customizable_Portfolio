@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +56,7 @@
                     <button value="submit" type="submit">Save</button>
                 </p>
             </form>
-        </div>
+        </div>Carrier-Event
 
     </div>
 
@@ -69,7 +70,7 @@
             echo ("<h3 class='titleOfWebsiteOverview'>Choose your Event</h3>
     <div class='contact-form setting'>");
 
-            $data =  $CarrierEvent->GetAllCarrierEvents($Carrier->GetCarrierTypeIDByTitle($_POST["chooseCarrierType"]));
+            $data =  $Carrier->GetEvent()->GetAllCarrierEvents($Carrier->GetCarrierTypeIDByTitle($_POST["chooseCarrierType"]));
 
             if (count($data) <= 0) {
                 echo ("<p>
@@ -99,7 +100,7 @@
     </p>
 
     <p>
-     <button name='DeleteCareerEvent'value='" . $_POST["chooseCarrierType"] . "' type='submit'>Delete Career Type</button>
+     <button name='deleteCarrierType'value='" . $_POST["chooseCarrierType"] . "' type='submit'>Delete Career Type</button>
     </p>
 
     <p>
@@ -107,11 +108,13 @@
     </p>
     </form>");
         }
+
+        // Pour ajouter des événements de carrières
         elseif (isset($_POST["AddCareerEvent"])) 
         {
             echo ("<h3 class='titleOfWebsiteOverview'>Add Carreer Event</h3>");
             if (isset($_POST["startDate"]) && $_POST["endDate"] && $_POST["titleEvent"]) {
-                if ($CarrierEvent->New($_POST["titleEvent"], $_POST["startDate"], $_POST["endDate"], $Carrier->GetCarrierTypeIDByTitle($_POST["AddCareerEvent"]))) {
+                if ($Carrier->GetEvent()->New($_POST["titleEvent"], $_POST["startDate"], $_POST["endDate"], $Carrier->GetCarrierTypeIDByTitle($_POST["AddCareerEvent"]))) {
                     echo ("<p class='notification' style='background-color: green;' >Career Added.</p>");
                 }
                 else {
@@ -165,11 +168,13 @@
 
 ");
         }
+
+        // Pour configurer les événements de carrières 
         elseif( isset($_POST['editCareerEvent'])) {
 
 
 
-            $data = $CarrierEvent->getPost($_POST['editCareerEvent']);
+            $data = $Carrier->GetEvent()->getPost($_POST['editCareerEvent']);
 
             echo ("<h3 class='titleOfWebsiteOverview'>Edit " . $data[0]["title"] . " </h3>");
 
@@ -179,11 +184,11 @@
             if (isset($_POST["careerContent"]) && isset($_POST["startDate"]) && isset($_POST["endDate"]) && isset($_POST["newTitle"])) {
                
                 
-                $res = $CarrierEvent->Edit($_POST['editCareerEvent'],$_POST["newTitle"],$_POST["careerContent"], $_POST["startDate"], $_POST["endDate"]) ;
+                $res = $Carrier->GetEvent()->Edit($_POST['editCareerEvent'],$_POST["newTitle"],$_POST["careerContent"], $_POST["startDate"], $_POST["endDate"]) ;
 
                 if ( $_POST['newTitle'] != $_POST['editCareerEvent']) {
                     $_POST['editCareerEvent'] = $_POST['newTitle'] ;
-                    $data = $CarrierEvent->getPost($_POST['editCareerEvent']);
+                    $data = $Carrier->GetEvent()->getPost($_POST['editCareerEvent']);
 
                 }
                 
@@ -195,13 +200,6 @@
                     echo ("<p class='notification' style='background-color: red;' >failure of the career update</p>");
                 }
             }
-
-            
-           
-
-            
-            
-            
             
             echo("    
     <div class='contact-form setting'>
@@ -244,19 +242,65 @@
     </form>
         <form action='' method='POST'>
 
-        <button style='margin-bottom: 2vh' name='removeProject' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
+        <button style='margin-bottom: 2vh' name='deleteCarrierEvent' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
 
         </form>
 ");
 
 
         }
-        elseif (!isset($_POST['chooseProjectType'])) {
+
+        elseif (isset($_POST["deleteCarrierType"])){
+
+            echo ("<h3 class='titleOfWebsiteOverview'>Are you sure</h3>
+
+            <div class='contact-form setting'>
+            <form method='post' action=''>
+            <p>
+            <label> Write the name of Project :" . $_POST['deleteCarrierType'] . " </label>
+            <input name='nameOfCarreerType' type='text' value='I DONT WANT TO DELETE THE PROJECT' required>
+            </p>
+            <p>
+            <button name='reallyDeleteCarrierType'value='" . $_POST['deleteCarrierType'] . "' type='submit'>Submit</button>
+            </p>
+            
+            </form>
+
+            </div>
+    
+        ");
+
+        }
+
+        elseif (isset($_POST["deleteCarrierEvent"])){
+
+            echo ("<h3 class='titleOfWebsiteOverview'>Are you sure</h3>
+
+            <div class='contact-form setting'>
+            <form method='post' action=''>
+            <p>
+            <label> Write the name of Project :" . $_POST['deleteCarrierEvent'] . " </label>
+            <input name='nameOfCarreerEvent' type='text' value='I DONT WANT TO DELETE THE Carrier Event' required>
+            </p>
+            <p>
+            <button name='reallyDeleteCarrierEvent'value='" . $_POST['deleteCarrierEvent'] . "' type='submit'>Submit</button>
+            </p>
+            
+            </form>
+
+            </div>
+    
+        ");
+
+        }
+        // Pour choisir un type de carrières
+       else {
 
             echo ("<h3 class='titleOfWebsiteOverview'>Choose your Career Type</h3>
 <div class='contact-form setting'>");
 
-            if (isset($_POST['saveArticle'])) {
+            if (isset($_POST['saveArticle'])) 
+            {
                 if (isset($_POST['articleContent']) && $_POST['newTitle']) {
                     if ($Carrier->Edit($_POST['saveArticle'], $_POST['newTitle'], $_POST['articleContent'])) {
                         echo ("<p class='notification' style='background-color: green;' >Article update.</p>");
@@ -264,7 +308,40 @@
                         echo ("<p class='notification' style='background-color: red;' >failure of the article update</p>");
                     }
                 }
+            } 
+            else 
+            {
+                if (isset($_POST['reallyDeleteCarrierType']) && isset($_POST['nameOfCarreerType'])) {
+                    if ($_POST['reallyDeleteCarrierType'] == $_POST['nameOfCarreerType']) {
+                        if ($Carrier->Remove($_POST['reallyDeleteCarrierType'])) {
+                            echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
+                        }
+                        else {
+                            echo ("<p class='notification' style='background-color: red;' >Unable to delete this project</p>");
+                        }
+                    }
+                    else {
+                        echo ("<p class='notification' style='background-color: green;' >Project not deleted</p>");
+                    }
+                }
+                else {
+                    if (isset($_POST['reallyDeleteCarrierEvent']) && isset( $_POST['nameOfCarreerEvent'])) {
+                        if($_POST['reallyDeleteCarrierEvent'] == $_POST['nameOfCarreerEvent']) {
+                            if ($Carrier->GetEvent()->Remove($_POST['reallyDeleteCarrierEvent'])) {
+                                echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
+                            }
+                            else {
+                                echo ("<p class='notification' style='background-color: red;' >Unable to delete this project</p>");
+                            }
+                        }
+                        else {
+                            echo ("<p class='notification' style='background-color: green;' >Project not deleted</p>");
+                        }  
+                    }
+                }
+               
             }
+        
 
 
             $data =  $Carrier->GetAllPosts();
@@ -287,9 +364,9 @@
             <p>You have not added any article to the website</p>
             ");
             }
-        } else {
-
+        
         }
+    
 
 
 

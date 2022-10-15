@@ -48,19 +48,22 @@ class CarrierEvent extends Post
     {
         if ($this->CheckLengthTitle($title)) {
             if ($this->PostExists($title)) {
-                $imgName = $this->GetPictureName($title); 
-                if (unlink(__DIR__ . "/../upload/$imgName")) {
                     $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
                     $stmt->execute();
                     return true;
-                }
             }
         }
         return false;
     }
 
+    public function RemoveByID($id) {
+        $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE fk_idCareer = " . $this->pdo->quote($id) . "; ");
+        $stmt->execute() ;
+        return true ; 
+    }
+
     public function IDtoTitle($id) {
-        $stmt = $this->pdo->prepare("SELECT title FROM $this->tableName WHERE id = " . $this->pdo->quote($id) . "; ");
+        $stmt = $this->pdo->prepare("SELECT title FROM $this->tableName WHERE fk_idCareer = " . $this->pdo->quote($id) . "; ");
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }

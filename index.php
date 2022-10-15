@@ -91,9 +91,9 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
 
          foreach($Carrier->GetAllPosts() as $key => $value ) {
 
-            echo("<div><h2>".$value["title"]."</h2><div>");
+            echo("<div><h2>".$value["title"]."</h2><br><hr><br><div>");
 
-            foreach($CarrierEvent->GetAllCarrierEvents($value["id"]) as $key => $value ) {
+            foreach($Carrier->GetEvent()->GetAllCarrierEvents($value["id"]) as $key => $value ) {
 
                 echo("<details>
                 <summary>".$value["title"]."</summary>
