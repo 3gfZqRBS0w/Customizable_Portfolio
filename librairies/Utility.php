@@ -1,5 +1,8 @@
 <?php
 
+
+
+
 class Utility
 {
 
@@ -298,7 +301,7 @@ class Utility
 
     echo ("
       <form action='projet.php' method='POST'>
-      <input style='display: none;' name='titleOfProjet' value='$name'></input>
+      <input style='display: none;' name='titleOfProjet' value='".htmlspecialchars($name)."'></input>
       <a onclick='this.parentNode.submit()' >
                     <figure class='wp-caption'>
                         <img  style='margin-bottom: 2vh;' class='previewProject' id='element' src='" . $imgPath . "' alt='Image'/>
@@ -313,7 +316,7 @@ class Utility
     echo("
 
     <form action='article.php' method='POST'>
-    <input style='display: none;' name='titleOfArticle' value='$name'></input>
+    <input style='display: none;' name='titleOfArticle' value='".htmlspecialchars($name)."'></input>
     <a onclick='this.parentNode.submit()'>
     <div class='articleVeille'>
     <h3>$name</h3>

@@ -97,7 +97,7 @@ if (!isset($_POST['chooseProject'])) {
             <form action='' method='POST'>
              <div class='projetPreview'>
               <p>" . $post["title"] . "</p>
-              <button name='chooseProject'value='" . $post["title"] . "' type='submit'>Edit</button>
+              <button name='chooseProject'value='" . htmlspecialchars($post["title"]) . "' type='submit'>Edit</button>
              </div> 
             </form>
             ");
@@ -121,13 +121,13 @@ if (!isset($_POST['chooseProject'])) {
         
         <form action='' method='post'>
         <label>Project Title</label>
-        <input name='newTitle' type='text' value='" . $data[0]["title"] . "' required>
+        <input name='newTitle' type='text' value='" . htmlspecialchars($data[0]["title"]) . "' required>
             <label>Article Content</label>
 
         <div class='container'>
 
             <div class='plain'>
-                <textarea name='articleContent' data-el='input0'>" . $data[0]["fullTextOfArticles"] . "</textarea>
+                <textarea name='articleContent' data-el='input0'>" . htmlspecialchars($data[0]["fullTextOfArticles"]) . "</textarea>
             </div>
             <div class='text'>
                 <div data-el='output0'></div>
@@ -138,13 +138,13 @@ if (!isset($_POST['chooseProject'])) {
         </p>
 
         <p>
-            <button style='margin-bottom: 2vh' name='saveArticle' value='" . $data[0]["title"] . "' type='submit'>Save</button>
+            <button style='margin-bottom: 2vh' name='saveArticle' value='" . htmlspecialchars($data[0]["title"]) . "' type='submit'>Save</button>
             <button value='submit' type='submit'>Cancel</button>
             </p>
         </form>
             <form action='' method='POST'>
 
-            <button style='margin-bottom: 2vh' name='removeProject' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
+            <button style='margin-bottom: 2vh' name='removeProject' value='" . htmlspecialchars($data[0]["title"]) . "' type='submit'>Delete</button>
 
             </form>
         

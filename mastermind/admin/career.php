@@ -83,8 +83,8 @@
                     echo ("
         <form action='' method='POST'>
          <div class='projetPreview'>
-          <p>" . $post["title"] . "</p>
-          <button name='editCareerEvent'value='" . $post["title"] . "' type='submit'>Edit</button>
+          <p>" . htmlspecialchars($post["title"]) . "</p>
+          <button name='editCareerEvent'value='" . htmlspecialchars($post["title"]) . "' type='submit'>Edit</button>
          </div> 
         </form>
         ");
@@ -143,7 +143,7 @@
                  </div>
                  </div>
                 <p>
-                <button name='AddCareerEvent' value='" . $_POST["AddCareerEvent"] . "' type='submit'>Add</button>
+                <button name='AddCareerEvent' value='" . htmlspecialchars($_POST["AddCareerEvent"]) . "' type='submit'>Add</button>
                 </p>
 
 
@@ -205,13 +205,13 @@
     
     <form action='' method='post'>
     <label>Career Event Title</label>
-    <input name='newTitle' type='text' value='" . $data[0]["title"] . "' required>
+    <input name='newTitle' type='text' value='" . htmlspecialchars($data[0]["title"]) . "' required>
         <label>Article Content</label>
 
     <div class='container'>
 
         <div class='plain'>
-            <textarea name='careerContent' data-el='input0'>" . $data[0]["eventText"] . "</textarea>
+            <textarea name='careerContent' data-el='input0'>" . htmlspecialchars($data[0]["eventText"]) . "</textarea>
         </div>
         <div class='text'>
             <div data-el='output0'></div>
@@ -235,13 +235,13 @@
     </p>
 
     <p>
-        <button style='margin-bottom: 2vh' name='editCareerEvent' value='" . $data[0]["title"] . "' type='submit'>Save</button>
+        <button style='margin-bottom: 2vh' name='editCareerEvent' value='" . htmlspecialchars($data[0]["title"]) . "' type='submit'>Save</button>
         <button value='submit' type='submit'>Cancel</button>
         </p>
     </form>
         <form action='' method='POST'>
 
-        <button style='margin-bottom: 2vh' name='deleteCarrierEvent' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
+        <button style='margin-bottom: 2vh' name='deleteCarrierEvent' value='" . htmlspecialchars($data[0]["title"]) . "' type='submit'>Delete</button>
 
         </form>
 ");
@@ -260,7 +260,7 @@
             <input name='nameOfCarreerType' type='text' value='I DONT WANT TO DELETE THE PROJECT' required>
             </p>
             <p>
-            <button name='reallyDeleteCarrierType'value='" . $_POST['deleteCarrierType'] . "' type='submit'>Submit</button>
+            <button name='reallyDeleteCarrierType'value='" . htmlspecialchars($_POST['deleteCarrierType']) . "' type='submit'>Submit</button>
             </p>
             
             </form>
@@ -282,7 +282,7 @@
             <input name='nameOfCarreerEvent' type='text' value='I DONT WANT TO DELETE THE Carrier Event' required>
             </p>
             <p>
-            <button name='reallyDeleteCarrierEvent'value='" . $_POST['deleteCarrierEvent'] . "' type='submit'>Submit</button>
+            <button name='reallyDeleteCarrierEvent'value='" . htmlspecialchars($_POST['deleteCarrierEvent']) . "' type='submit'>Submit</button>
             </p>
             
             </form>
@@ -353,7 +353,7 @@
         <form action='' method='POST'>
          <div class='projetPreview'>
           <p>" . $post["title"] . "</p>
-          <button name='chooseCarrierType'value='" . $post["title"] . "' type='submit'>Edit</button>
+          <button name='chooseCarrierType' value='" . htmlspecialchars($post["title"]) . "' type='submit'>Edit</button>
          </div> 
         </form>
         ");

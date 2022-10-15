@@ -223,6 +223,9 @@ a:hover {
     background-color: #E8F1F2;
 }
 
+.previewArticle {
+    min-height: 100vh;
+}
 #container1 {
 
     width: 100vw;
@@ -614,4 +617,5 @@ text-align: left;
             }
 
            }
+           
 

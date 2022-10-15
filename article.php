@@ -21,7 +21,7 @@
         echo(Utility::getHeader($config["redirection"]["return"], $articleData[0]["title"], "" )) ;
 
 
-        echo(" <div class='bloc' id='bloc1'>
+        echo(" <div class='bloc previewArticle' id='bloc1'>
         <div id='container1'>
             <div id='blocTexte1'>
                 ".$Parsedown->text($articleData[0]["fullTextOfArticles"])."

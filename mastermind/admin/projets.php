@@ -224,7 +224,7 @@ Old version of this part of code
         
         <form action='' method='post'>
         <label>Project Title</label>
-        <input name='nameOfProject' type='text' value='" . $data[0]["title"] . "' required>
+        <input name='nameOfProject' type='text' value='" . htmlspecialchars($data[0]["title"]) . "' required>
 
            
         
@@ -246,13 +246,13 @@ Old version of this part of code
         </p>
 
         <p>
-            <button style='margin-bottom: 2vh'name='saveProject' value='".$data[0]["title"]."' type='submit'>Save</button>
+            <button style='margin-bottom: 2vh'name='saveProject' value='".htmlspecialchars($data[0]["title"])."' type='submit'>Save</button>
             <button value='submit' type='submit'>Cancel</button>
             </p>
         </form>
             <form action='' method='POST'>
 
-            <button style='margin-bottom: 2vh' name='removeProject' value='" . $data[0]["title"] . "' type='submit'>Delete</button>
+            <button style='margin-bottom: 2vh' name='removeProject' value='" . htmlspecialchars($data[0]["title"]) . "' type='submit'>Delete</button>
 
             </form>
         

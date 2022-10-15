@@ -58,6 +58,7 @@ abstract class Post {
     public function GetPost($title)
     {
         if ($this->CheckLengthTitle($title)) {
+
             $stmt = $this->pdo->prepare("SELECT * FROM $this->tableName WHERE title =" . $this->pdo->quote($title) . " ;");
             $stmt->execute();
             $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
