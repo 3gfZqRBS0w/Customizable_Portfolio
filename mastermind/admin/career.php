@@ -176,23 +176,22 @@
 
             $data = $Carrier->GetEvent()->getPost($_POST['editCareerEvent']);
 
-            echo ("<h3 class='titleOfWebsiteOverview'>Edit " . $data[0]["title"] . " </h3>");
-
-
             
 
+            echo ("<h3 class='titleOfWebsiteOverview'>Edit " . $data[0]["title"] . " </h3>");
             if (isset($_POST["careerContent"]) && isset($_POST["startDate"]) && isset($_POST["endDate"]) && isset($_POST["newTitle"])) {
                
                 
                 $res = $Carrier->GetEvent()->Edit($_POST['editCareerEvent'],$_POST["newTitle"],$_POST["careerContent"], $_POST["startDate"], $_POST["endDate"]) ;
 
                 if ( $_POST['newTitle'] != $_POST['editCareerEvent']) {
+                    
+                    $data = $Carrier->GetEvent()->getPost($_POST["newTitle"]);
                     $_POST['editCareerEvent'] = $_POST['newTitle'] ;
-                    $data = $Carrier->GetEvent()->getPost($_POST['editCareerEvent']);
 
                 }
                 
-            
+                
                 if ($res) {
                     echo ("<p class='notification' style='background-color: green;' >Career Update</p>");
                     
