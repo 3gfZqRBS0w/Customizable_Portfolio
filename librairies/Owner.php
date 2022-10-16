@@ -14,6 +14,10 @@ class Owner {
         $this->pdo = null ;
     }
 
+    public function UploadProfile() {
+        
+    }
+
     public function ActiveCheckQRCode() {
         $stmt = $this->pdo->prepare("UPDATE $this->tableName SET qrcodeCheck = 1 WHERE 1  ;") ;
         $stmt->execute() ;

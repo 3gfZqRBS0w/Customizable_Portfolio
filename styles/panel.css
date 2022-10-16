@@ -28,6 +28,46 @@ body {
 }
 
 
+.setting {
+    margin-left: 2.5vw;
+    margin-right: 2.5vw;
+    text-align: center;
+}
+
+.notification {
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    text-align: left;
+}
+
+
+.plain, .text {
+    flex: 0.4 0 20rem;
+    position: relative;
+}
+
+
+label {
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+    background-color: #E8F1F2;
+    padding: 0.5rem;
+    box-shadow: 0 4px 2px -2px black;
+    border-radius: 10px;
+}
+
+.imagePreview {
+    width: 100%;
+    min-width: 0px;
+}
+
+
 
 
 

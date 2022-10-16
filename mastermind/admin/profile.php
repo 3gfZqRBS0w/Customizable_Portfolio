@@ -19,52 +19,8 @@
         header('Location: ../../index.php');
 }
 
-
-
     ?>
 
-
-    <style>
-        .setting {
-            margin-left: 2.5vw;
-            margin-right: 2.5vw;
-            text-align: center;
-        }
-
-        .notification {
-            text-align: center;
-            position: relative;
-            width: 100%;
-        }
-
-        .container {
-            display: flex;
-            justify-content: space-around;
-            text-align: left;
-        }
-
-
-        .plain, .text {
-            flex: 0.4 0 20rem;
-            position: relative;
-        }
-
-
-        label {
-            margin-top: 2.5vh;
-            margin-bottom: 2.5vh;
-            background-color: #E8F1F2;
-            padding: 0.5rem;
-            box-shadow: 0 4px 2px -2px black;
-            border-radius: 10px;
-        }
-
-        .imagePreview {
-            width: 100%;
-            min-width: 0px;
-        }
-
-    </style>
 
 
     <link rel="stylesheet" type="text/css" href="../../styles/main.css">
@@ -76,6 +32,13 @@
 
 <body>
     <?= (Utility::getHeader($config["redirection"]["dashboard"], "Profile", "Customize your profile")) ?>
+    <?php
+    if (isset($_POST["uploadNewProfileImage"])) {
+        if (isset($_POST["profilePicture"])) {
+            
+        }
+    }
+    ?>
     <div class="websiteOverview">
     <h3 class="titleOfWebsiteOverview">Changing the profile image</h3>
         <div class="contact-form setting">
@@ -84,7 +47,7 @@
                     <input type="file" name="profilePicture">
                 </p>
                 <p>
-                    <button type="submit">Save</button>
+                    <button name="uploadNewProfileImage" type="submit">Save</button>
                 </p>
             </form>
         </div>
