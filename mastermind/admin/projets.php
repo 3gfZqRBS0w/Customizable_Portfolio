@@ -53,7 +53,7 @@ ini_set("display_errors", 1);
                         if ($size <= $config["stockage"]["maxProfileSize"]) {
                             $uniqueName = uniqid('', true);
                             $fileName = $uniqueName . "." . $extension;
-                            if (strlen($projetName) > 0 && strlen($projetName) < 30) {
+                            if (strlen($projetName) > 0 && strlen($projetName) < 255) {
                                 if ($Projects->New($projetName, $fileName)) {
                                     move_uploaded_file($tmpName, '../../upload/' . $fileName);
                                     echo ("<p class='notification' style='background-color: green;' >" . $config["translations"]["selected"]["notification"]["projectAdded"] . "</p>");

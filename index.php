@@ -96,7 +96,13 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
             foreach($Carrier->GetEvent()->GetAllCarrierEvents($value["id"]) as $key => $value ) {
 
                 echo("<details>
-                <summary>".$value["title"]."</summary>
+                <summary class='summary'>
+                <div>".$value["title"]."</div>
+                <div>".substr($value["startDate"],0,4 )."-".substr($value["endDate"],0,4 )."</div>
+                </summary>") ;
+
+
+                echo("
                 <div class='description'>
                 ".$value["eventText"]."
                 </div>

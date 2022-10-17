@@ -28,6 +28,11 @@ a {
 
 }
 
+.summary {
+    display: flex;
+    justify-content: space-between;
+}
+
 hr {
     border: 1px solid;
     width: 100%; 
@@ -127,18 +132,25 @@ hr {
     
 }
 
+
+
 .articleVeille {
     background: white;
     border: white 0px solid;
     border: 2px solid;
     transition: transform .2s;
     min-width: 300px;
-    width: 80%;
     border-left: black 15px solid; 
     margin-left: 10vw ;
     margin-right: 10vw ;
     padding: 2vh;
     margin-bottom: 2vh;
+    cursor: pointer;
+
+}
+
+a.veilleTechnologique:hover  {
+    text-decoration: hidden !important;
 
 }
 
@@ -163,12 +175,12 @@ hr {
     background-repeat: no-repeat;
 }
 
-
+/*
 a:hover {
     text-decoration: underline;
     transition-delay: 0.25s;
 }
-
+*/
 
 
 
@@ -194,6 +206,7 @@ a:hover {
 #element {
     box-shadow: 10px 10px 10px black;
     width: 30vw;
+    cursor: pointer;
     height: 50vh;
 
 }

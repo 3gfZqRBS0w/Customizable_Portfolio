@@ -70,7 +70,7 @@ abstract class Post {
 
 
     protected function CheckLengthTitle($title) {
-        if ( strlen($title) > 0 && strlen($title) < 32 ) {
+        if ( strlen($title) > 0 && strlen($title) < 255 ) {
             return true ;
         }
         else {

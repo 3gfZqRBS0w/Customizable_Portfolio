@@ -31,7 +31,7 @@
         if (isset($_POST["articleTitle"])) {
             $articleTitle = $_POST["articleTitle"];
     
-            if (strlen($articleTitle) > 0 && strlen($articleTitle) < 30) {
+            if (strlen($articleTitle) > 0 && strlen($articleTitle) < 255) {
                 if ($Articles->New($articleTitle)) {
                     echo ("<p class='notification' style='background-color: green;' >Article added</p>");
                 }

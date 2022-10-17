@@ -75,6 +75,10 @@ class CarrierEvent extends Post
 
     }
 
+    public function GetYear($date) {
+            return substr($date,0, 4) ;
+    }
+
 
     private function GetPictureName($title)
     {

@@ -72,6 +72,8 @@ class CarrierType extends Post
 
 
 
+
+
     private function GetPictureName($title)
     {
         return $this->GetPost($title)[0]["photoName"];
