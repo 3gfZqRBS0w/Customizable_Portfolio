@@ -1,23 +1,23 @@
-#Customizable Portfolio
+## Customizable Portfolio
 
-#En Français
+# En Français
 
 
 Customizable Portfolio est un projet qui a pour objectif de permettre a chacun de pouvoir crée et personnaliser son portfolio grâce a du code sûr et totalement open source. Il propose pour l'instant la configuration d'une seule template mais plus tard plusieurs pourront être proposer et ajouter.
 
-###Fonctionnalité
+### Fonctionnalité
 
 * Un Tableau de bord simple qui affiche les différents événements de la plateforme
 * Ajout, édition et suppression de projet, carrière et compétences
 * Publication et mise à jour d'article
 * Des trucs évidents qu'on trouvent sur les portfolios
 
-#In English
+# In English
 
 
 Customizable Portfolio is a project that aims to allow everyone to create and customize their portfolio with safe and totally open source code. It proposes for the moment the configuration of a single template but later several can be proposed and added.
 
-###Features
+### Features
 
 * A simple dashboard that displays the different events of the platform
 * Add, edit and delete projects, careers and skills
@@ -54,7 +54,7 @@ Customizable Portfolio is a project that aims to allow everyone to create and cu
 
 
 
-##Installation
+## Installation
 
 Pour l'instant, le projet n'est pas a un stade permettant son utilisation. Je vous invite néanmois a l'essayer et a me faire un retour de votre expérience
 
