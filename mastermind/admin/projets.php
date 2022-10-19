@@ -213,7 +213,7 @@ Old version of this part of code
                 }
             } else {
 
-                $data = $Projects->GetAllPosts();
+                $data = $Projects->GetPost($_POST["chooseProject"]);
 
                 //Utility::getData($bdd, $_POST['chooseProject'], "tbl_projects");
 

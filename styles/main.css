@@ -232,7 +232,7 @@ a:hover {
 
 
 #listeDesProjets {
-    height: 100vh;
+    min-height: 100vh;
     background-color: #E8F1F2;
 }
 
