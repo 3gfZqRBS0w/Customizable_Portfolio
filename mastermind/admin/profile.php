@@ -32,22 +32,51 @@
 
 <body>
     <?= (Utility::getHeader($config["redirection"]["dashboard"], "Profile", "Customize your profile")) ?>
-    <?php
-    if (isset($_POST["uploadNewProfileImage"])) {
-        if (isset($_POST["profilePicture"])) {
-            
-        }
-    }
-    ?>
     <div class="websiteOverview">
     <h3 class="titleOfWebsiteOverview">Changing the profile image</h3>
+    <?php
+        if (isset($_POST["newPicture"]) && isset($_FILES['profilePicture'])) {
+            $tmpName = $_FILES['profilePicture']['tmp_name'];
+            $name = $_FILES['profilePicture']['name'];
+            $size = $_FILES['profilePicture']['size'];
+            $tabExtension = explode('.', $name);
+            $extension = strtolower(end($tabExtension));
+            $error = $_FILES['profilePicture']['error'];
+           $extensions = ['png'];
+           if (in_array($extension, $extensions)) {
+            if ($error == 0) {
+                if ($size <= $config["stockage"]["maxProfileSize"]) {
+                    $uniqueName = uniqid('', true);
+                    $fileName = $uniqueName . "." . $extension;
+                    if (!$Owner->IsDefaultProfilePath()) {
+                        unlink("../../".$Owner->GetProfilePath()) ;
+                    }
+                    move_uploaded_file($tmpName, '../../upload/' . $fileName);
+                    $Owner->SetProfilePath('upload/'.$fileName) ;
+                    echo("<p class='notification' style='background-color: green;' >Profil updated</p>") ;
+                }
+                else {
+                    echo ("<p class='notification' style='background-color: red;' >Picture to big</p>");
+                }
+            }
+            else {
+                echo ("<p class='notification' style='background-color: red;' >ERROR</p>");
+            }
+           }
+           else {
+            echo ("<p class='notification' style='background-color: red;' >PNG ONLY</p>");
+           }
+
+        }
+    
+    ?>
         <div class="contact-form setting">
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <p>
-                    <input type="file" name="profilePicture">
+                    <input type="file" name="profilePicture" required>
                 </p>
                 <p>
-                    <button name="uploadNewProfileImage" type="submit">Save</button>
+                    <button name="newPicture" type="submit">Save</button>
                 </p>
             </form>
         </div>
@@ -102,7 +131,7 @@
                         </div>
                         
                         <div id="monPortrait">
-                            <img class="imagePreview" src=<?="../../".Utility::PROFILE_PATH?>>
+                            <img class="imagePreview" src=<?="../../".$Owner->GetProfilePath()?>>
                             <div class="text">
                                 <div data-el="output1"></div>
                             </div>

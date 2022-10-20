@@ -14,8 +14,26 @@ class Owner {
         $this->pdo = null ;
     }
 
-    public function UploadProfile() {
-        
+    public function IsDefaultProfilePath() {
+        if ($this->GetProfilePath() == "presentation/portrait.png") {
+            return true ;
+        }
+        else {
+            return false ; 
+        }
+    }
+
+    public function GetProfilePath() {
+        $stmt = $this->pdo->prepare("SELECT profilPath FROM $this->tableName WHERE 1 ; ") ;
+        $stmt->execute() ;
+
+        return $stmt->fetch()["profilPath"] ;
+    }
+
+    public function SetProfilePath($path) {
+        $stmt = $this->pdo->prepare("UPDATE $this->tableName SET profilPath = ".$this->pdo->quote($path)." ; ") ;
+        $stmt->execute();
+
     }
 
     public function ActiveCheckQRCode() {

@@ -40,6 +40,10 @@ hr {
     background: #333;
 }
 
+#profile {
+    width: 25em;
+}
+
 
 
 @media(max-width: 600px) {

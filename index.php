@@ -78,7 +78,7 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
                     <?= $Parsedown->text(file_get_contents(Utility::SUMMARY_PATH)) ?>
                 </div>
                 <div id="monPortrait">
-                    <img src=<?= Utility::PROFILE_PATH ?>>
+                    <img id="profile" src=<?=$Owner->GetProfilePath()?>>
                     <?= $Parsedown->text(file_get_contents(Utility::LIBELLE_PORTRAIT_PATH)) ?>
                 </div>
             </div>

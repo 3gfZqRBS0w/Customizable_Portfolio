@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS tbl_owner (
     surName VARCHAR(50) NOT NULL,
     secretCode CHAR(255),
     secretQrCode VARCHAR(255) NOT NULL,
+    profilPath VARCHAR(255) DEFAULT 'presentation/portrait.png',
     nameOfWebsite VARCHAR(50) NOT NULL,
     websiteSubtitble VARCHAR(50) NOT NULL,
     qrcodeCheck BOOLEAN DEFAULT 0,
