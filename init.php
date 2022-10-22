@@ -8,6 +8,8 @@ require_once(__DIR__."/librairies/Parsedown.php");
 require_once(__DIR__."/librairies/Utility.php");
 require_once(__DIR__."/librairies/Projects.php");
 require_once(__DIR__."/librairies/Articles.php");
+require_once(__DIR__."/librairies/Skill.php");
+require_once(__DIR__."/librairies/Skills.php");
 require_once(__DIR__."/librairies/CarrierType.php");
 require_once(__DIR__."/librairies/CarrierEvent.php");
 require_once(__DIR__."/librairies/Logs.php");
@@ -82,6 +84,7 @@ if (!Utility::bddExists($bdd)) {
 $Parsedown = new Parsedown();
 $Projects = new Projects($bdd);
 $Articles = new Articles($bdd);
+$Skills = new Skills($bdd);
 $Carrier = new CarrierType($bdd);
 $Owner = new Owner($bdd);
 $Logs = new Logs($bdd);

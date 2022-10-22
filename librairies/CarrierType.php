@@ -16,7 +16,7 @@ class CarrierType extends Post
     }
 
 
-    public function New($title, $picture = null,$eventText = null,$dateStart = null, $dateEnd = null, $careerEventID = null)
+    public function New($title, $picture = null,$eventText = null,$dateStart = null, $dateEnd = null, $careerEventID = null, $activationPercentage = null, $percentage = null)
     {
 
         if ($this->CheckLengthTitle($title)) {
@@ -30,11 +30,11 @@ class CarrierType extends Post
     }
 
 
-    public function Edit($oldtitle,$title, $text, $dateStart = null, $dateEnd = null)
+    public function Edit($oldtitle,$title, $text = null, $dateStart = null, $dateEnd = null)
     {
         if ($this->CheckLengthTitle($title)) {  
             if ( $oldtitle==$title || ($this->PostExists($oldtitle) and !$this->PostExists($title)) ) {
-                $stmt = $this->pdo->prepare("UPDATE " . $this->tableName . " SET title = " . $this->pdo->quote($title) . ", fullTextOfProject = " . $this->pdo->quote($text) . " WHERE title = " . $this->pdo->quote($oldtitle) . ";");
+                $stmt = $this->pdo->prepare("UPDATE " .$this->tableName. " SET title = " . $this->pdo->quote($title)." WHERE title = " . $this->pdo->quote($oldtitle) . ";");
                 $stmt->execute();
                 return true;
             }

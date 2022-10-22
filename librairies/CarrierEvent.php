@@ -8,10 +8,11 @@ class CarrierEvent extends Post
 {
 
     protected $tableName = "tbl_carreersEvent";
+    protected $foreignKey= "fk_idCareer" ; 
 
 
 
-    public function New($title,$dateStart, $dateEnd, $careerEventID, $picture = null)
+    public function New($title,$dateStart, $dateEnd, $careerEventID, $picture = null, $activationPercentage = null, $percentage = null)
     {
 
         if ($this->CheckLengthTitle($title)) {
@@ -73,12 +74,5 @@ class CarrierEvent extends Post
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    }
-
- 
-
-    private function GetPictureName($title)
-    {
-        return $this->GetPost($title)[0]["photoName"];
     }
 }

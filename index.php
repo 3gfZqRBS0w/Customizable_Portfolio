@@ -36,6 +36,8 @@
 
 
 <?php
+
+
 require_once(__DIR__ . "/init.php");
 /*
 $abc = $otp->create();
@@ -79,7 +81,7 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
                 </div>
                 <div id="monPortrait">
                     <img id="profile" src=<?=$Owner->GetProfilePath()?>>
-                    <?= $Parsedown->text(file_get_contents(Utility::LIBELLE_PORTRAIT_PATH)) ?>
+                    <?=$Parsedown->text(file_get_contents(Utility::LIBELLE_PORTRAIT_PATH))?>
                 </div>
             </div>
         </div>
@@ -179,7 +181,9 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
 
 
         <?php
-        $allProjects = Utility::getAllData($bdd, "tbl_projects");
+       // $allProjects = Utility::getAllData($bdd, "tbl_projects");
+
+       $allProjects = $Projects->GetAllPosts() ;
         $i = 0;
         if (count($allProjects) > 0) {
             echo ("<div class='bloc' id='bloc3'>
@@ -201,6 +205,53 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
         }
         ?>
 
+        <div class="bloc" id="bloc3">
+            <?php
+            $allSkills = $Skills->GetAllPosts() ;
+            ?>
+        </div>
+        </div>
+
+
+        <?php
+        $allSkill = $Skills->GetAllPosts() ;
+        echo("<div class='bloc' id='bloc4'>
+        <div class='categoryTitle'>
+                <h2>My skills and qualifications</h2>
+                <hr style='width: 80%;'>
+            </div>
+            <div class='blocOfSkills'>
+            
+        ") ;
+        foreach($allSkill as $value) {
+            echo("<div class='blocOfSkill'> <ul class='competenceList'>".$value["title"]."<hr>") ;
+            foreach($Skills->GetSkills()->GetAllAssociatedSkill($value["id"]) as $skill) {
+
+                echo("
+                
+                <li>".$skill["title"]);
+                
+                if ( $skill["activationPercentage"] ) {
+                    echo("
+                    <div class='skillBar'>
+                        <div style=' width:".$skill["Percentage"]."%' class='intoSkillBar'>
+                            <div class='growUp'>".$skill["Percentage"]."%</div>
+                        </div>
+                    </div>
+                
+        ") ;
+                }
+         
+
+                echo("</li>") ; 
+
+
+            }
+            echo("</ul></div>") ;
+        }
+        echo("</div>") ;
+        ?>
+ 
 
         <!--
         <div class="bloc" id="bloc4">
@@ -324,7 +375,9 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
 
         </div>
 
-        -->
+    -->
+ 
+      
 
 
         <?php

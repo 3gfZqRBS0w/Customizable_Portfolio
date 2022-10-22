@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS tbl_logs (
 
 
 CREATE TABLE IF NOT EXISTS tbl_careers (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL, 
     fk_logsID INT,
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
@@ -43,7 +43,23 @@ CREATE TABLE IF NOT EXISTS tbl_carreersEvent (
      endDate DATE,
      fk_idCareer INT NOT NULL,
      FOREIGN KEY (fk_idCareer) REFERENCES tbl_careers(id) 
-) ; 
+) ;
+
+
+CREATE TABLE IF NOT EXISTS tbl_skillType(
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50) NOT NULL,
+    fk_logsID INT,
+    FOREIGN KEY (fk_logsID) REFERENCES tbl_logs(logsID)
+) ;
+
+CREATE TABLE IF NOT EXISTS tbl_skill (
+    title VARCHAR(50) NOT NULL,
+    fk_idSkillType INT NOT NULL, 
+    activationPercentage BOOLEAN DEFAULT 1,
+    Percentage INT(1),
+    FOREIGN KEY (fk_idSkillType) REFERENCES tbl_skillType(id)
+) ;
 
 CREATE TABLE IF NOT EXISTS tbl_articles (
     articleID INT PRIMARY KEY AUTO_INCREMENT,
@@ -76,4 +92,13 @@ CREATE TABLE IF NOT EXISTS tbl_contacts (
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
 ) ;
 
+
+
+/*
+CREATE TABLE IF NOT EXISTS tbl_category (
+    id INT NOT NULL AUTO_INCREMENT,
+
+    PRIMARY KEY (id)
+) ; 
+*/
 COMMIT;
