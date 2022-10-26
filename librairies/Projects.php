@@ -6,6 +6,7 @@ class Projects extends Post
 {
 
     protected $tableName = "tbl_projects";
+    protected $logTable = "tbl_projectLogs";
 
 
     public function New($title, $picture,$dateStart = null, $dateEnd = null, $careerEventID = null)
@@ -41,6 +42,10 @@ class Projects extends Post
             if ($this->PostExists($title)) {
                 $imgName = $this->GetPictureName($title); 
                 if (unlink(__DIR__ . "/../upload/$imgName")) {
+
+                    $stmt = $this->pdo->prepare("UPDATE $this->logTable INNER JOIN $this->tableName ON id = idPost SET idPost = NULL WHERE title = " . $this->pdo->quote($title ).";");
+                    $stmt->execute();
+                    
                     $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
                     $stmt->execute();
                     return true;

@@ -8,6 +8,7 @@ class Skill extends Post
 {
 
     protected $tableName = "tbl_skill";
+    protected $logTable = "tbl_skillLogs";
 
 
     public function New($title, $percentage,$careerEventID, $picture = null ,$dateStart = null, $dateEnd = null )
@@ -28,12 +29,15 @@ class Skill extends Post
         return false;
     }
 
-    // title is percentage 
+   /*
+   the text parameter is used here to indicate the percentage of mastery of a skill 
+   */
     public function Edit($oldtitle,$title, $text, $dateStart = null, $dateEnd = null)
     {
         if ($this->CheckLengthTitle($title) && $text >= -1 && $text <= 100) {  
 
-            $activePercentage = $text == "-1" ? "0" : "1" ; 
+            $activePercentage = $text == "-1" ? "0" : "1" ;
+
             if ( $oldtitle==$title || ($this->PostExists($oldtitle) and !$this->PostExists($title)) ) {
                 $stmt = $this->pdo->prepare("UPDATE " . $this->tableName . " SET title = " . $this->pdo->quote($title) . ", activationPercentage = ".$this->pdo->quote($activePercentage).",Percentage = ".$this->pdo->quote($text)."  WHERE title = " . $this->pdo->quote($oldtitle) . ";");
                 $stmt->execute();
@@ -44,17 +48,6 @@ class Skill extends Post
         return false;
     }
 
-    public function Remove($title)
-    {
-        if ($this->CheckLengthTitle($title)) {
-            if ($this->PostExists($title)) {
-                    $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
-                    $stmt->execute();
-                    return true;
-                }
-            }
-        return false;
-    }
 
     public function GetAllSkills($id) {
         $stmt = $this->pdo->prepare("SELECT * FROM " . $this->tableName . " WHERE fk_idSkillType = ".$this->pdo->quote($id).";");
@@ -63,6 +56,9 @@ class Skill extends Post
     }
 
 
+    /*
+    Same as in the Career method class. You have to merge the two
+    */
 
     public function RemoveByID($id) {
         $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE fk_idSkillType = " . $this->pdo->quote($id) . "; ");

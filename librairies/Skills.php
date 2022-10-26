@@ -8,6 +8,7 @@ class Skills extends Post
 {
 
     protected $tableName = "tbl_skillType" ;
+    protected $logTable = "tbl_skillTypesLogs";
     protected $skill ; 
 
     function __construct($pdo) {
@@ -29,6 +30,10 @@ class Skills extends Post
         return false;
     }
 
+
+    /*
+    For the moment, this method is not used in the code. Maybe in the next versions 
+    */
 
     public function Edit($oldtitle,$title, $text, $dateStart = null, $dateEnd = null)
     {

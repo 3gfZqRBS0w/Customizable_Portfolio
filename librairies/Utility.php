@@ -25,7 +25,7 @@ class Utility
   public static function addlog($pdo, $code)
   {
 
-    $query = "INSERT INTO tbl_logs(horodatage, addr_ip, user_agent, actionid_fk) VALUES(NOW(),'" . $_SERVER['REMOTE_ADDR'] . "','" . $_SERVER['HTTP_USER_AGENT'] . "', $code) ;";
+    $query = "INSERT INTO tbl_logs(timestamp, ipAddress, userAgent, actionid_fk) VALUES(NOW(),'" . $_SERVER['REMOTE_ADDR'] . "','" . $_SERVER['HTTP_USER_AGENT'] . "', $code) ;";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $stmt->closeCursor();
@@ -33,7 +33,7 @@ class Utility
 
   public static function getlogs($pdo)
   {
-    $query = "SELECT horodatage, addr_ip, user_agent, actionid_fk FROM tbl_logs ORDER BY horodatage DESC ;";
+    $query = "SELECT timestamp, ipAddress, userAgent, actionid_fk FROM tbl_logs ORDER BY timestamp DESC ;";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -137,12 +137,12 @@ class Utility
   public static function lastSuccessfulConnection($pdo, $ip)
   {
 
-    $query = "SELECT horodatage FROM tbl_logs WHERE addr_ip='$ip' AND actionid_fk=3 ;";
+    $query = "SELECT timestamp FROM tbl_logs WHERE ipAddress='$ip' AND actionid_fk=3 ;";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $result["horodatage"];
+    return $result["timestamp"];
   }
 
 
@@ -151,7 +151,7 @@ class Utility
 
     $date = $pdo->quote(Utility::lastSuccessfulConnection($pdo, $_SERVER['REMOTE_ADDR']));
     $query = "SELECT COUNT(*) FROM tbl_logs
-    WHERE actionid_fk=2 AND horodatage BETWEEN $date AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND addr_ip='$ip';";
+    WHERE actionid_fk=2 AND timestamp BETWEEN $date AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND ipAddress='$ip';";
 
 
     $stmt = $pdo->prepare($query);

@@ -8,7 +8,7 @@ class CarrierEvent extends Post
 {
 
     protected $tableName = "tbl_carreersEvent";
-    protected $foreignKey= "fk_idCareer" ; 
+    protected $logTable = "tbl_careerLogs";
 
 
 
@@ -25,11 +25,6 @@ class CarrierEvent extends Post
         return false;
     }
 
-    public function GetAllCarrierEvents($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM " . $this->tableName . " WHERE fk_idCareer = ".$this->pdo->quote($id).";");
-            $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
-    }
 
 
     public function Edit($oldtitle,$title, $text, $dateStart, $dateEnd )
@@ -45,18 +40,13 @@ class CarrierEvent extends Post
         return false;
     }
 
-    public function Remove($title)
-    {
-        if ($this->CheckLengthTitle($title)) {
-            if ($this->PostExists($title)) {
-                    $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
-                    $stmt->execute();
-                    return true;
-            }
-        }
-        return false;
-    }
 
+    public function GetAllCarrierEvents($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM " . $this->tableName . " WHERE fk_idCareer = ".$this->pdo->quote($id).";");
+            $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); 
+    }
+    
     public function RemoveByID($id) {
         $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE fk_idCareer = " . $this->pdo->quote($id) . "; ");
         $stmt->execute() ;

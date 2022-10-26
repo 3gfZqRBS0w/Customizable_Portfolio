@@ -7,6 +7,7 @@ class CarrierType extends Post
 {
 
     protected $tableName = "tbl_careers";
+    protected $logTable = "tbl_careerTypeLogs";
     protected $carrierEvent ;
 
     function __construct($pdo)
@@ -43,19 +44,6 @@ class CarrierType extends Post
         return false;
     }
 
-    public function Remove($title)
-    {
-        if ($this->CheckLengthTitle($title)) {
-            if ($this->PostExists($title)) {
-                if ($this->carrierEvent->RemoveByID($this->GetCarrierTypeIDByTitle($title))) {
-                    $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
-                    $stmt->execute();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     public function GetCarrierTypeIDByTitle($title) { 
         $stmt = $this->pdo->prepare("SELECT id FROM $this->tableName WHERE title = ".$this->pdo->quote($title).";");
@@ -68,10 +56,6 @@ class CarrierType extends Post
     public function GetEvent() {
         return $this->carrierEvent ; 
     }
-
-
-
-
 
 
     private function GetPictureName($title)

@@ -34,6 +34,7 @@
 
             if (strlen($carrierType) > 0 && strlen($carrierType) < 30) {
                 if ($Carrier->New($carrierType)) {
+                    $Carrier->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(11)) ; 
                     echo ("<p class='notification' style='background-color: green;' >Carrier Type added</p>");
                 } else {
                     echo ("<p class='notification' style='background-color: green;' >Already existing Carrier Type</p>");
@@ -105,7 +106,6 @@
 
     <p>
     <button type='submit'>CANCEL</button>
-    </p>
     </form>");
         }
 
@@ -115,6 +115,9 @@
             echo ("<h3 class='titleOfWebsiteOverview'>Add Carreer Event</h3>");
             if (isset($_POST["startDate"]) && $_POST["endDate"] && $_POST["titleEvent"]) {
                 if ($Carrier->GetEvent()->New($_POST["titleEvent"], $_POST["startDate"], $_POST["endDate"], $Carrier->GetCarrierTypeIDByTitle($_POST["AddCareerEvent"]))) {
+
+                    $Carrier->GetEvent()->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(14)) ;
+                    
                     echo ("<p class='notification' style='background-color: green;' >Career Added.</p>");
                 }
                 else {
@@ -184,6 +187,8 @@
                 
                 $res = $Carrier->GetEvent()->Edit($_POST['editCareerEvent'],$_POST["newTitle"],$_POST["careerContent"], $_POST["startDate"], $_POST["endDate"]) ;
 
+                $Carrier->GetEvent()->SetTraceability($Carrier->GetEvent()->GetPost($_POST['editCareerEvent'])[0]["id"],$Logs->AddLog(15)) ;
+
                 if ( $_POST['newTitle'] != $_POST['editCareerEvent']) {
                     
                     $data = $Carrier->GetEvent()->getPost($_POST["newTitle"]);
@@ -193,6 +198,7 @@
                 
                 
                 if ($res) {
+
                     echo ("<p class='notification' style='background-color: green;' >Career Update</p>");
                     
                 } else {
@@ -298,11 +304,16 @@
             echo ("<h3 class='titleOfWebsiteOverview'>Choose your Career Type</h3>
 <div class='contact-form setting'>");
 
+
+/* Save Carrier Type !!!*/
+
             if (isset($_POST['saveArticle'])) 
             {
                 if (isset($_POST['articleContent']) && $_POST['newTitle']) {
                     if ($Carrier->Edit($_POST['saveArticle'], $_POST['newTitle'], $_POST['articleContent'])) {
-                        echo ("<p class='notification' style='background-color: green;' >Article update.</p>");
+
+                        $Carrier->SetTraceability($Carrier->GetPost($_POST['saveArticle'])[0]["id"], $Logs->AddLog(12)) ;
+                        echo ("<p class='notification' style='background-color: green;' >Career update update.</p>");
                     } else {
                         echo ("<p class='notification' style='background-color: red;' >failure of the article update</p>");
                     }
@@ -313,6 +324,8 @@
                 if (isset($_POST['reallyDeleteCarrierType']) && isset($_POST['nameOfCarreerType'])) {
                     if ($_POST['reallyDeleteCarrierType'] == $_POST['nameOfCarreerType']) {
                         if ($Carrier->Remove($_POST['reallyDeleteCarrierType'])) {
+                            $Carrier->SetTraceability('NULL',$Logs->AddLog(13)) ;
+
                             echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
                         }
                         else {
@@ -327,6 +340,8 @@
                     if (isset($_POST['reallyDeleteCarrierEvent']) && isset( $_POST['nameOfCarreerEvent'])) {
                         if($_POST['reallyDeleteCarrierEvent'] == $_POST['nameOfCarreerEvent']) {
                             if ($Carrier->GetEvent()->Remove($_POST['reallyDeleteCarrierEvent'])) {
+
+                                $Carrier->GetEvent()->SetTraceability('NULL',$Logs->AddLog(16)) ;
                                 echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
                             }
                             else {

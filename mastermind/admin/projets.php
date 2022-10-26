@@ -57,6 +57,7 @@ ini_set("display_errors", 1);
                                 if ($Projects->New($projetName, $fileName)) {
                                     move_uploaded_file($tmpName, '../../upload/' . $fileName);
                                     echo ("<p class='notification' style='background-color: green;' >" . $config["translations"]["selected"]["notification"]["projectAdded"] . "</p>");
+                                    $Projects->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(8) ) ;  
                                 } else {
                                     echo ("<p class='notification' style='background-color: red;' >Already existing project</p>");
                                 }   
@@ -160,11 +161,12 @@ Old version of this part of code
             if (isset($_POST['deleteReallyProject'])) {
                 if (isset($_POST['nameOfProject']) && isset($_POST["deleteReallyProject"])) {
 
-                    // If the input of user is correct, delete really project
+                    //   If the input of user is correct, delete really project
                     if ($_POST["nameOfProject"] == $_POST["deleteReallyProject"]) {
                         //if (Utility::deleteData($bdd, $_POST["deleteReallyProject"], "tbl_projects")) {
                         if ($Projects->Remove($_POST["deleteReallyProject"])) {
                             echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
+                            $Projects->SetTraceability('NULL',$Logs->AddLog(10)) ;
                         } else {
                             echo ("<p class='notification' style='background-color: red;' >Unable to delete this project</p>");
                         }
@@ -186,7 +188,10 @@ Old version of this part of code
             if (isset($_POST['nameOfProject']) && isset($_POST['ProjectContent'])) {
                 // Utility::editProjects($bdd, $_POST['nameOfProject'], $_POST['ProjectContent']);
                 if ($Projects->Edit($_POST["saveProject"],$_POST['nameOfProject'], $_POST['ProjectContent'])) {
+                   // $Projects->SetTraceability(,$Logs->AddLog(9)) ;
+                   $Projects->SetTraceability($Projects->GetPost($_POST['saveProject'])[0]["id"],$Logs->AddLog(9)) ; 
                     echo ("<p class='notification' style='background-color: green;' >Project updating.</p>");
+                    
                 }
                 else {
                     echo ("<p class='notification' style='background-color: red;' >failure of the project update</p>");

@@ -81,7 +81,6 @@
         </div>
     </div>
     </div>
-
     <div class="container">
         <div style="width: 45vw; min-width: 400px;" class="websiteOverview">
             <h3 class="titleOfWebsiteOverview"><?=$config["translations"]["selected"]["dashboard"]["latestLogs"]?></h3>
@@ -98,9 +97,9 @@
                     foreach ($logs as $key => $value) {
                         echo ("
     <tr>
-        <td>" . $value["horodatage"] . "</td>
-        <td>" . $value["addr_ip"] . "</td>
-        <td>" . $value["user_agent"] . "</td>
+        <td>" . $value["timestamp"] . "</td>
+        <td>" . $value["ipAddress"] . "</td>
+        <td>" . $value["userAgent"] . "</td>
         <td>" . $config["translations"]["selected"]["logs"][$value["actionid_fk"]] . "</td>
       </tr>
         ");

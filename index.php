@@ -215,41 +215,43 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
 
         <?php
         $allSkill = $Skills->GetAllPosts() ;
-        echo("<div class='bloc' id='bloc4'>
-        <div class='categoryTitle'>
-                <h2>My skills and qualifications</h2>
-                <hr style='width: 80%;'>
-            </div>
-            <div class='blocOfSkills'>
-            
-        ") ;
-        foreach($allSkill as $value) {
-            echo("<div class='blocOfSkill'> <ul class='competenceList'>".$value["title"]."<hr>") ;
-            foreach($Skills->GetSkills()->GetAllAssociatedSkill($value["id"]) as $skill) {
-
-                echo("
+        if ( count($allSkill) > 0 ) {
+            echo("<div class='bloc' id='bloc4'>
+            <div class='categoryTitle'>
+                    <h2>My skills and qualifications</h2>
+                    <hr style='width: 80%;'>
+                </div>
+                <div class='blocOfSkills'>
                 
-                <li>".$skill["title"]);
-                
-                if ( $skill["activationPercentage"] ) {
+            ") ;
+            foreach($allSkill as $value) {
+                echo("<div class='blocOfSkill'> <ul class='competenceList'>".$value["title"]."<hr>") ;
+                foreach($Skills->GetSkills()->GetAllAssociatedSkill($value["id"]) as $skill) {
+    
                     echo("
-                    <div class='skillBar'>
-                        <div style=' width:".$skill["Percentage"]."%' class='intoSkillBar'>
-                            <div class='growUp'>".$skill["Percentage"]."%</div>
+                    
+                    <li>".$skill["title"]);
+                    
+                    if ( $skill["activationPercentage"] ) {
+                        echo("
+                        <div class='skillBar'>
+                            <div style=' width:".$skill["Percentage"]."%' class='intoSkillBar'>
+                                <div class='growUp'>".$skill["Percentage"]."%</div>
+                            </div>
                         </div>
-                    </div>
-                
-        ") ;
+                    
+            ") ;
+                    }
+             
+    
+                    echo("</li>") ; 
+    
+    
                 }
-         
-
-                echo("</li>") ; 
-
-
+                echo("</ul></div>") ;
             }
-            echo("</ul></div>") ;
-        }
-        echo("</div>") ;
+            echo("</div>") ;
+        } 
         ?>
  
 

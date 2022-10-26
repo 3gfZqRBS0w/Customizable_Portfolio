@@ -30,9 +30,10 @@
         <?php
         if (isset($_POST["carrierType"])) {
             $SkillsType = $_POST["carrierType"];
-
+// Skills = Skill Type
             if (strlen($SkillsType) > 0 && strlen($SkillsType) < 30) {
                 if ($Skills->New($SkillsType)) {
+                    $Skills->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(17)) ;
                     echo ("<p class='notification' style='background-color: green;' >Skill Type added</p>");
                 } else {
                     echo ("<p class='notification' style='background-color: red;' >Already existing Skill Type</p>");
@@ -113,6 +114,7 @@
             echo ("<h3 class='titleOfWebsiteOverview'>Add Skill Event</h3>");
             if (isset($_POST["titleSkill"]) && $_POST["competenceLevel"]) {
                 if ($Skills->GetSkills()->New($_POST["titleSkill"],$_POST["competenceLevel"] ,$_POST["AddSkill"])) {
+                    $Skills->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(20)) ;
                     echo ("<p class='notification' style='background-color: green;' >Skill Added.</p>");
                 }
                 else {
@@ -297,6 +299,8 @@
                 if (isset($_POST['reallyDeleteCarrierType']) && isset($_POST['nameOfSkillType'])) {
                     if ($_POST['reallyDeleteCarrierType'] == $_POST['nameOfSkillType']) {
                         if ($Skills->Remove($_POST['reallyDeleteCarrierType'])) {
+                            $Skills->SetTraceability('NULL',$Logs->AddLog(19)) ;
+
                             echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
                         }
                         else {
@@ -311,6 +315,7 @@
                     if (isset($_POST['reallyDeleteCarrierEvent']) && isset( $_POST['nameOfSkillEvent'])) {
                         if($_POST['reallyDeleteCarrierEvent'] == $_POST['nameOfSkillEvent']) {
                             if ($Skills->GetSkills()->Remove($_POST['reallyDeleteCarrierEvent'])) {
+                                $Skills->SetTraceability('NULL',$Logs->AddLog(22)) ;
                                 echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
                             }
                             else {

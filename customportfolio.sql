@@ -1,7 +1,11 @@
-START TRANSACTION;
+
+
+START TRANSACTION ;
+
+
 
 CREATE TABLE IF NOT EXISTS tbl_actions (
-    id_action INT NOT NULL AUTO_INCREMENT,
+    id_action INT NOT NULL,
     titre_action VARCHAR(255) NOT NULL,
     PRIMARY KEY (id_action)
 ) ;
@@ -20,10 +24,10 @@ CREATE TABLE IF NOT EXISTS tbl_owner (
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_logs (
-    logsID INT PRIMARY KEY AUTO_INCREMENT,
-    horodatage DATETIME NOT NULL,
-    addr_ip VARCHAR(15) NOT NULL,
-    user_agent VARCHAR(255) NOT NULL,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    timestamp DATETIME NOT NULL,
+    ipAddress VARCHAR(15) NOT NULL,
+    userAgent VARCHAR(255) NOT NULL,
     actionid_fk INT NOT NULL,
     FOREIGN KEY (actionid_fk) REFERENCES tbl_actions (id_action)
 ) ;
@@ -31,29 +35,29 @@ CREATE TABLE IF NOT EXISTS tbl_logs (
 
 CREATE TABLE IF NOT EXISTS tbl_careers (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(50) NOT NULL, 
-    fk_logsID INT,
-    FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
+    title VARCHAR(50) NOT NULL
+
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_carreersEvent (
+    id INT PRIMARY KEY AUTO_INCREMENT,
      title VARCHAR(50) NOT NULL,
      eventText TEXT NOT NULL,
      startDate DATE,
      endDate DATE,
      fk_idCareer INT NOT NULL,
-     FOREIGN KEY (fk_idCareer) REFERENCES tbl_careers(id) 
+     FOREIGN KEY (fk_idCareer) REFERENCES tbl_careers(id)
 ) ;
+
 
 
 CREATE TABLE IF NOT EXISTS tbl_skillType(
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(50) NOT NULL,
-    fk_logsID INT,
-    FOREIGN KEY (fk_logsID) REFERENCES tbl_logs(logsID)
+    title VARCHAR(50) NOT NULL
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_skill (
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     fk_idSkillType INT NOT NULL, 
     activationPercentage BOOLEAN DEFAULT 1,
@@ -62,36 +66,77 @@ CREATE TABLE IF NOT EXISTS tbl_skill (
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_articles (
-    articleID INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     publicationDate DATETIME,
-    fullTextOfArticles TEXT NOT NULL,
-    fk_logsID INT,
-    FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
+    fullTextOfArticles TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS tbl_projects (
     fk_careerID INT,
     fk_articleID INT,
-    fk_logsID INT,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     photoName VARCHAR(255) NOT NULL,
     fullTextOfProject TEXT NOT NULL,
-    PRIMARY KEY(title),
-    FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID),
-    FOREIGN KEY (fk_careerID) REFERENCES tbl_careers (id),
-    FOREIGN KEY (fk_articleID) REFERENCES tbl_articles(articleID)
+    FOREIGN KEY (fk_careerID) REFERENCES tbl_careers(id),
+    FOREIGN KEY (fk_articleID) REFERENCES tbl_articles(id)
 );
+
+
 
 CREATE TABLE IF NOT EXISTS tbl_contacts (
     fullName VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     num CHAR(10) NOT NULL,
-    fk_logsID INT NOT NULL,
+    fk_logsID INT,
     message MEDIUMTEXT,
-    FOREIGN KEY (fk_logsID) REFERENCES tbl_logs (logsID)
+    FOREIGN KEY (fk_logsID) REFERENCES tbl_logs(id)
 ) ;
 
+/* LOGS LINK */
+
+CREATE TABLE IF NOT EXISTS tbl_projectLogs(
+    idPost INT,
+    idLog INT NOT NULL,
+    FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
+    FOREIGN KEY (idPost) REFERENCES tbl_projects(id)
+) ;
+
+CREATE TABLE IF NOT EXISTS tbl_articlesLogs(
+    idPost INT,
+    idLog INT NOT NULL,
+    FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
+    FOREIGN KEY (idPost) REFERENCES tbl_articles(id)
+) ;
+
+CREATE TABLE IF NOT EXISTS tbl_careerTypeLogs(
+    idPost INT,
+    idLog INT NOT NULL,
+    FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
+    FOREIGN KEY (idPost) REFERENCES tbl_careers(id)
+) ;
+
+CREATE TABLE IF NOT EXISTS tbl_careerLogs(
+    idPost INT,
+    idLog INT NOT NULL,
+    FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
+    FOREIGN KEY (idPost) REFERENCES tbl_careers(id)
+) ;
+
+CREATE TABLE IF NOT EXISTS tbl_skillLogs (
+    idPost INT,
+    idLog INT NOT NULL,
+    FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
+    FOREIGN KEY (idPost) REFERENCES tbl_skill(id)
+) ;
+
+CREATE TABLE IF NOT EXISTS tbl_skillTypesLogs (
+    idPost INT,
+    idLog INT NOT NULL,
+    FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
+    FOREIGN KEY (idPost) REFERENCES tbl_skillType(id)
+) ;
 
 
 /*

@@ -21,6 +21,8 @@ $otp = TOTP::create();
 
 
 
+
+
 try {
     $bdd = new PDO("mysql:host=".$config["db"]["host"].";dbname=".$config["db"]["bddName"].";charset=utf8", $config["db"]["username"], $config["db"]["password"]) ;
 }
@@ -40,7 +42,6 @@ catch (PDOException $e) {
 
 
 
-
 if (!Utility::bddExists($bdd)) {
     $password = Utility::generatePassword(rand(16,255));
     $hash = hash('sha256', $password);
@@ -53,11 +54,11 @@ if (!Utility::bddExists($bdd)) {
     $stmt->execute() ;
 
     foreach( $config["translations"]["en"]["logs"] as $key => $value) {
-        $stmt = $bdd->prepare("INSERT INTO tbl_actions(titre_action) VALUES('".$value."')") ;
+        $stmt = $bdd->prepare("INSERT INTO tbl_actions(id_action,titre_action) VALUES($key,".$bdd->quote($value).")") ;
         $stmt->execute();
     }
 
-
+//no8gZ8?k2NgYl47[FJGwm2tLh
 
 
     $stmt = $bdd->prepare("INSERT INTO tbl_owner(lastName, surName, nameOfWebsite, websiteSubtitble, secretCode, secretQrCode) VALUES('LASTNAME', 'FIRSTNAME', 'PORTFOLIO OF LASTNAME FIRSTNAME','SUBTITLE','".$hash."', '".$otp->create()->getSecret()."')") ;
@@ -88,8 +89,6 @@ $Skills = new Skills($bdd);
 $Carrier = new CarrierType($bdd);
 $Owner = new Owner($bdd);
 $Logs = new Logs($bdd);
-
-
 
 $otp = TOTP::create($Owner->GetQRSecret());
 
@@ -136,7 +135,6 @@ $config["redirection"]["dashboard"] = [
 
 if ($Projects->GetPostNumber() > 0) {
     $config["redirection"]["default"] = array_merge($config["redirection"]["default"], array($config["translations"]["selected"]["navBar"]["myprojects"] => "#bloc3")) ; 
-    
 }
 
 if ($Articles->GetPostNumber() > 0) {
@@ -144,10 +142,21 @@ if ($Articles->GetPostNumber() > 0) {
 }
 
 
+if ($Skills->GetPostNumber() > 0) {
+    $config["redirection"]["default"] = array_merge($config["redirection"]["default"], array("Skill" =>"#bloc4")) ; 
+}
 
+if ($Carrier->GetPostNumber() > 0 ) {
+    $config["redirection"]["default"] = array_merge($config["redirection"]["default"], array("Carreers" =>"#bloc2")) ; 
+}
+
+
+
+/*
 if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
     $config["redirection"]["default"][$config["translations"]["selected"]["navBar"]["skills"]] = "#bloc4";
 }
+*/
 
 // for Languages
 

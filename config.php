@@ -5,7 +5,7 @@
 $config["db"] = [
     "username" => "admin",
     "password" => "password",
-    "bddName" => "custom3",
+    "bddName" => "custom",
     "host" => "127.0.0.1"
 ];
 
@@ -87,11 +87,46 @@ $config["translations"]["en"] = [
         5 => "Update of the user profile",
         6 => "Change your profile picture",
         7 => "Update of the presentation",
+
+        // POSTS 
+
+        // Project traceability
         8 => "Add a project",
-        9 => "Editing a project",
-        10 => "Updated project",
-        11 => "Project deleted",
-        12 => "Mot de passe reset"
+        9 => "Updated project",
+        10 => "Project deleted",
+
+        // Career traceability :
+        
+        // Career Type 
+        11 => "Add Career Type",
+        12 => "Updated Career Type",
+        13 => "Career Type deleted",
+
+        // Career Event 
+        14 => "Add Career Event",
+        15 => "Updated Career Event",
+        16 => "Career Event deleted",
+
+
+        // Skills traceability :
+
+        // Skill Type
+        17 => "Add Skill Type",
+        18 => "Update Skill Type",
+        19 => "Skill Type deleted",
+
+        // Skill
+        20 => "Add Skill",
+        21 => "Update Skill",
+        22 => "Skill deleted",
+
+        // Article traceability :
+
+        23 => "Add Article",
+        24 => "Update Article",
+        25 => "Article deleted",
+
+        26 => "Password Reset"
     ],
     "navBar" => [
         "return" => "return",

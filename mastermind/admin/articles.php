@@ -1,3 +1,11 @@
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,8 +41,10 @@
     
             if (strlen($articleTitle) > 0 && strlen($articleTitle) < 255) {
                 if ($Articles->New($articleTitle)) {
-                    echo ("<p class='notification' style='background-color: green;' >Article added</p>");
-                }
+                    $Articles->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(23)) ; 
+                    echo ("<p class='notification' style='background-color: green;' >Article added  </p>" );
+               
+                }       
                 else {
                     echo ("<p class='notification' style='background-color: green;' >Already existing article</p>");
 
@@ -94,8 +104,12 @@
                             // If the input of user is correct, delete really project
                             if ($_POST["nameOfProject"] == $_POST["deleteReallyProject"]) {
                                 //if (Utility::deleteData($bdd, $_POST["deleteReallyProject"], "tbl_projects")) {
+                                    
                                 if ($Articles->Remove($_POST["deleteReallyProject"])) {
+                                    $Articles->SetTraceability('NULL',$Logs->AddLog(25)) ;
                                     echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
+                  
+                                    
                                 } else {
                                     echo ("<p class='notification' style='background-color: red;' >Unable to delete this project</p>");
                                 }
@@ -113,6 +127,7 @@
                         if (isset($_POST['saveArticle'])) {
                             if (isset($_POST['articleContent']) && $_POST['newTitle']) {
                                 if ($Articles->Edit($_POST['saveArticle'],$_POST['newTitle'],$_POST['articleContent'] )) {
+                                    $Articles->SetTraceability($Articles->GetPost($_POST['saveArticle'])[0]["id"],$Logs->AddLog(24)) ;
                                     echo ("<p class='notification' style='background-color: green;' >Article update.</p>");
                                 }
                                 else {

@@ -17,8 +17,27 @@ abstract class Post {
     " ;
 
     abstract public function New($title,$dateStart, $dateEnd,$picture, $careerEventID) ;
-    abstract public function Remove($title) ;
     abstract public function Edit($oldtitle, $title, $text, $dateStart, $dateEnd) ;
+
+
+
+    public function Remove($title)
+    {
+        if ($this->CheckLengthTitle($title)) {
+            if ($this->PostExists($title)) {
+
+                $stmt = $this->pdo->prepare("UPDATE $this->logTable INNER JOIN $this->tableName ON id = idPost SET idPost = NULL WHERE title = " . $this->pdo->quote($title ).";");
+                $stmt->execute();
+
+
+
+                $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
+                $stmt->execute();
+                return true;
+            }
+        }
+        return false;
+    }
 
     protected function PostExists($title)
     {
@@ -86,6 +105,14 @@ abstract class Post {
         $res = $stmt->fetch()["COUNT(*)"];
 
         return $res;
+    }
+
+
+    public function SetTraceability($idPost, $idLog) {
+
+        echo("INSERT INTO $this->logTable(idPost, idLog) VALUES($idPost,$idLog) ;") ;
+        $stmt = $this->pdo->prepare("INSERT INTO $this->logTable(idPost, idLog) VALUES($idPost,$idLog) ;") ;
+        $stmt->execute() ;
     }
 
 }
