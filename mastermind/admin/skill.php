@@ -114,7 +114,7 @@
             echo ("<h3 class='titleOfWebsiteOverview'>Add Skill Event</h3>");
             if (isset($_POST["titleSkill"]) && $_POST["competenceLevel"]) {
                 if ($Skills->GetSkills()->New($_POST["titleSkill"],$_POST["competenceLevel"] ,$_POST["AddSkill"])) {
-                    $Skills->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(20)) ;
+                    $Skills->GetSkills()->SetTraceability($bdd->lastInsertId(),$Logs->AddLog(20)) ;
                     echo ("<p class='notification' style='background-color: green;' >Skill Added.</p>");
                 }
                 else {
@@ -315,7 +315,7 @@
                     if (isset($_POST['reallyDeleteCarrierEvent']) && isset( $_POST['nameOfSkillEvent'])) {
                         if($_POST['reallyDeleteCarrierEvent'] == $_POST['nameOfSkillEvent']) {
                             if ($Skills->GetSkills()->Remove($_POST['reallyDeleteCarrierEvent'])) {
-                                $Skills->SetTraceability('NULL',$Logs->AddLog(22)) ;
+                                $Skills->GetSkills()->SetTraceability('NULL',$Logs->AddLog(22)) ;
                                 echo ("<p class='notification' style='background-color: green;' >Project deleted with success</p>");
                             }
                             else {

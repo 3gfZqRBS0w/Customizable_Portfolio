@@ -110,6 +110,7 @@ abstract class Post {
 
     public function SetTraceability($idPost, $idLog) {
 
+        // For debugging 
         echo("INSERT INTO $this->logTable(idPost, idLog) VALUES($idPost,$idLog) ;") ;
         $stmt = $this->pdo->prepare("INSERT INTO $this->logTable(idPost, idLog) VALUES($idPost,$idLog) ;") ;
         $stmt->execute() ;

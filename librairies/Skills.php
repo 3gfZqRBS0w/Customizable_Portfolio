@@ -50,21 +50,6 @@ class Skills extends Post
     
     }
 
-    public function Remove($title)
-    {
-        if ($this->CheckLengthTitle($title)) {
-            if ($this->PostExists($title)) {
-                if ($this->skill->RemoveByID($this->GetSkillTypeIDByTitle($title))) {
-                    $stmt = $this->pdo->prepare("DELETE FROM $this->tableName WHERE title = " . $this->pdo->quote($title) . " ; ");
-                    $stmt->execute();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-
     public function GetSkillTypeIDByTitle($title) { 
         $stmt = $this->pdo->prepare("SELECT id FROM $this->tableName WHERE title = ".$this->pdo->quote($title).";");
         $stmt->execute();
