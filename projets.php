@@ -30,7 +30,7 @@
                echo("<div style='padding-top: 2vh;' class='container1'>") ;
                Utility::displayPreviewProject($value["title"],"upload/".$value["photoName"]) ;
             }
-            else if ($i > 3) {
+            else if ($i >= 3) {
                echo("</div><div style='padding-bottom: 2vh;' class='container1'>") ;
                Utility::displayPreviewProject($value["title"],"upload/".$value["photoName"]) ;
                $i = 1 ; 
