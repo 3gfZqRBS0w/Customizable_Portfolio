@@ -18,9 +18,7 @@ class Skill extends Post
             if (!$this->PostExists($title)) {
 
                 $activePercentage = $percentage == "-1" ? "0" : "1" ; 
-
-
-          
+                
                 $stmt = $this->pdo->prepare("INSERT INTO " . $this->tableName . "(title, fk_idSkillType, activationPercentage, Percentage) VALUES (" . $this->pdo->quote($title) . ", " . $this->pdo->quote($careerEventID) .",".$activePercentage.",".$this->pdo->quote($percentage).");" );
                 $stmt = $stmt->execute();
                 return true;

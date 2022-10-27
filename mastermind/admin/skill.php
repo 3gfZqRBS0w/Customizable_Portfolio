@@ -172,6 +172,7 @@
                
                 
                 $res = $Skills->GetSkills()->Edit($_POST['editSkill'],$_POST["newTitle"], $_POST["skillPercentage"]) ;
+                $Skills->GetSkills()->SetTraceability($Skills->GetSkills()->GetPost($_POST['editSkill'])[0]["id"],$Logs->AddLog(21)) ;
 
                 if ( $_POST['newTitle'] != $_POST['editSkill']) {
                     
@@ -288,6 +289,7 @@
             {
                 if (isset($_POST['skillPercentage']) && $_POST['newTitle']) {
                     if ($Skills->Edit($_POST['saveArticle'], $_POST['newTitle'], $_POST['skillPercentage'])) {
+                        $Skills->SetTraceability($Skills->GetPost($_POST['saveArticle'])[0]["id"],$Logs->AddLog(18)) ;
                         echo ("<p class='notification' style='background-color: green;' >Article update.</p>");
                     } else {
                         echo ("<p class='notification' style='background-color: red;' >failure of the article update</p>");

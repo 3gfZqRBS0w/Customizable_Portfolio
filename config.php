@@ -224,18 +224,53 @@ $config["translations"]["fr"] = [
         ]
     ],
     "logs" => [
-        1 => "Installation du site internet",
-        2 => "Echec de la tentative de connexion",
-        3 => "Réussite de la connexion",
-        4 => "Consulte une page",
-        5 => "Mise a jour du profil utilisateur",
-        6 => "Modification de la photo de profil",
-        7 => "Mise à jour du message de bienvenue",
-        8 => "Ajout d'un nouveau projet",
-        9 => "Edition d'un projet",
-        10 => "Mise a jour d'un projet",
-        11 => "Un projet a été supprimer",
-        12 => "Mot de passe reset"
+        1 => "L'installation du site est un succès",
+        2 => "Tentative de connexion échoué",
+        3 => "Connexion au panel réussis",
+        4 => "Visite pour la première fois la page aujourd'hui",
+        5 => "Mise a jour du profile utilisateur",
+        6 => "Modification de l'avatar",
+        7 => "Mise à jour de la présentation",
+
+        // POSTS 
+
+        // Project traceability
+        8 => "Ajout du projet ",
+        9 => "Mise a jour du Projet",
+        10 => "Projet supprimé",
+
+        // Career traceability :
+        
+        // Career Type 
+        11 => "Ajout d'un type de carrière",
+        12 => "Mise a jour d'un type de carrière",
+        13 => "Type de carrière supprimé",
+
+        // Career Event 
+        14 => "Ajout d'un événements de carrière",
+        15 => "Mise a jour d'un événement de carrière",
+        16 => "Suppression d'un évenement de carrière",
+
+
+        // Skills traceability :
+
+        // Skill Type
+        17 => "Ajout d'un type de compétences",
+        18 => "Mise a jour d'un type de compétences",
+        19 => "Skill Type deleted",
+
+        // Skill
+        20 => "Ajout de compétence",
+        21 => "Mis a jour de compétence",
+        22 => "compétence supprimé",
+
+        // Article traceability :
+
+        23 => "Ajout d'article ",
+        24 => "Mis a jour article",
+        25 => "article supprimé",
+
+        26 => "Mot de passe reset"
     ],
     "tab_logs" => [
         "timestamp" => "Horodatage",
