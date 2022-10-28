@@ -147,7 +147,7 @@ error_reporting(E_ALL);
                                 <form action='' method='POST'>
                                  <div class='projetPreview'>
                                   <p>" . $post["title"] . "</p>
-                                  <button name='chooseProject'value='" . htmlspecialchars($post["title"]) . "' type='submit'>Edit</button>
+                                  <button name='chooseProject' value='" . htmlspecialchars($post["title"]) . "' type='submit'>Edit</button>
                                  </div> 
                                 </form>
                                 ");

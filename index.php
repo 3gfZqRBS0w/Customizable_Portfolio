@@ -65,12 +65,27 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
     session_start();
 
 
-
     if (isset($_SESSION["codeSecret"]) && Utility::IsValidPassword($bdd, $_SESSION["codeSecret"]) && ($Owner->CheckQRCode() || isset($_SESSION["qrCode"]))) {
         echo (Utility::getHeader($config["redirection"]["admin"], Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
     } else {
         echo (Utility::getHeader($config["redirection"]["default"], Utility::getOwnerData($bdd, "nameOfWebsite"), Utility::getOwnerData($bdd, "websiteSubtitble")));
     }
+
+    if ( isset($_POST['fullname']) && ( isset($_POST['email']) || isset($_POST['phone']) ) && isset($_POST['objet']) && isset($_POST['message']) ) {
+        if ( $Logs->IsPotentiallyBruteForceAttackForContactForm($_SERVER['REMOTE_ADDR'])) {
+            if ($Contact->New($_POST['fullname'],$_POST['email'],$_POST['phone'],$_POST['objet'],$_POST['message'], $Logs->AddLog(27))) {
+                echo ("<p class='notification' style='background-color: green;' >Le message a été envoyé</p>");
+            }
+            else {
+                echo ("<p class='notification' style='background-color: red;' >Vérifier ce que vous avez entrée</p>");
+            }
+        }
+        else {
+            echo ("<p class='notification' style='background-color: orange;' >Nombre de soumission maximum</p>");
+        }
+    }
+ 
+
 
     ?>
     <main>
@@ -418,7 +433,7 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
                     <hr>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Sit amet mattis vulputate enim nulla. Pretium viverra suspendisse potenti nullam ac tortor vitae purus faucibus. Vestibulum lectus mauris ultrices eros in. Viverra ipsum nunc aliquet bibendum enim facilisis gravida neque. Ornare suspendisse sed nisi lacus sed. Nullam eget felis eget nunc lobortis. Augue mauris augue neque gravida in fermentum et sollicitudin ac. Euismod elementum nisi quis eleifend. Id faucibus nisl tincidunt eget nullam. Purus gravida quis blandit turpis cursus in hac habitasse platea. Aliquam etiam erat velit scelerisque. Tellus elementum sagittis vitae et leo duis ut diam quam. Dui faucibus in ornare quam. Iaculis at erat pellentesque adipiscing commodo elit.</p>
                 </div>
-
+            
         -->
 
 
@@ -433,14 +448,14 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
 
                 <div class="contact-wrapper animated bounceInUp">
                     <div class="contact-form">
-                        <form action="">
+                        <form action="" method="POST">
                             <p>
                                 <label>Nom/Prénom</label>
                                 <input type="text" name="fullname">
                             </p>
                             <p>
                                 <label>Adresse E-Mail</label>
-                                <input text="tefr" type="email" name="email">
+                                <input  type="email" name="email">
                             </p>
                             <p>
                                 <label>Numéro de Téléphone</label>
@@ -448,14 +463,14 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
                             </p>
                             <p>
                                 <label>Objet</label>
-                                <input type="text" name="affair">
+                                <input type="text" name="objet">
                             </p>
                             <p class="block">
                                 <label>Message</label>
                                 <textarea name="message" rows="3"></textarea>
                             </p>
                             <p class="block">
-                                <button>Soumettre</button>
+                                <button name="contact" type="submit">Soumettre</button>
                             </p>
                         </form>
                     </div>
@@ -468,7 +483,6 @@ echo "The OTP secret is: {$abc->getSecret()}\n";
                         </ul>
                     </div>
                 </div>
-
             </div>
         </div>
 

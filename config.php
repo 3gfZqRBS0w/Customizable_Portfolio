@@ -5,9 +5,17 @@
 $config["db"] = [
     "username" => "admin",
     "password" => "password",
-    "bddName" => "custom",
+    "bddName" => "custom1",
     "host" => "127.0.0.1"
 ];
+
+/* 
+It is necessary to put the limits in the code now 
+*/
+
+$config["protection"] = [
+    "attemptLimit" => 10
+] ; 
 
 $config["stockage"] = [
     "maxProfileSize" => 500000,
@@ -126,7 +134,14 @@ $config["translations"]["en"] = [
         24 => "Update Article",
         25 => "Article deleted",
 
-        26 => "Password Reset"
+        // OTHER
+
+
+        26 => "Password Reset",
+
+        27 => "Add New Message",
+        28 => "Message accept",
+        29 => "Message delete"
     ],
     "navBar" => [
         "return" => "return",

@@ -116,34 +116,26 @@
                     <tr>
                         <th>Nom/Prénom</th>
                         <th>Adresse E-Mail</th>
+                        <th>Numéro de Téléphone</th>
                         <th>Objet</th>
                         <th>Message</th>
                     </tr>
-                    <tr>
-                        <td>Lombrès</td>
-                        <td>lombres@protonmail.com</td>
-                        <td>Bienvenue dans votre espace d'administration</td>
-                        <td>help.md</td>
-                    </tr>
-                    <tr>
-                        <td>Lombrès</td>
-                        <td>lombres@protonmail.com</td>
-                        <td>Bienvenue dans votre espace d'administration</td>
-                        <td>help.md</td>
-                    </tr>
-                    <tr>
-                        <td>Lombrès</td>
-                        <td>lombres@protonmail.com</td>
-                        <td>Bienvenue dans votre espace d'administration</td>
-                        <td>help.md</td>
-                    </tr>
-                    <tr>
-                        <td>Lombrès</td>
-                        <td>lombres@protonmail.com</td>
-                        <td>Bienvenue dans votre espace d'administration</td>
-                        <td>help.md</td>
-                    </tr>
+                    <?php
+                    $messages = $Contact->GetAllMessages() ;
 
+                    foreach ($messages as $key => $value) {
+                        echo ("
+    <tr>
+        <td>" . $value["fullName"] . "</td>
+        <td>" . $value["email"] . "</td>
+        <td>" . $value["num"] . "</td>
+        <td>" . $value["title"] . "</td>
+        <td>" . $value["message"] . "</td>
+      </tr>
+        ");
+                    }
+
+                    ?>
                 </table>
             </div>
         </div>

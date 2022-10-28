@@ -39,15 +39,13 @@ require_once("../init.php");
 
       $captcha = $_POST['g-recaptcha-response'];
 
-      $ip = $_SERVER['REMOTE_ADDR'];
-
       $url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
 
       $responseKeys = json_decode(@file_get_contents($url, false), true);
 
       if ($responseKeys["success"]) {
         if (isset($_POST["password"])) {
-          if (!Utility::potentiallyBruteForceAttack($bdd, $ip)) {
+          if (!$Logs->IsPotentiallyBruteForceAttack($_SERVER['REMOTE_ADDR'])) {
             if (hash('sha256', $_POST["password"]) == Utility::getOwnerData($bdd, "secretCode")) {
               $_SESSION['codeSecret'] = $_POST["password"];
               echo ("<p class='notification' style='position: absolute;background-color: green;'>Mot de passe correct. redirection dans cinq secondes </p>");

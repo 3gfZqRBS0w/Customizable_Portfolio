@@ -88,6 +88,7 @@ CREATE TABLE IF NOT EXISTS tbl_projects (
 CREATE TABLE IF NOT EXISTS tbl_contacts (
     fullName VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
     num CHAR(10) NOT NULL,
     fk_logsID INT,
     message MEDIUMTEXT,
