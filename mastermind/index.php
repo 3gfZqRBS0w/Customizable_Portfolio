@@ -55,7 +55,8 @@ require_once("../init.php");
                 header("Refresh: 5;url=2fa.php");
               }
               
-              Utility::addlog($bdd, 3);
+           //   Utility::addlog($bdd, 3);
+              $Logs->AddLog(3) ; 
               
             } 
             else {

@@ -1,8 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<!--Qfe8s*pFWhf]Bx*F9vZ6avbVKz*V4x]08rYTnsuraE?fNv5A2NVYQv[kq0r9(cUR0ogh()rTHEc3QN1[cRPNo7Qa?GZ]QwACNUzlpA]9ZGmnCO9M*u-Z]bALC[t4c7Co-->
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -118,8 +115,9 @@
                         <th>Adresse E-Mail</th>
                         <th>Numéro de Téléphone</th>
                         <th>Objet</th>
-                        <th>Message</th>
+                        <th>Check</th>
                     </tr>
+                    
                     <?php
                     $messages = $Contact->GetAllMessages() ;
 
@@ -130,12 +128,14 @@
         <td>" . $value["email"] . "</td>
         <td>" . $value["num"] . "</td>
         <td>" . $value["title"] . "</td>
-        <td>" . $value["message"] . "</td>
+        <td><form action='messages/index.php' method='post' ><button type='submit' name='checkMessage' value='".$value["id"]."'  class='check'>Check</button></form></td>
       </tr>
         ");
                     }
 
                     ?>
+
+                   
                 </table>
             </div>
         </div>

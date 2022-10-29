@@ -66,11 +66,6 @@ label {
     width: 100%;
     min-width: 0px;
 }
-
-
-
-
-
 .elementOfWebsiteOverview {
     background: rgb(232, 241, 242);
     background: linear-gradient(90deg, rgba(232, 241, 242, 1) 0%, rgba(232, 241, 242, 1) 54%, rgba(232, 241, 242, 1) 100%, rgba(255, 240, 0, 1) 100%);
@@ -101,6 +96,56 @@ label {
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+.check {
+    background-color: white;
+    padding: 0.5rem;
+    border: 1px solid;
+    border-radius: 25px;
+       
+}
+
+.check:hover {
+    transition-duration: 0.5s;
+    transform: scale(1.5); 
+}
+
+#accepter {
+    background-color: green;
+
+}
+#refuser {
+    background-color: red; 
+}
+
+#yes {
+    width: 100px;
+    padding-top: 14px;
+    padding-bottom: 10px;
+    height: auto;
+    min-width: 0px;
+    cursor: pointer;
+
+}
+#no {
+    width: 100px;
+    height: auto;
+    min-width: 0px;
+    cursor: pointer;
+}
+
+
+#accepter:hover {
+    transition-duration: 0.5s;
+    transform: scale(1.1);
+}
+
+#refuser:hover {
+    transition-duration: 0.5s;
+    transform: scale(1.1);
+ 
+}
+
 
 table {
 

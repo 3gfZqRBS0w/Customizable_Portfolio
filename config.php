@@ -285,7 +285,11 @@ $config["translations"]["fr"] = [
         24 => "Mis a jour article",
         25 => "article supprimé",
 
-        26 => "Mot de passe reset"
+        26 => "Mot de passe reset",
+
+        27 => "Ajout d'un nouveau message",
+        28 => "Message accepté",
+        29 => "Message supprimé"
     ],
     "tab_logs" => [
         "timestamp" => "Horodatage",

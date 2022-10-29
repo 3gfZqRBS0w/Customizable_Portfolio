@@ -118,6 +118,10 @@ $config["redirection"]["return2"] = [
     $config["translations"]["selected"]["navBar"]["return"] => "../index.php"
 ];
 
+$config["redirection"]["return3"] = [
+    $config["translations"]["selected"]["navBar"]["return"] => "../../index.php"
+];
+
 $config["redirection"]["dashboard"] = [
     $config["translations"]["selected"]["navBar"]["dashboard"]  => "dashboard.php",
     $config["translations"]["selected"]["navBar"]["profile"]  => "profile.php",
