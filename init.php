@@ -81,6 +81,25 @@ if (!Utility::bddExists($bdd)) {
 }
 
 
+
+// for Languages
+
+if ( isset($_REQUEST["lang"]) ) {
+    if (is_array($config["translations"][$_REQUEST["lang"]])) {
+        $lang = $_REQUEST["lang"] ;
+        $config["translations"]["selected"] = $config["translations"][$lang] ;
+        setcookie("lang", $lang, time() + (86400 * 30), "/");
+    }
+}
+else {
+    if (isset($_COOKIE["lang"])) {
+        if (is_array($config["translations"][$_COOKIE["lang"]])) {
+            $lang = $_COOKIE["lang"] ; 
+            $config["translations"]["selected"] = $config["translations"][$lang] ;
+        }
+    }
+}
+
 // initialize object
 
 $Parsedown = new Parsedown();
@@ -98,9 +117,8 @@ $otp = TOTP::create($Owner->GetQRSecret());
 
 $config["redirection"]["default"] = [
     $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",
-    $config["translations"]["selected"]["navBar"]["contact"] => "#bloc6"
 ];
-
+/*
 $config["redirection"]["admin"] = [
     $config["translations"]["selected"]["navBar"]["presentation"] => "#bloc1",
     $config["translations"]["selected"]["navBar"]["myprojects"] => "#bloc3",
@@ -109,6 +127,7 @@ $config["redirection"]["admin"] = [
     $config["translations"]["selected"]["navBar"]["contact"] => "#bloc6",
     $config["translations"]["selected"]["navBar"]["panel"] => "mastermind"
 ];
+*/
 
 $config["redirection"]["return"] = [
     $config["translations"]["selected"]["navBar"]["return"] => "index.php"
@@ -139,6 +158,8 @@ $config["redirection"]["dashboard"] = [
 
 
 
+
+
 if ($Projects->GetPostNumber() > 0) {
     $config["redirection"]["default"] = array_merge($config["redirection"]["default"], array($config["translations"]["selected"]["navBar"]["myprojects"] => "#bloc3")) ; 
 }
@@ -157,6 +178,11 @@ if ($Carrier->GetPostNumber() > 0 ) {
 }
 
 
+// Add contact at the end 
+$config["redirection"]["default"] = array_merge($config["redirection"]["default"], array($config["translations"]["selected"]["navBar"]["contact"] => "#bloc5") ) ;
+
+
+
 
 /*
 if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
@@ -164,23 +190,7 @@ if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
 }
 */
 
-// for Languages
 
-if ( isset($_REQUEST["lang"]) ) {
-    if (is_array($config["translations"][$_REQUEST["lang"]])) {
-        $lang = $_REQUEST["lang"] ;
-        $config["translations"]["selected"] = $config["translations"][$lang] ;
-        setcookie("lang", $lang, time() + (86400 * 30), "/");
-    }
-}
-else {
-    if (isset($_COOKIE["lang"])) {
-        if (is_array($config["translations"][$_COOKIE["lang"]])) {
-            $lang = $_COOKIE["lang"] ; 
-            $config["translations"]["selected"] = $config["translations"][$lang] ;
-        }
-    }
-}
 
 // for check if is visitor
 

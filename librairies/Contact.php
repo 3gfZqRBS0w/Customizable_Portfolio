@@ -59,7 +59,6 @@ private function IsValidPhoneNumber($phone){
 
     public function TreatsMessage($IsValid, $id, $email,$data) {
         if ($IsValid) {
-            print_r($data) ; 
             mail($email, $data["title"], "Ce mail a été envoyé par ".$data["email"]."\n Son numéro est ".$data["num"]."\n Le message est :".$data["message"]) ;
         }
         $stmt = $this->pdo->prepare("DELETE FROM ".$this->tableName." WHERE id = $id ;") ;
