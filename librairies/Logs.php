@@ -26,10 +26,29 @@ class Logs {
     }
 
     public function GetLogs() {
-        $stmt = $this->pdo->prepare("SELECT * FROM tbl_logs ORDER BY timestamp DESC ;");
+        $stmt = $this->pdo->prepare("SELECT * FROM ".$this->tableName." ORDER BY timestamp DESC ;");
         $stmt->execute();
         $resultat = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultat;
+    }
+
+    public function GetNumberOfVisitors() {
+      $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM ".$this->tableName." WHERE actionid_fk = 4 ;  ") ;
+      $stmt->execute();
+      $resultat = $stmt->fetch() ;
+
+      return $resultat["COUNT(*)"] ;
+    }
+
+    public function MaxVisitPerIP($ip) {
+      $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM ".$this->tableName." WHERE timestamp BETWEEN CURDATE() AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND ipAddress='$ip';");
+      $result = $stmt->execute();
+
+      if ($result["COUNT(*)"] < 8 ) {
+        return true;
+      } else {
+        return false;
+      }
     }
 
 

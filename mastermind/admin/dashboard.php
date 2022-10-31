@@ -39,7 +39,7 @@
 
                 <div class="childelementOfWebsiteOverview">
                     <h1><?= $config["translations"]["selected"]["dashboard"]["visitor"] ?></h1>
-                    <h3>10000</h3>
+                    <h3><?=$Logs->GetNumberOfVisitors()?></h3>
                 </div>
             </div>
             <div class="elementOfWebsiteOverview">
@@ -49,7 +49,7 @@
 
                 <div class="childelementOfWebsiteOverview">
                     <h1><?= $config["translations"]["selected"]["dashboard"]["projects"] ?></h1>
-                    <h3><?= Utility::getNumberOfItem($bdd, "tbl_projects") ?></h3>
+                    <h3><?= $Projects->GetPostNumber()?></h3>
                 </div>
 
             </div>
@@ -60,7 +60,7 @@
 
                 <div class="childelementOfWebsiteOverview">
                     <h1><?= $config["translations"]["selected"]["dashboard"]["career"] ?></h1>
-                    <h3><?= Utility::getNumberOfItem($bdd, "tbl_careers") ?></h3>
+                    <h3><?=$Carrier->GetPostNumber()?></h3>
                 </div>
 
             </div>
@@ -71,7 +71,7 @@
 
                 <div class="childelementOfWebsiteOverview">
                     <h1><?= $config["translations"]["selected"]["dashboard"]["articles"] ?></h1>
-                    <h3><?= Utility::getNumberOfItem($bdd, "tbl_articles") ?></h3>
+                    <h3><?=$Articles->GetPostNumber()?></h3>
                 </div>
 
             </div>

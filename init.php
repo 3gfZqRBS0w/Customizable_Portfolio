@@ -195,12 +195,17 @@ if (!Utility::tableIsEmpty($bdd, "tbl_careers")) {
 // for check if is visitor
 
 
-/*
+
 if ( !isset($_COOKIE["visitor"])) {
-    Utility::addlog($bdd, 4) ;
-    setcookie("lang", $lang, time() + (86400 * 1), "/");
+    if ($Logs->MaxVisitPerIP($_SERVER['REMOTE_ADDR'])) {
+        setcookie("visitor", true, time() + (86400 * 1), "/");
+        $Logs->AddLog(4) ; 
+    }
 }
-*/
+
+
+
+
 
 
 
