@@ -40,10 +40,11 @@ class Logs {
       return $resultat["COUNT(*)"] ;
     }
 
-    public function MaxVisitPerIP($ip) {
-      $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM ".$this->tableName." WHERE timestamp BETWEEN CURDATE() AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND ipAddress='$ip';");
-      $result = $stmt->execute();
+    public function MaxVisitPerIP($ip) { 
 
+      $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM ".$this->tableName." WHERE DATE(timestamp) = CURRENT_DATE AND ipAddress='$ip' AND actionid_fk=4;");
+      $stmt->execute();
+      $result = $stmt->fetch(PDO::FETCH_ASSOC);
       if ($result["COUNT(*)"] < 8 ) {
         return true;
       } else {
@@ -68,7 +69,7 @@ class Logs {
       $date = $this->pdo->quote($this->GetLastSuccessfulConnection($_SERVER['REMOTE_ADDR']));
       
       $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM tbl_logs
-      WHERE actionid_fk=2 AND timestamp BETWEEN $date AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND ipAddress='$ip';");
+      WHERE actionid_fk=2 AND DATE(timestamp) = CURRENT_DATE AND ipAddress='$ip';");
       $stmt->execute();
       $result = $stmt->fetch(PDO::FETCH_ASSOC);
   
@@ -80,7 +81,7 @@ class Logs {
     }
 
     public function IsPotentiallyBruteForceAttackForContactForm($ip) {
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM tbl_logs WHERE actionid_fk=27 AND timestamp BETWEEN CURDATE() AND CONCAT(YEAR(CURDATE()),'-',MONTH(CURDATE()) ,'-', DAY(CURDATE()),' 23:59:59') AND ipAddress='$ip' ;  ") ;
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM tbl_logs WHERE actionid_fk=27 AND DATE(timestamp) = CURRENT_DATE AND ipAddress='$ip' ;  ") ;
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
