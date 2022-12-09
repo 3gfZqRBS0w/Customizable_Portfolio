@@ -96,48 +96,59 @@ CREATE TABLE IF NOT EXISTS tbl_contacts (
     FOREIGN KEY (fk_logsID) REFERENCES tbl_logs(id)
 ) ;
 
-/* LOGS LINK */
+/* LOGS LINK
+Many tables for the same thing
+I did not see any other possibility
+
+
+ */
 
 CREATE TABLE IF NOT EXISTS tbl_projectLogs(
     idPost INT,
     idLog INT NOT NULL,
     FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
-    FOREIGN KEY (idPost) REFERENCES tbl_projects(id)
+    FOREIGN KEY (idPost) REFERENCES tbl_projects(id),
+    PRIMARY KEY(idPost, idLog)
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_articlesLogs(
     idPost INT,
     idLog INT NOT NULL,
     FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
-    FOREIGN KEY (idPost) REFERENCES tbl_articles(id)
+    FOREIGN KEY (idPost) REFERENCES tbl_articles(id),
+    PRIMARY KEY(idPost, idLog)
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_careerTypeLogs(
     idPost INT,
     idLog INT NOT NULL,
     FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
-    FOREIGN KEY (idPost) REFERENCES tbl_careers(id)
+    FOREIGN KEY (idPost) REFERENCES tbl_careers(id),
+    PRIMARY KEY(idPost, idLog)
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_careerLogs(
     idPost INT,
     idLog INT NOT NULL,
     FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
-    FOREIGN KEY (idPost) REFERENCES tbl_careers(id)
-) ;
+    FOREIGN KEY (idPost) REFERENCES tbl_careers(id),
+    PRIMARY KEY(idPost, idLog)
+    ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_skillLogs (
     idPost INT,
     idLog INT NOT NULL,
     FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
-    FOREIGN KEY (idPost) REFERENCES tbl_skill(id)
+    FOREIGN KEY (idPost) REFERENCES tbl_skill(id),
+    PRIMARY KEY(idPost, idLog)
 ) ;
 
 CREATE TABLE IF NOT EXISTS tbl_skillTypesLogs (
     idPost INT,
     idLog INT NOT NULL,
     FOREIGN KEY (idLog) REFERENCES tbl_logs(id),
-    FOREIGN KEY (idPost) REFERENCES tbl_skillType(id)
+    FOREIGN KEY (idPost) REFERENCES tbl_skillType(id),
+    PRIMARY KEY(idPost, idLog)
 ) ;
 
 
